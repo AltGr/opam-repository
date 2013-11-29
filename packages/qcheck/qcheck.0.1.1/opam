@@ -6,6 +6,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "4.00.0"]
+remove: [make "uninstall"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+]

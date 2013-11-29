@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "jeremie@dimino.org"
-authors: ["Jérémie Dimino"]
+author: "J\195\169r\195\169mie Dimino"
 homepage: "http://lambda-term.forge.ocamlcore.org/"
 license: "BSD3"
 build: [
@@ -8,11 +8,11 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "lambda-term"]]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "lambda-term"]
 depends: [
+  "ocaml" {>= "3.12"}
   "ocamlfind"
   "lwt" {>= "2.4.0"}
   "zed" {>= "1.2"}
 ]
-ocaml-version: [>= "3.12"]

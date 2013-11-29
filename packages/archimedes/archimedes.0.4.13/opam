@@ -1,10 +1,10 @@
 opam-version: "1"
 maintainer: "Christophe.Troestler@umons.ac.be"
-authors: [
+author: [
   "Christophe Troestler <Christophe.Troestler@umons.ac.be>"
   "Pierre Hauweele <pierre@hauweele.net>"
   "Fabian Pijcke <fabian.pijcke@gmail.com>"
-  "Noémie Meunier <noemie_6462@hotmail.com>"
+  "No\195\169mie Meunier <noemie_6462@hotmail.com>"
   "Bertrand Desmons <bibi-6@hotmail.fr>"
   "Xavier Deschuyteneer <xavier.deschuyteneer@gmail.com>"
 ]
@@ -15,9 +15,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "archimedes"]]
+remove: ["ocamlfind" "remove" "archimedes"]
 depends: [
+  "ocaml" {= "3.12.1"}
   "ocamlfind"
   "cairo2"
 ]
-ocaml-version: [= "3.12.1"]

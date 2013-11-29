@@ -8,10 +8,12 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "ctypes"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "ctypes"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+]
 depexts: [
   [["debian"] ["libffi-dev"]]
   [["ubuntu"] ["libffi-dev"]]
 ]
-ocaml-version: [>= "4.00.0"]

@@ -5,5 +5,7 @@ build: [
   [make]
   [make "install"]
 ]
-depends: ["core_extended" {= "109.08.00"}]
-ocaml-version: [>= "4.00.0"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "core_extended" {= "109.08.00"}
+]

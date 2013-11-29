@@ -5,6 +5,8 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "mascot"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "4.0.0" & < "4.01.0"]
+remove: ["ocamlfind" "remove" "mascot"]
+depends: [
+  "ocaml" {>= "4.0.0" & < "4.01.0"}
+  "ocamlfind"
+]

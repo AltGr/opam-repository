@@ -5,9 +5,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "shcaml"]]
+remove: ["ocamlfind" "remove" "shcaml"]
 depends: [
+  "ocaml" {= "3.12.1"}
   "ocamlfind"
   "pcre-ocaml"
 ]
-ocaml-version: [= "3.12.1"]

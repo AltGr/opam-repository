@@ -5,8 +5,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocaml" "setup.ml" "-uninstall"]]
+remove: ["ocaml" "setup.ml" "-uninstall"]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "sexplib" {>= "108.07.00"}
   "spotlib" {>= "2.1.2"}
@@ -14,4 +15,3 @@ depends: [
   "omake"
   "pa_monad_custom"
 ]
-ocaml-version: [>= "4.00.1"]

@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "anil@recoil.org"
-authors: [
+author: [
   "Anil Madhavapeddy"
   "Tim Deegan"
   "Richard Mortier"
@@ -17,8 +17,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "dns"]]
+remove: ["ocamlfind" "remove" "dns"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "lwt" {>= "2.4.1"}
   "cstruct" {>= "0.6.0"}
   "ocamlfind"
@@ -27,5 +28,4 @@ depends: [
   "uri"
   "cmdliner"
 ]
-depopts: ["mirage-net" {>= "0.5.2"}]
-ocaml-version: [>= "4.00.0"]
+depopts: "mirage-net" {>= "0.5.2"}

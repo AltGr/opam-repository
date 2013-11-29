@@ -1,9 +1,9 @@
 opam-version: "1"
 maintainer: "zoggy@bat8.org"
-authors: ["Maxence Guesdon"]
+author: "Maxence Guesdon"
 homepage: "http://ocaml-rdf.forge.ocamlcore.org/"
 license: "GNU Lesser General Public License version 3"
-doc: ["http://ocaml-rdf.forge.ocamlcore.org/ocamldoc/index.html"]
+doc: "http://ocaml-rdf.forge.ocamlcore.org/ocamldoc/index.html"
 tags: [
   "rdf"
   "semantic web"
@@ -16,8 +16,9 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "xmlm" {>= "1.1.1"}
   "ocamlnet" {>= "3.6"}
@@ -28,4 +29,3 @@ depopts: [
   "ocaml-mysql" {>= "1.1.1"}
   "postgresql-ocaml"
 ]
-ocaml-version: [>= "4.00.0"]

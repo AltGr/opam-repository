@@ -1,9 +1,9 @@
 opam-version: "1"
 maintainer: "vincent.hugot@gmail.com"
-build: [["ocaml" "do.ml" "qtest" "install" prefix]]
-remove: [["ocaml" "do.ml" "qtest" "remove" prefix]]
+build: ["ocaml" "do.ml" "qtest" "install" prefix]
+remove: ["ocaml" "do.ml" "qtest" "remove" prefix]
 depends: [
+  "ocaml" {> "3.12.0"}
   "ocamlfind"
   "oasis" {>= "0.2.0"}
 ]
-ocaml-version: [> "3.12.0"]

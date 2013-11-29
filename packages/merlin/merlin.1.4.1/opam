@@ -5,10 +5,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "yojson"
   "menhir"
 ]
-ocaml-version: [>= "4.00.1"]

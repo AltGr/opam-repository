@@ -5,4 +5,4 @@ build: [
   [make]
   [make "install"]
 ]
-ocaml-version: [>= "4.00.0" & < "4.01.0"]
+depends: "ocaml" {>= "4.00.0" & < "4.01.0"}

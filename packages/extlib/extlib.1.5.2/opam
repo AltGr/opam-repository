@@ -6,7 +6,9 @@ build: [
   ["ocamlopt" "-shared" "-linkall" "extLib.cmxa" "-o" "extLib.cmxs"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "extlib"]]
-depends: ["ocamlfind"]
-patches: ["opam.patch"]
-ocaml-version: [< "4.00.0"]
+remove: ["ocamlfind" "remove" "extlib"]
+depends: [
+  "ocaml" {< "4.00.0"}
+  "ocamlfind"
+]
+patches: "opam.patch"

@@ -5,6 +5,6 @@ build: [
   [make]
   [make "INSTALLDIR=%{bin}%" "install"]
 ]
-remove: [["rm" "%{bin}%/zipperposition"]]
-patches: ["sed-bsd-compatible.patch"]
-ocaml-version: [>= "4.00.0" & < "4.01.0"]
+remove: ["rm" "%{bin}%/zipperposition"]
+depends: "ocaml" {>= "4.00.0" & < "4.01.0"}
+patches: "sed-bsd-compatible.patch"

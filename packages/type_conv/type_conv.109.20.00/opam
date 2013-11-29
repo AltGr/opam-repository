@@ -4,6 +4,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "type_conv"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "4.00.1"]
+remove: ["ocamlfind" "remove" "type_conv"]
+depends: [
+  "ocaml" {>= "4.00.1"}
+  "ocamlfind"
+]

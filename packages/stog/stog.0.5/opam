@@ -4,8 +4,9 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "xmlm" {>= "1.1"}
   "xtmpl" {>= "0.5"}
@@ -13,4 +14,3 @@ depends: [
   "ocamlrss" {>= "2.0"}
   "pcre-ocaml"
 ]
-ocaml-version: [>= "4.00.0"]

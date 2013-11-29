@@ -5,12 +5,12 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "config-file" {>= "1.1"}
   "lablgtk-extras" {>= "1.2"}
   "lablgtk" {>= "2.16.0"}
   "pcre-ocaml"
 ]
-ocaml-version: [>= "4.00.0"]

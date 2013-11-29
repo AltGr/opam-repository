@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "jeremie@dimino.org"
-authors: ["Jérémie Dimino"]
+author: "J\195\169r\195\169mie Dimino"
 homepage: "http://forge.ocamlcore.org/projects/utop/"
 license: "BSD3"
 build: [
@@ -8,11 +8,11 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "utop"]]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "utop"]
 depends: [
+  "ocaml" {>= "3.12"}
   "ocamlfind"
   "lambda-term" {>= "1.2"}
   "lwt"
 ]
-ocaml-version: [>= "3.12"]

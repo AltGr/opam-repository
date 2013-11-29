@@ -6,8 +6,8 @@ build: [
   [make "PREFIX=%{prefix}%"]
 ]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "opam-lib" {= "0.9.4"}
   "cow" {>= "0.5.2"}
   "js_of_ocaml" {>= "1.3"}
 ]
-ocaml-version: [>= "4.00.0"]

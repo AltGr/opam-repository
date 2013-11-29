@@ -1,9 +1,9 @@
 opam-version: "1"
-maintainer: "Daniel Bünzli <daniel.buenzl i@erratique.ch>"
-authors: ["Daniel Bünzli <daniel.buenzli i@erratique.ch>"]
+maintainer: "Daniel B\195\188nzli <daniel.buenzl i@erratique.ch>"
+author: "Daniel B\195\188nzli <daniel.buenzli i@erratique.ch>"
 homepage: "http://erratique.ch/software/vg"
 license: "BSD3"
-doc: ["http://erratique.ch/software/vg/doc/Vg"]
+doc: "http://erratique.ch/software/vg/doc/Vg"
 tags: [
   "pdf"
   "svg"
@@ -13,9 +13,10 @@ tags: [
 ]
 build: [
   ["./pkg/pkg-git"]
-  ["./pkg/build" "true" "%{uutf:installed}%" "%{otfm:installed}%" "%{js_of_ocaml:installed}%"]
+  ["./pkg/build" "true" uutf:installed otfm:installed js_of_ocaml:installed]
 ]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "gg"
 ]
@@ -24,4 +25,3 @@ depopts: [
   "otfm"
   "js_of_ocaml"
 ]
-ocaml-version: [>= "4.00.0"]

@@ -7,4 +7,4 @@ build: [
   [make]
   [make "install"]
 ]
-ocaml-version: [>= "3.10.1"]
+depends: "ocaml" {>= "3.10.1"}

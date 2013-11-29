@@ -5,11 +5,11 @@ build: [
   [make "opt"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "ocamldap"]]
+remove: ["ocamlfind" "remove" "ocamldap"]
 depends: [
+  "ocaml" {= "3.12.1"}
   "ocamlfind"
   "ocamlnet" {= "3.6.0"}
   "pcre-ocaml"
   "ssl"
 ]
-ocaml-version: [= "3.12.1"]

@@ -9,8 +9,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "dns"]]
+remove: ["ocamlfind" "remove" "dns"]
 depends: [
+  "ocaml" {>= "4.0.0"}
   "cstruct" {>= "0.5.1" & < "0.6.0"}
   "ocamlfind"
   "cryptokit"
@@ -21,4 +22,3 @@ depopts: [
   "lwt" {>= "2.4.1"}
   "mirage-net"
 ]
-ocaml-version: [>= "4.0.0"]

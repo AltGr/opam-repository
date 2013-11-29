@@ -5,8 +5,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocaml" "setup.ml" "-uninstall"]]
+remove: ["ocaml" "setup.ml" "-uninstall"]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "omake"
   "cryptokit"
@@ -14,4 +15,3 @@ depends: [
   "tiny_json_conv" {>= "1.3.0"}
   "spotlib" {>= "2.1.1"}
 ]
-ocaml-version: [>= "4.00.1"]

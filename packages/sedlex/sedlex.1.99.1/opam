@@ -5,9 +5,9 @@ build: [
   [make "opt"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "sedlex"]]
+remove: ["ocamlfind" "remove" "sedlex"]
 depends: [
+  "ocaml" {>= "4.02.0"}
   "ocamlfind"
   "ppx_tools"
 ]
-ocaml-version: [>= "4.02.0"]

@@ -5,8 +5,8 @@ build: [
   [make "install"]
 ]
 depends: [
+  "ocaml" {= "3.12.1"}
   "cduce"
   "ocurl"
   "ocaml-src"
 ]
-ocaml-version: [= "3.12.1"]

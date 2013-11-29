@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "core"]]
+remove: ["ocamlfind" "remove" "core"]
 depends: [
+  "ocaml" {>= "4.00.1" & < "4.01.0"}
   "ocamlfind"
   "bin_prot" {= "109.07.00"}
   "fieldslib" {= "109.07.00"}
@@ -21,5 +22,4 @@ patches: [
   "fix_META.patch"
   "disable_warn_error.patch"
 ]
-ocaml-version: [>= "4.00.1" & < "4.01.0"]
 os: ["linux"]

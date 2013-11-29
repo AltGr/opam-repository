@@ -8,8 +8,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "lwt"
   "cmdliner"
@@ -18,4 +19,3 @@ depexts: [
   [["debian"] ["libxen-dev"]]
   [["ubuntu"] ["libxen-dev"]]
 ]
-ocaml-version: [>= "4.00.0"]

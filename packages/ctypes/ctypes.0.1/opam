@@ -8,10 +8,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "ctypes"]]
+remove: ["ocamlfind" "remove" "ctypes"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "ounit"
   ("oasis" {>= "0.3.0"} | "oasis-mirage" {>= "0.3.0"})
 ]
-ocaml-version: [>= "4.00.0"]

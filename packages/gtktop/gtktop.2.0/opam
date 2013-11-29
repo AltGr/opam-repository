@@ -5,10 +5,10 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "lablgtk-extras" {>= "1.2"}
   "lablgtk" {>= "2.16.0"}
 ]
-ocaml-version: [>= "4.00.0"]

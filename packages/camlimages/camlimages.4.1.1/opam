@@ -1,8 +1,8 @@
 opam-version: "1"
 maintainer: "jun.furuse@gmail.com"
-authors: [
+author: [
   "Jun Furuse"
-  "François Pessaux"
+  "Fran\195\167ois Pessaux"
   "Pierre Weis"
 ]
 homepage: "https://bitbucket.org/camlspotter/camlimages"
@@ -11,11 +11,11 @@ build: [
   ["omake" "--configure"]
   ["omake" "install"]
 ]
-remove: [["ocamlfind" "remove" "camlimages"]]
+remove: ["ocamlfind" "remove" "camlimages"]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "base-unix"
   "omake"
 ]
-depopts: ["lablgtk"]
-ocaml-version: [>= "4.00.1"]
+depopts: "lablgtk"

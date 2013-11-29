@@ -1,9 +1,9 @@
 opam-version: "1"
-maintainer: "Daniel Bünzli <daniel.buenzl i@erratique.ch>"
-authors: ["Daniel Bünzli <daniel.buenzli i@erratique.ch>"]
+maintainer: "Daniel B\195\188nzli <daniel.buenzl i@erratique.ch>"
+author: "Daniel B\195\188nzli <daniel.buenzli i@erratique.ch>"
 homepage: "http://erratique.ch/software/otfm"
 license: "BSD3"
-doc: ["http://erratique.ch/software/otfm/doc/Otfm"]
+doc: "http://erratique.ch/software/otfm/doc/Otfm"
 tags: [
   "OpenType"
   "font"
@@ -15,7 +15,7 @@ build: [
   ["./pkg/build" "true"]
 ]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "uutf"
   "ocamlfind"
 ]
-ocaml-version: [>= "4.00.0"]

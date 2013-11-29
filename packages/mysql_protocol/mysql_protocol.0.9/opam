@@ -4,10 +4,10 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [[make "deinstall"]]
+remove: [make "deinstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "cryptokit"
   "bitstring"
 ]
-ocaml-version: [>= "4.00.0"]
