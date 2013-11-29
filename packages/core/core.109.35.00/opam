@@ -4,7 +4,7 @@ author: "Jane Street Capital LLC <opensource@janestreet.com>"
 homepage: "https://github.com/janestreet/core"
 license: "Apache-2.0"
 build: [
-  ["patch" "-p1" "-i" "4.01cloexec.diff"] {ocaml-version >= "4.01.0"}
+  ["patch" "-p1" "-i" "4.01cloexec.diff"] {ocaml:version >= "4.01.0"}
   [make]
   [make "install"]
 ]

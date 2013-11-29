@@ -18,4 +18,4 @@ depends: [
   "sexplib"
   "omake"
 ]
-patches: ["no_bin_annot.patch" {ocaml-version < "4.00"}]
+patches: ["no_bin_annot.patch" {ocaml:version < "4.00"}]

@@ -46,5 +46,5 @@ depopts: [
 patches: [
   "netpop.patch"
   "nethttpd_types.patch"
-  "cloexec.patch" {ocaml-version >= "4.01.0"}
+  "cloexec.patch" {ocaml:version >= "4.01.0"}
 ]
