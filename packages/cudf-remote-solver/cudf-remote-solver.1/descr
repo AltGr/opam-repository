@@ -1,0 +1,8 @@
+Proxy to the dependency solvers at the IRILL solver farms
+
+This small shell-script will setup a placeholder for "aspcud", giving the power
+of the external solver to OPAM by sending queries to the solver farms at
+http://cudf-services.irill.org
+
+This can easily be bypassed when needed with command-line option
+--use-internal-solver or by setting the variable OPAMUSEINTERNALSOLVER

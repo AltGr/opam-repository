@@ -1,0 +1,13 @@
+opam-version: "1.2.0"
+name: "cudf-remote-solver"
+version: "1"
+maintainer: "Louis Gesbert <louis.gesbert@ocamlpro.com>"
+authors: "Roberto Di Cosmo <roberto@dicosmo.org>"
+homepage: "http://cudf-services.irill.org"
+bug-reports: "https://github.com/irill/cudf_remote_proxy/issues?state=open"
+license: "LGPL-2.1"
+build: [ "sh" "-c" "type" "curl" ]
+post-messages: [
+  "The solver can be bypassed if needed with '--use-internal-solver'" {success}
+  "This package requires 'curl' installed on your system" {failure}
+]

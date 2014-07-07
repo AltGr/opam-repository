@@ -1,0 +1,7 @@
+#!/bin/sh
+SERVER=cudf-solvers.irill.org
+if type bzip2 >/dev/null; then
+    bzip2 -c $1 | curl -f --data-binary @- http://$SERVER/cudf.bz2?criteria="$3" | bunzip2 -c > $2 || echo FAIL > $2
+else
+    curl -f --data-binary @"$1" -o "$2" http://$SERVER/cudf?criteria="$3" || echo FAIL > $2
+fi
