@@ -1,10 +1,11 @@
 opam-version: "1"
 maintainer: "vb@luminar.eu.org"
+dev-repo: "git://github.com/vbmithr/ocaml-crypt"
 build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
   "ocamlfind"
   "ocaml-makefile"

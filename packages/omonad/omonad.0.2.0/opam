@@ -1,12 +1,13 @@
 opam-version: "1"
 maintainer: "Wojciech.Meyer@gmail.com"
+dev-repo: "git://github.com/danmey/omonad"
 build: [
   ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--enable-tests" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "omonad"]]
+remove: ["ocamlfind" "remove" "omonad"]
 depends: [
   "ocamlfind"
   "oasis"

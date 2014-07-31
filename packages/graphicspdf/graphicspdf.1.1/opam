@@ -1,10 +1,11 @@
 opam-version: "1"
 maintainer: "contact@coherentgraphics.co.uk"
+dev-repo: "git://github.com/johnwhitington/graphicspdf"
 build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "graphicspdf"]]
+remove: ["ocamlfind" "remove" "graphicspdf"]
 depends: [
   "ocamlfind"
   "camlpdf"

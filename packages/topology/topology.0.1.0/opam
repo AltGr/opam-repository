@@ -1,11 +1,13 @@
 opam-version: "1"
 maintainer: "arjun@cs.umass.edu"
+dev-repo: "git://github.com/frenetic-lang/ocaml-topology"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "topology"]
+remove: ["ocamlfind" "remove" "topology"]
+depends: [
+  "ocamlfind"
+  "ocamlgraph"
 ]
-depends: ["ocamlfind" "ocamlgraph"]

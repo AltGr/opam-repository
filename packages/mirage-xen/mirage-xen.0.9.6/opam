@@ -1,10 +1,11 @@
 opam-version: "1"
 maintainer: "anil@recoil.org"
+dev-repo: "git://github.com/mirage/mirage-platform"
 build: [
   [make "xen-build"]
   [make "xen-install" "PREFIX=%{prefix}%"]
 ]
-remove: [[make "xen-uninstall" "PREFIX=%{prefix}%"]]
+remove: [make "xen-uninstall" "PREFIX=%{prefix}%"]
 depends: [
   "cstruct" {>= "0.7.1"}
   "ocamlfind"
@@ -13,5 +14,5 @@ depends: [
   "xenstore" {>= "1.2.3"}
   "ipaddr" {>= "0.2.2"}
 ]
-conflicts: ["mirage-unix"]
+conflicts: "mirage-unix"
 os: ["linux"]

@@ -1,6 +1,5 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
-build: [
-  [make "install_ocamlfind"]
-]
-depends: ["ocamlfind"]
+dev-repo: "git://github.com/ncannasse/xml-light"
+build: [make "install_ocamlfind"]
+depends: "ocamlfind"

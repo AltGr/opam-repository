@@ -1,16 +1,15 @@
 opam-version: "1"
 maintainer: "rudi.grinberg@gmail.com"
-authors: [ "Rudi Grinberg" ]
+authors: "Rudi Grinberg"
 license: "WTFPL"
+dev-repo: "git://github.com/rgrinberg/ocaml-mustache"
 build: [
   [make "configure"]
   [make "build"]
   [make "install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "mustache"]
-]
-build-doc: [ make "doc" ]
+build-doc: [make "doc"]
+remove: ["ocamlfind" "remove" "mustache"]
 depends: [
   "ocamlfind"
   "ezjsonm"
@@ -19,5 +18,5 @@ depends: [
   "sexplib"
   "ounit"
 ]
-patches: ["add_pipe.patch" {ocaml-version < "4.01.0"}]
-ocaml-version: [>="3.12.1"]
+patches: "add_pipe.patch" {ocaml-version < "4.01.0"}
+ocaml-version: [>= "3.12.1"]

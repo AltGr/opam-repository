@@ -2,6 +2,7 @@ opam-version: "1"
 maintainer: "contact@ocamlpro.com"
 homepage: "http://www.typerex.org/ocp-indent.html"
 license: "GPL"
+dev-repo: "git://github.com/OCamlPro/ocp-indent"
 build: [
   ["./configure" "--prefix" prefix]
   [make]

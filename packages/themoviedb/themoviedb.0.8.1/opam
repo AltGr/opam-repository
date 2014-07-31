@@ -1,14 +1,15 @@
 opam-version: "1"
 maintainer: "opam-devel@lists.ocaml.org"
-authors: ["Marc Simon marc.simon42@gmail.com"]
+authors: "Marc Simon marc.simon42@gmail.com"
 license: "GPL-3"
+dev-repo: "git://github.com/msimon/the_movie_db"
 build: [
   ["ocaml" "setup.ml" "-configure" "--%{ounit:enable}%-utest" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "themoviedb"]]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "themoviedb"]
 depends: [
   "ocamlfind"
   "ocsigenserver"
@@ -16,6 +17,4 @@ depends: [
   "yojson"
   "lwt"
 ]
-depopts: [
-  "ounit" {>= "2.0.0" }
-]
+depopts: "ounit" {>= "2.0.0"}

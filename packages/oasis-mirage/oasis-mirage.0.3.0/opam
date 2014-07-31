@@ -4,6 +4,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
+dev-repo: "git://github.com/avsm/oasis"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
@@ -21,4 +22,4 @@ depends: [
   "ocamlify"
   "ocamlmod"
 ]
-conflicts: ["oasis"]
+conflicts: "oasis"

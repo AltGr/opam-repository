@@ -5,5 +5,6 @@ tags: [
   "org:ocamllabs"
   "org:mirage"
 ]
-build: [[make]]
-depends: ["cmdliner"]
+dev-repo: "git://github.com/avsm/travis-senv"
+build: [make]
+depends: "cmdliner"

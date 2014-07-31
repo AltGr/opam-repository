@@ -1,16 +1,15 @@
 opam-version: "1"
 maintainer: "anil@recoil.org"
-tags: [
-  "org:mirage"
-]
+tags: "org:mirage"
+dev-repo: "git://github.com/mirage/ocaml-conduit"
 build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "conduit"]]
+remove: ["ocamlfind" "remove" "conduit"]
 depends: [
   "ocamlfind"
-  "sexplib" {>="109.15.00"}
+  "sexplib" {>= "109.15.00"}
 ]
 depopts: [
   "async"
@@ -19,6 +18,6 @@ depopts: [
   "async_ssl"
 ]
 conflicts: [
-  "async" {<"109.15.00"}
-  "lwt" {<"2.4.3"}
+  "async" {< "109.15.00"}
+  "lwt" {< "2.4.3"}
 ]

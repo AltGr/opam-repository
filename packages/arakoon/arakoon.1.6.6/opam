@@ -1,7 +1,8 @@
 opam-version: "1"
 maintainer: "dev@domoco.fr"
-authors: ["Incubaid Team"]
+authors: "Incubaid Team"
 homepage: "http://arakoon.org/"
+dev-repo: "git://github.com/Incubaid/arakoon"
 build: [
   [make]
   [make "install" "DESTDIR=%{prefix}%"]
@@ -17,4 +18,4 @@ depends: [
   "camltc"
   "camlbz2"
 ]
-patches: ["opam.patch"]
+patches: "opam.patch"

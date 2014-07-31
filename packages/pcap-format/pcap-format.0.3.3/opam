@@ -4,14 +4,15 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
+dev-repo: "git://github.com/mirage/ocaml-pcap"
 build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "pcap-format"]]
+remove: ["ocamlfind" "remove" "pcap-format"]
 depends: [
   "ocamlfind"
   "cstruct" {>= "0.6.0"}
   "lwt" {>= "2.4.0"}
 ]
-depopts: ["mirage-net"]
+depopts: "mirage-net"

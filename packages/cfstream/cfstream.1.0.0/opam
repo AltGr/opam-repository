@@ -1,5 +1,6 @@
 opam-version: "1"
 maintainer: "agarwal1975@gmail.com"
+dev-repo: "git://github.com/biocaml/cfstream"
 build: [
   ["rm" "-f" "configure.om"]
   ["omake"]
@@ -14,4 +15,4 @@ depends: [
   "omake"
   "core"
 ]
-ocaml-version: [>="4.00.0"]
+ocaml-version: [>= "4.00.0"]

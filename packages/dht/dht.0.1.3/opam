@@ -1,16 +1,14 @@
 opam-version: "1"
 maintainer: "n.oje.bar@gmail.com"
-authors: [ "Nicolas Ojeda Bar <n.oje.bar@gmail.com>" ]
+authors: "Nicolas Ojeda Bar <n.oje.bar@gmail.com>"
 license: "GPL"
-ocaml-version: [ >= "4.01.0" ]
+dev-repo: "git://github.com/nojb/ocaml-dht"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "dht"]
-]
+remove: ["ocamlfind" "remove" "dht"]
 depends: [
   "bitstring"
   ("cryptokit" | "cryptokit-sha512")
@@ -18,3 +16,4 @@ depends: [
   "ocamlfind"
   "zarith"
 ]
+ocaml-version: [>= "4.01.0"]

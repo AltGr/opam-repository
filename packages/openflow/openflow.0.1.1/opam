@@ -1,11 +1,12 @@
 opam-version: "1"
 maintainer: "arjun@cs.umass.edu"
+dev-repo: "git://github.com/frenetic-lang/ocaml-openflow"
 build: [
   ["ocaml" "setup.ml" "-configure"]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "openflow"]]
+remove: ["ocamlfind" "remove" "openflow"]
 depends: [
   "ocamlfind"
   "lwt"
