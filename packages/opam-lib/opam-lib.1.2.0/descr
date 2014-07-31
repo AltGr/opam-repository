@@ -1,0 +1,9 @@
+The OCaml PAckage Manager (OPAM), internal libraries
+
+OPAM is a source-based package manager for OCaml. It supports multiple
+simultaneous compiler installations, flexible package constraints, and
+a Git-friendly development workflow.
+
+This package contains the internal OPAM libraries, useful to create tools
+managing repositories, work on its file formats, perform operations on an OPAM
+installation.

@@ -1,0 +1,16 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+homepage: "https://github.com/ocaml/opam"
+dev-repo: "git://github.com/OCamlPro/opam"
+build: [
+  ["./configure" "--prefix=%{prefix}%" "--mandir=%{prefix}%/man"]
+  [make]
+]
+depends: [
+  "ocamlgraph"
+  "cmdliner" {build}
+  "dose" {>= "3.2.2+opam"}
+  "cudf"
+  "re" {>= "1.2.0"}
+  "ocamlfind" {build}
+]
