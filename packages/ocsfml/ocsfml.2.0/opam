@@ -5,9 +5,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
-depends: ["ocamlfind"]
+remove: [make "uninstall"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
- [["debian"] ["cmake" "libboost-dev" "libsfml-dev"]]
- [["ubuntu"] ["cmake" "libboost-dev" "libsfml-dev"]]
+  [["debian"] ["cmake" "libboost-dev" "libsfml-dev"]]
+  [["ubuntu"] ["cmake" "libboost-dev" "libsfml-dev"]]
 ]

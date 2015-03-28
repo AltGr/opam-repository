@@ -4,5 +4,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "ocamlscript"]]
-depends: ["ocamlfind" "camlp4"]
+remove: ["ocamlfind" "remove" "ocamlscript"]
+depends: ["ocaml" "ocamlfind" "camlp4"]

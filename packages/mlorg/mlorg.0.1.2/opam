@@ -5,8 +5,9 @@ build: [
   [make]
   [make "install" "PREFIX=%{prefix}%"]
 ]
-remove: [[make "uninstall" "PREFIX=%{prefix}%"]]
+remove: [make "uninstall" "PREFIX=%{prefix}%"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "batteries" {>= "2.0"}
   "cmdliner"

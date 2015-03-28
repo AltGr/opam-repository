@@ -17,6 +17,8 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "lacaml"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "3.12"]
+remove: ["ocamlfind" "remove" "lacaml"]
+depends: [
+  "ocaml" {>= "3.12"}
+  "ocamlfind"
+]

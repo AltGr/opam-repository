@@ -9,4 +9,10 @@ remove: [
   ["./configure" "--bin-dir" bin]
   [make "uninstall"]
 ]
-depends: ["ocamlfind" "cow" "config-file" "omd" {>= "0.8.1" & < "0.9.0"}]
+depends: [
+  "ocaml"
+  "ocamlfind"
+  "cow"
+  "config-file"
+  "omd" {>= "0.8.1" & < "0.9.0"}
+]

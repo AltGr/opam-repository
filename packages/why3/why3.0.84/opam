@@ -27,6 +27,7 @@ build-doc: [
   [make "DOCDIR=%{doc}%/why3" "install-doc"]
 ]
 depends: [
+  "ocaml"
   "alt-ergo"
   "lablgtk" {>= "2.14.2"}
   "conf-gtksourceview"

@@ -5,9 +5,5 @@ build: [
   [make]
   [make "install" "PREFIX=%{prefix}%"]
 ]
-remove: [["ocamlfind" "remove" "jsondiff"]]
-depends: [
-  "ocamlfind"
-  "biniou"
-  "yojson"
-]
+remove: ["ocamlfind" "remove" "jsondiff"]
+depends: ["ocaml" "ocamlfind" "biniou" "yojson"]

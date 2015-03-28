@@ -4,8 +4,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "faillib"]]
-depends: ["camlp4"
-          "ocamlfind"
-          "herelib"   {>= "109.35.00" & < "109.36.00"}]
-ocaml-version: [>= "4.00.0"]
+remove: ["ocamlfind" "remove" "faillib"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "camlp4"
+  "ocamlfind"
+  "herelib" {>= "109.35.00" & < "109.36.00"}
+]

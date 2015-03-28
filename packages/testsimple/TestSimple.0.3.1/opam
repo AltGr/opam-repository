@@ -1,20 +1,15 @@
 opam-version: "1"
 maintainer: "hez@0ok.org"
-authors: [ "Stevan Little" ]
-license: "LGPL-2.1 with OCaml linking exception"
+authors: "Stevan Little"
 homepage: "https://github.com/hcarty/ocaml-testsimple"
+license: "LGPL-2.1 with OCaml linking exception"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "testsimple"]
-]
-depends: [
-  "batteries"
-  "ocamlfind"
-]
+remove: ["ocamlfind" "remove" "testsimple"]
+depends: ["ocaml" "batteries" "ocamlfind"]
 depexts: [
   [["debian"] ["perl"]]
   [["ubuntu"] ["perl"]]

@@ -32,6 +32,7 @@ build: [
 ]
 remove: ["rm" "-rf" "%{lib}%/ocsigenserver"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "react" {< "1.0.0"}
   "ssl"

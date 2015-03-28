@@ -7,10 +7,12 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "nlopt"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "nlopt"]
+depends: [
+  "ocaml" {>= "3.12"}
+  "ocamlfind"
+]
 depexts: [
-  [["debian"] ["libnlopt0" "libnlopt-dev"]]
-  [["ubuntu"] ["libnlopt0" "libnlopt-dev"]]
- ]
-ocaml-version: [>= "3.12"]
+  [["debian"] ["libnlopt-dev" "libnlopt0"]]
+  [["ubuntu"] ["libnlopt-dev" "libnlopt0"]]
+]

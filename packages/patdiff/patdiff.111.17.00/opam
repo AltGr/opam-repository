@@ -5,7 +5,10 @@ build: [
   [make]
   [make "install"]
 ]
-depends: ["camlp4"
-          "core_extended" {= "111.17.00"}
-          "patience_diff" {= "111.17.00"}
-          "pcre"]
+depends: [
+  "ocaml"
+  "camlp4"
+  "core_extended" {= "111.17.00"}
+  "patience_diff" {= "111.17.00"}
+  "pcre"
+]

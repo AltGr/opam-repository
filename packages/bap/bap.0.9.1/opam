@@ -1,12 +1,10 @@
 opam-version: "1.2"
-name: "bap"
-version: "0.9.1"
 maintainer: "Ivan Gotovchits <ivg@ieee.org>"
 authors: "BAP Team"
 homepage: "https://github.com/BinaryAnalysisPlatform/bap/"
 bug-reports: "https://github.com/BinaryAnalysisPlatform/bap/issues"
-dev-repo: "git://github.com/BinaryAnalysisPlatform/bap/"
 license: "MIT"
+dev-repo: "git://github.com/BinaryAnalysisPlatform/bap/"
 build: [
   ["./configure" "--prefix=%{prefix}%" "--with-cxx=`which clang++`"]
   [make]
@@ -16,19 +14,18 @@ remove: [
   ["ocamlfind" "remove" "bap"]
   ["ocamlfind" "remove" "core_lwt"]
 ]
-
 depends: [
- 	"base-unix"
- 	"bitstring"
-	"cmdliner"
-	"cohttp" {= "0.15.0"}
-	"core_kernel" {= "111.28.0"}
-	"ezjsonm" {= "0.4.0"}
-	"faillib"
-	"lwt"
-	"oasis" {build}
-	"re"
-	"uri" {= "1.7.2"}
-	"zarith"
+  "ocaml" {>= "4.01"}
+  "base-unix"
+  "bitstring"
+  "cmdliner"
+  "cohttp" {= "0.15.0"}
+  "core_kernel" {= "111.28.0"}
+  "ezjsonm" {= "0.4.0"}
+  "faillib"
+  "lwt"
+  "oasis" {build}
+  "re"
+  "uri" {= "1.7.2"}
+  "zarith"
 ]
-available: [ocaml-version >= "4.01"]

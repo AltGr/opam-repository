@@ -1,10 +1,6 @@
 opam-version: "1.2"
 maintainer: "jerome.vouillon@pps.univ-paris-diderot.fr"
-authors: [
-  "Jerome Vouillon"
-  "Thomas Gazagnaire"
-  "Anil Madhavapeddy"
-]
+authors: ["Jerome Vouillon" "Thomas Gazagnaire" "Anil Madhavapeddy"]
 homepage: "https://github.com/ocaml/ocaml-re"
 bug-reports: "https://github.com/ocaml/ocaml-re/issues"
 license: "LGPL-2.0 with OCaml linking exception"
@@ -22,6 +18,7 @@ build-test: [
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "re"]
 depends: [
+  "ocaml"
   "ocamlfind" {build}
   "base-bytes"
   "ounit" {test}

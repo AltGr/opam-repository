@@ -5,8 +5,5 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "rtime"]]
-depends: [
-  "ocamlfind"
-  "react"
-]
+remove: ["ocamlfind" "remove" "rtime"]
+depends: ["ocaml" "ocamlfind" "react"]

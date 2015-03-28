@@ -7,6 +7,7 @@ build: [
 ]
 remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "optcomp"
   "ounit"
@@ -28,4 +29,3 @@ conflicts: [
   "ocp-index" {< "1.0.1"}
 ]
 patches: "4.00.1.patch"
-ocaml-version: [>= "4.00.1"]

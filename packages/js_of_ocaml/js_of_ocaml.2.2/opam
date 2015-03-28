@@ -6,19 +6,16 @@ build: [
   [make "build"]
   [make "install-lib" "BINDIR=%{bin}%"]
 ]
-remove: [
-  ["ocamlfind" "remove" "js_of_ocaml"]
-]
+remove: ["ocamlfind" "remove" "js_of_ocaml"]
 depends: [
+  "ocaml" {<= "4.01.0"}
   "ocamlfind"
   "lwt"
   "menhir"
   "camlp4"
 ]
-
-depopts: ["deriving"]
+depopts: "deriving"
 conflicts: [
   "deriving" {< "0.6"}
-  "lwt"      {< "2.4"}
+  "lwt" {< "2.4"}
 ]
-ocaml-version: [<= "4.01.0"]

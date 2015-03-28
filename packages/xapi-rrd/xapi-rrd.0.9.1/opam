@@ -4,11 +4,10 @@ build: [
   [make]
   [make "PREFIX=%{prefix}%" "install"]
 ]
-remove: [
-  [make "PREFIX=%{prefix}%" "uninstall"]
-]
+remove: [make "PREFIX=%{prefix}%" "uninstall"]
 depends: [
-  "obuild" {> "0.1.0" }
+  "ocaml"
+  "obuild" {> "0.1.0"}
   "rpc"
   "xapi-stdext"
 ]

@@ -6,5 +6,5 @@ build: [
   [make "cmxs"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "extlib"]]
-depends: ["ocamlfind" "camlp4"]
+remove: ["ocamlfind" "remove" "extlib"]
+depends: ["ocaml" "ocamlfind" "camlp4"]

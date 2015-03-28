@@ -9,12 +9,9 @@ remove: [
   ["./configure" "--prefix" prefix]
   [make "uninstall"]
 ]
-depends: ["ocamlfind"]
-depopts: [
-  "zarith"
-  "mlgmp"
+depends: [
+  "ocaml" {>= "3.12.0"}
+  "ocamlfind"
 ]
-ocaml-version: [>= "3.12.0"]
-patches: [
-  "fix-makefile.diff"
-]
+depopts: ["zarith" "mlgmp"]
+patches: "fix-makefile.diff"

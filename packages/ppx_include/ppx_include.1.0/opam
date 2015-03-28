@@ -7,7 +7,20 @@ license: "MIT"
 tags: "syntax"
 dev-repo: "git://github.com/whitequark/ppx_include.git"
 substs: "pkg/META"
-build: ["ocaml" "pkg/build.ml" "native=%{ocaml-native}%" "native-dynlink=%{ocaml-native-dynlink}%"]
-build-test: ["ocamlbuild" "-classic-display" "-use-ocamlfind" "src_test/test_ppx_include.byte" "--"]
-depends: "ocamlfind" {build}
-available: [ocaml-version >= "4.02.0"]
+build: [
+  "ocaml"
+  "pkg/build.ml"
+  "native=%{ocaml-native}%"
+  "native-dynlink=%{ocaml-native-dynlink}%"
+]
+build-test: [
+  "ocamlbuild"
+  "-classic-display"
+  "-use-ocamlfind"
+  "src_test/test_ppx_include.byte"
+  "--"
+]
+depends: [
+  "ocaml" {>= "4.02.0"}
+  "ocamlfind" {build}
+]

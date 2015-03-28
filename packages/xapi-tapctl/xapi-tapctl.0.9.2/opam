@@ -8,8 +8,4 @@ remove: [
   ["ocamlfind" "remove" "tapctl"]
   [make "uninstall" "BINDIR=%{bin}%"]
 ]
-depends: [
-  "ocamlfind"
-  "xapi-stdext"
-  "xapi-forkexecd"
-] 
+depends: ["ocaml" "ocamlfind" "xapi-stdext" "xapi-forkexecd"]

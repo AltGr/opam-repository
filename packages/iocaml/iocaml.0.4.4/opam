@@ -2,10 +2,11 @@ opam-version: "1.1"
 maintainer: "andy.ray@ujamjar.com"
 homepage: "https://github.com/andrewray/iocamlserver"
 build: [
-  [ "cp" "config.darwin.ml" "config.ml" ] {os = "darwin"}
-  [ make "all" ]
+  ["cp" "config.darwin.ml" "config.ml"] {os = "darwin"}
+  [make "all"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "uuidm"
   "yojson"
@@ -19,4 +20,3 @@ depends: [
   "iocaml-kernel" {= "0.4.4"}
   "iocamljs-kernel" {= "0.4.4"}
 ]
-ocaml-version: [ >= "4.01.0" ]

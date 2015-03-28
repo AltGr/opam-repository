@@ -4,8 +4,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "graphicspdf"]]
-depends: [
-  "ocamlfind"
-  "camlpdf"
-]
+remove: ["ocamlfind" "remove" "graphicspdf"]
+depends: ["ocaml" "ocamlfind" "camlpdf"]

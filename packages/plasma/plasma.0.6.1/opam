@@ -6,6 +6,7 @@ build: [
   ["omake" "install"]
 ]
 depends: [
+  "ocaml" {< "4.01.0"}
   "ocamlfind"
   "ocamlnet" {= "3.6.0"}
   "cryptokit"
@@ -18,4 +19,3 @@ depexts: [
   [["debian"] ["libpq-dev"]]
   [["ubuntu"] ["libpq-dev"]]
 ]
-ocaml-version: [<"4.01.0"]

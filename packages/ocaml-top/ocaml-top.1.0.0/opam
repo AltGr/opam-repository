@@ -3,15 +3,36 @@ maintainer: "contact@ocamlpro.com"
 homepage: "http://www.typerex.org/ocaml-top.html"
 license: "GPL 3"
 build: [
-  ["./configure" "-install-bin" bin "-install-lib" lib "-install-doc" "%{doc}%/ocaml-top" "-install-data" "%{prefix}%/share/ocaml-top"]
+  [
+    "./configure"
+    "-install-bin"
+    bin
+    "-install-lib"
+    lib
+    "-install-doc"
+    "%{doc}%/ocaml-top"
+    "-install-data"
+    "%{prefix}%/share/ocaml-top"
+  ]
   [make]
   [make "install"]
 ]
 remove: [
-  ["./configure" "-install-bin" bin "-install-lib" lib "-install-doc" "%{doc}%/ocaml-top" "-install-data" "%{prefix}%/share/ocaml-top"]
+  [
+    "./configure"
+    "-install-bin"
+    bin
+    "-install-lib"
+    lib
+    "-install-doc"
+    "%{doc}%/ocaml-top"
+    "-install-data"
+    "%{prefix}%/share/ocaml-top"
+  ]
   [make "uninstall"]
 ]
 depends: [
+  "ocaml"
   "ocp-build" {>= "1.99.6-beta"}
   "lablgtk" {>= "2.16.0"}
   "conf-gtksourceview" {= "2"}

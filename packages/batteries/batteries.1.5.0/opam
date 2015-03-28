@@ -10,7 +10,7 @@ remove: [
   ["ocamlfind" "remove" "batteries"]
 ]
 depends: [
+  "ocaml" {<= "4.00.1"}
   "ocamlfind"
   "camomile"
 ]
-ocaml-version: [<="4.00.1"]

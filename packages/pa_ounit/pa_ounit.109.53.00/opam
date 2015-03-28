@@ -4,8 +4,11 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "pa_ounit"]]
-depends: ["camlp4"
-          "ocamlfind"
-          "type_conv" {= "109.53.00"}
-          "ounit"]
+remove: ["ocamlfind" "remove" "pa_ounit"]
+depends: [
+  "ocaml"
+  "camlp4"
+  "ocamlfind"
+  "type_conv" {= "109.53.00"}
+  "ounit"
+]

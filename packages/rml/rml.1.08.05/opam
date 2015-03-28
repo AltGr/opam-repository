@@ -6,5 +6,7 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
-ocaml-version: [<= "4.00.1"]
+remove: [make "uninstall"]
+depends: [
+  "ocaml" {<= "4.00.1"}
+]

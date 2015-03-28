@@ -4,4 +4,4 @@ build: [
   ["ocp-build" "-init"]
   ["ocp-build" "-scan" "ocaml-wget" "owget"]
 ]
-depends: ["ocp-build"]
+depends: ["ocaml" "ocp-build"]

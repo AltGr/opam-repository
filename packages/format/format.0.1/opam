@@ -4,4 +4,4 @@ build: [
   [make]
   [make "install"]
 ]
-depends: ["ocamlfind" "camlp4"]
+depends: ["ocaml" "ocamlfind" "camlp4"]

@@ -9,10 +9,11 @@ build: [
   ["./configure" "--prefix=%{prefix}%" "--%{alcotest:enable}%-tests"]
   [make]
 ]
-build-test: [make "test"]
 install: [make "install"]
+build-test: [make "test"]
 remove: ["ocamlfind" "remove" "mirage-flow"]
 depends: [
+  "ocaml"
   "ocamlfind" {build}
   "mirage-types-lwt"
   "cstruct"

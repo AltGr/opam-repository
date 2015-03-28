@@ -1,23 +1,18 @@
 opam-version: "1"
 maintainer: "zoggy@bat8.org"
-authors: ["Maxence Guesdon"]
+authors: "Maxence Guesdon"
 homepage: "http://zoggy.github.io/genet"
 license: "GNU General Public License version 3"
-doc: ["http://zoggy.github.io/genet/doc.html"]
-tags: [
-  "continuous integration"
-  "test"
-  "execution chains"
-  "rdf"
-  "sparql"
-]
+doc: "http://zoggy.github.io/genet/doc.html"
+tags: ["continuous integration" "test" "execution chains" "rdf" "sparql"]
 build: [
   ["./configure" "--prefix" prefix]
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "genet"]]
+remove: ["ocamlfind" "remove" "genet"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "config-file" {>= "1.1"}
   "lablgtk-extras" {>= "1.2"}
@@ -29,8 +24,7 @@ depends: [
   "ocamlnet" {>= "3.6.5"}
   "ocamldot" {>= "1.0"}
   "rdf" {>= "0.8.0"}
-  "conf-gnomecanvas" {= "2" }
-  "conf-glade" {= "2" }
+  "conf-gnomecanvas" {= "2"}
+  "conf-glade" {= "2"}
 ]
-depopts: ["postgresql"]
-ocaml-version: [>= "4.00.0"]
+depopts: "postgresql"

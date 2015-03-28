@@ -9,20 +9,33 @@ authors: [
 ]
 homepage: "http://biocaml.org"
 build: [
-  ["omake" "configure" "PREFIX=%{prefix}%" "BUILD_TESTS=false" "BUILD_APP=true"]
+  [
+    "omake"
+    "configure"
+    "PREFIX=%{prefix}%"
+    "BUILD_TESTS=false"
+    "BUILD_APP=true"
+  ]
   ["omake" "-j2"]
   ["omake" "install"]
 ]
 build-test: [
-  ["omake" "configure" "PREFIX=%{prefix}%" "BUILD_TESTS=true" "BUILD_APP=false"]
+  [
+    "omake"
+    "configure"
+    "PREFIX=%{prefix}%"
+    "BUILD_TESTS=true"
+    "BUILD_APP=false"
+  ]
   ["omake" "test"]
 ]
 build-doc: [
   ["omake" "doc"]
   ["omake" "install_doc" "INSTALL_DOCDIR=%{doc}%"]
 ]
-remove: [["ocamlfind" "remove" "biocaml"]]
+remove: ["ocamlfind" "remove" "biocaml"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "core" {>= "109.27.00" & <= "109.47.00"}
   "sexplib"

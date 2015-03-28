@@ -4,5 +4,5 @@ build: [
   [make]
   [make "install" "DESTPREF=%{prefix}%"]
 ]
-remove: [["ocamlfind" "remove" "schoca"]]
-depends: ["ocamlfind" "camlp4"]
+remove: ["ocamlfind" "remove" "schoca"]
+depends: ["ocaml" "ocamlfind" "camlp4"]

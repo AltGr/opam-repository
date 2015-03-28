@@ -8,6 +8,9 @@ build: [
   [make "opt"]
   [make "install-findlib"]
 ]
-remove: [[make "uninstall-findlib"]]
-depends: ["ocamlfind" "camlp4"]
-ocaml-version: [>= "3.12.1" & < "4.02.0"]
+remove: [make "uninstall-findlib"]
+depends: [
+  "ocaml" {>= "3.12.1" & < "4.02.0"}
+  "ocamlfind"
+  "camlp4"
+]

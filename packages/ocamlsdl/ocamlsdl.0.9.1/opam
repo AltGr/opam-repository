@@ -1,21 +1,21 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
 build: [
-  ["./configure" "--with-installdir=%{lib}%/ocamlsdl" "--with-lablgldir=%{lib}%/lablgl" {"%{lablgl:installed}%"}]
+  [
+    "./configure"
+    "--with-installdir=%{lib}%/ocamlsdl"
+    "--with-lablgldir=%{lib}%/lablgl" {"%{lablgl:installed}%"}
+  ]
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "sdl"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "sdl"]
+depends: ["ocaml" "ocamlfind"]
 depopts: [
-  "lablgl"
-  "conf-sdl-gfx"
-  "conf-sdl-image"
-  "conf-sdl-mixer"
-  "conf-sdl-ttf"
+  "lablgl" "conf-sdl-gfx" "conf-sdl-image" "conf-sdl-mixer" "conf-sdl-ttf"
 ]
 depexts: [
-   [["debian"] ["libsdl1.2-dev"]]
-   [["ubuntu"] ["libsdl1.2-dev"]]
-   [["osx" "homebrew"] ["sdl"]]
+  [["debian"] ["libsdl1.2-dev"]]
+  [["homebrew" "osx"] ["sdl"]]
+  [["ubuntu"] ["libsdl1.2-dev"]]
 ]

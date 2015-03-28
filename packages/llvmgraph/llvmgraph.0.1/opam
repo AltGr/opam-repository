@@ -1,28 +1,24 @@
 opam-version: "1.2"
-author: "Gabriel Radanne <drupyog@zoho.com>"
 maintainer: "Gabriel Radanne <drupyog@zoho.com>"
+authors: "Gabriel Radanne <drupyog@zoho.com>"
 homepage: "https://github.com/Drup/llvmgraph"
 bug-reports: "https://github.com/Drup/llvmgraph/issues"
-dev-repo: "https://github.com/Drup/llvmgraph.git"
 license: "MIT"
-tags: [ "llvm" "ocamlgraph" ]
-
+tags: ["llvm" "ocamlgraph"]
+dev-repo: "https://github.com/Drup/llvmgraph.git"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
 ]
+install: ["ocaml" "setup.ml" "-install"]
 build-test: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--enable-tests"]
   ["ocaml" "setup.ml" "-test"]
 ]
 build-doc: ["ocaml" "setup.ml" "-doc"]
-
-install: ["ocaml" "setup.ml" "-install"]
-
 remove: ["ocamlfind" "remove" "llvmgraph"]
-
-available: [ocaml-version >= "4.01.0"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind" {build}
   "llvm"
   "ocamlgraph"

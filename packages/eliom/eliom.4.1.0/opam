@@ -1,13 +1,13 @@
 opam-version: "1.2"
-name: "eliom"
-author: "dev@ocsigen.org"
 maintainer: "dev@ocsigen.org"
+authors: "dev@ocsigen.org"
 homepage: "http://ocsigen.org/eliom/"
 bug-reports: "https://github.com/ocsigen/eliom/issues/"
-dev-repo: "https://github.com/ocsigen/eliom.git"
 license: "LGPL-2.1 with OCaml linking exception"
+dev-repo: "https://github.com/ocsigen/eliom.git"
 build: [make]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "deriving" {>= "0.6"}
   "js_of_ocaml" {>= "2.5"}
@@ -18,4 +18,3 @@ depends: [
   "ipaddr" {>= "2.1"}
   "reactiveData"
 ]
-available: [ ocaml-version >= "4.00.0" ]

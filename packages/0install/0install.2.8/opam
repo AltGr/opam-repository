@@ -1,14 +1,21 @@
 opam-version: "1"
 maintainer: "ygrek@autistici.org"
 homepage: "http://0install.net/"
-build: [
-  [make]
+build: [make]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "yojson"
+  "xmlm"
+  "ounit"
+  "react"
+  "lwt" {<= "2.4.6"}
+  "extlib"
+  "ocurl"
+  "sha"
 ]
-patches: [ "gui_gtk_dir.patch" ]
-depends: [ "yojson" "xmlm" "ounit" "react" "lwt" {<= "2.4.6"} "extlib" "ocurl" "sha"]
-depopts: [ "obus" "lablgtk" ]
+depopts: ["obus" "lablgtk"]
 depexts: [
-  [["ubuntu"] ["unzip"]]
   [["debian"] ["unzip"]]
+  [["ubuntu"] ["unzip"]]
 ]
-available: [ ocaml-version >= "4.00.0" ]
+patches: "gui_gtk_dir.patch"

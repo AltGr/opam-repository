@@ -1,5 +1,4 @@
 opam-version: "1"
-ocaml-version: [>= "4.01.0"]
 maintainer: "Spiros Eliopoulos <seliopou@gmail.com>"
 homepage: "https://github.com/frenetic-lang/ocaml-tdk"
 build: [
@@ -7,7 +6,8 @@ build: [
   ["make"]
   ["make" "install"]
 ]
-remove: [["ocamlfind" "remove" "tdk"]]
+remove: ["ocamlfind" "remove" "tdk"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
 ]

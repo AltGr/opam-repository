@@ -6,10 +6,9 @@ build: [
   [make]
   [make "install" "PREFIX=%{prefix}%"]
 ]
-remove: [
-  ["rm" "-f" "%{prefix}%/bin/opam2web"]
-]
+remove: ["rm" "-f" "%{prefix}%/bin/opam2web"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "opam-lib" {>= "1.1.1"}
   "opamfu" {>= "0.1.1"}
@@ -19,4 +18,3 @@ depends: [
   "js_of_ocaml" {>= "1.3"}
   "cmdliner"
 ]
-ocaml-version: [>= "4.00.0"]

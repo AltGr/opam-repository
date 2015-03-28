@@ -1,11 +1,9 @@
 opam-version: "1.2"
-name: "diy"
-version: "5.01"
 maintainer: "Thibault Suzanne <thi.suzanne@gmail.com>"
-authors: "Luc Maranget <Luc.Maranget@inria.fr>, Susmit Sarkar <ss265@st-andrews.ac.uk>, Jade Alglave <j.alglave@ucl.ac.uk >"
+authors:
+  "Luc Maranget <Luc.Maranget@inria.fr>, Susmit Sarkar <ss265@st-andrews.ac.uk>, Jade Alglave <j.alglave@ucl.ac.uk >"
 homepage: "http://diy.inria.fr/"
 license: "LGPL"
-available: ["ocaml-version" >= "3.12"]
 build: [
   ["sed" "-i" "-e" "s#^PREFIX=.*$#PREFIX=%{prefix}%#" "Makefile"]
   [make "-j" jobs]
@@ -22,3 +20,5 @@ remove: [
   ["rm" "-f" "%{prefix}%/bin/dont"]
   ["rm" "-fr" "%{prefix}%/lib/litmus"]
 ]
+depends: "ocaml"
+available: ["ocaml-version" >= "3.12"]

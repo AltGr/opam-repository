@@ -8,9 +8,11 @@ build: [
   [make]
   [make "install" "MANDIR=%{man}%"]
 ]
-depends: "ocamlfind"
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+]
 depopts: "functory"
 conflicts: [
   "functory" {< "0.5"}
 ]
-ocaml-version: [>= "4.00.0"]

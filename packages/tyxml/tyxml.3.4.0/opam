@@ -1,26 +1,27 @@
 opam-version: "1.2"
-
-author: "The ocsigen team"
 maintainer: "dev@ocsigen.org"
+authors: "The ocsigen team"
 homepage: "https://ocsigen.org/tyxml/"
-dev-repo: "https://github.com/ocsigen/tyxml.git"
 bug-reports: "https://github.com/ocsigen/tyxml/issues"
 doc: "https://ocsigen.org/tyxml/manual/"
+dev-repo: "https://github.com/ocsigen/tyxml.git"
 build: [
-  ["ocaml" "setup.ml" "-configure"
-      "--%{camlp4:enable}%-syntax"
-      "--prefix" prefix]
+  [
+    "ocaml"
+    "setup.ml"
+    "-configure"
+    "--%{camlp4:enable}%-syntax"
+    "--prefix"
+    prefix
+  ]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
-remove: [
-  ["ocamlfind" "remove" "tyxml"]
-]
+remove: ["ocamlfind" "remove" "tyxml"]
 depends: [
+  "ocaml"
   "ocamlfind" {build}
   "uutf"
   "base-bytes"
 ]
-depopts: [
-  "camlp4"
-]
+depopts: "camlp4"

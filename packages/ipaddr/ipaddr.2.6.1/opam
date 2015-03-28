@@ -21,6 +21,7 @@ install: [make "install"]
 build-test: [make "test"]
 remove: ["ocamlfind" "remove" "ipaddr"]
 depends: [
+  "ocaml"
   "ocamlfind" {build}
   "base-bytes"
   "sexplib"

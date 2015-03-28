@@ -5,8 +5,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "utop"]]
+remove: ["ocamlfind" "remove" "utop"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "zed"
   "lambda-term"

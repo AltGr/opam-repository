@@ -5,5 +5,5 @@ build: [
   [make "all.opt"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "ulex"]]
-depends: ["ocamlfind" "camlp4"]
+remove: ["ocamlfind" "remove" "ulex"]
+depends: ["ocaml" "ocamlfind" "camlp4"]

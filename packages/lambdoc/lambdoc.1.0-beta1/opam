@@ -1,17 +1,15 @@
 opam-version: "1"
 maintainer: "dario.teixeira@nleyten.com"
-authors: ["Dario Teixeira <dario.teixeira@nleyten.com>"]
+authors: "Dario Teixeira <dario.teixeira@nleyten.com>"
 homepage: "http://lambdoc.forge.ocamlcore.org/"
 license: "GPL-2.0"
-ocaml-version: [>= "4.01.0"]
 build: [
   [make]
   [make "install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "lambdoc"]
-]
+remove: ["ocamlfind" "remove" "lambdoc"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "camlp4"
   "batteries" {>= "2"}
@@ -29,4 +27,3 @@ depends: [
   "bookaml"
   "lwt"
 ]
-

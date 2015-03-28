@@ -2,9 +2,10 @@ opam-version: "1"
 maintainer: "francois.berenger@inria.fr"
 homepage: "http://zeromq.org/"
 license: "LGPL"
-build: [["cc" "test.c" "-lzmq"]]
+build: ["cc" "test.c" "-lzmq"]
+depends: "ocaml"
 depexts: [
   [["debian"] ["libzmq3-dev"]]
+  [["homebrew" "osx"] ["zeromq"]]
   [["ubuntu"] ["libzmq3-dev"]]
-  [["osx" "homebrew"] ["zeromq"]]
 ]

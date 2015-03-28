@@ -1,6 +1,4 @@
 opam-version: "1.2"
-name: "imaplet-lwt"
-version: "0.1.9"
 maintainer: "Gregory Tsipenyuk <gregtsip@gmail.com>"
 authors: "Gregory Tsipenyuk <gregtsip@gmail.com>"
 license: "MIT"
@@ -15,6 +13,7 @@ remove: [
   ["rm" "-f" "%{bin}%/imaplet*"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind" {build}
   "lwt"
   "mirage"
@@ -25,4 +24,3 @@ depends: [
   "tls" {>= "0.3.0"}
   "menhir"
 ]
-ocaml-version: [ >= "4.01.0" ]

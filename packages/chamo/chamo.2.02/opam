@@ -10,11 +10,11 @@ remove: [
   [make "uninstall-lib"]
 ]
 depends: [
+  "ocaml" {>= "4.00.0" & < "4.02.0"}
   "ocamlfind"
   "config-file" {>= "1.1"}
   "lablgtk-extras" {>= "1.2"}
   "lablgtk" {>= "2.16.0" & < "2.18"}
-  "conf-glade" { = "2" }
+  "conf-glade" {= "2"}
   "pcre"
 ]
-ocaml-version: [>= "4.00.0" & < "4.02.0"]

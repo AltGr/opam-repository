@@ -2,7 +2,14 @@ opam-version: "1"
 maintainer: "jonathan.protzenko@inria.fr"
 homepage: "http://protz.github.io/mezzo/"
 license: "GPL-2"
+build: [
+  ["./configure"]
+  [make]
+  [make "install"]
+]
+remove: ["ocamlfind" "remove" "mezzo"]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "yojson"
   "ulex"
@@ -11,15 +18,4 @@ depends: [
   "functory"
   "pprint"
 ]
-patches: [
-  "no-deprecated-fatal-warning.patch"
-]
-build: [
-  ["./configure"]
-  [make]
-  [make "install"]
-]
-remove: [
-  ["ocamlfind" "remove" "mezzo"]
-]
-ocaml-version: [>= "4.00.1"]
+patches: "no-deprecated-fatal-warning.patch"

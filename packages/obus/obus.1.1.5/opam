@@ -5,8 +5,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "obus"]]
+remove: ["ocamlfind" "remove" "obus"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "lwt"
   "react" {< "1.0.0"}

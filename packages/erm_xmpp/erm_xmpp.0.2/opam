@@ -7,12 +7,13 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-test: [["ocaml" "setup.ml" "-test"]]
-remove: [["ocamlfind" "remove" "erm_xmpp"]]
+build-test: ["ocaml" "setup.ml" "-test"]
+remove: ["ocamlfind" "remove" "erm_xmpp"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "erm_xml" {>= "0.3"}
   "cryptokit" {>= "1.5"}
   "camlp4"
 ]
-patches: ["disable_tests.patch"]
+patches: "disable_tests.patch"

@@ -5,8 +5,9 @@ build: [
   [make "all"]
   [make "install-lib"]
 ]
-remove: [[make "uninstall-lib"]]
+remove: [make "uninstall-lib"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "gtktop" {>= "2.0"}
   "lablgtk" {>= "2.16.0"}

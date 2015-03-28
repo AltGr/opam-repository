@@ -4,8 +4,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "type_conv"]]
-depends: ["camlp4"
-          "ocamlfind"]
-patches: ["disable_warn_error.patch"]
-ocaml-version: [>= "4.00.0"]
+remove: ["ocamlfind" "remove" "type_conv"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "camlp4"
+  "ocamlfind"
+]
+patches: "disable_warn_error.patch"

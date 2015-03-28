@@ -5,6 +5,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "tophide"]]
-depends: ["ocamlfind"]
-ocaml-version: [> "4.00" & < "4.02"]
+remove: ["ocamlfind" "remove" "tophide"]
+depends: [
+  "ocaml" {> "4.00" & < "4.02"}
+  "ocamlfind"
+]

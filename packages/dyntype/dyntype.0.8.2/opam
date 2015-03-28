@@ -1,17 +1,14 @@
 opam-version: "1"
 maintainer: "anil@recoil.org"
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
+tags: ["org:mirage" "org:xapi-project"]
 build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "dyntype"]]
+remove: ["ocamlfind" "remove" "dyntype"]
 depends: [
+  "ocaml" {= "3.12.1"}
   "ocamlfind"
   "type_conv" {= "108.00.02"}
   "camlp4"
 ]
-ocaml-version: [= "3.12.1"]

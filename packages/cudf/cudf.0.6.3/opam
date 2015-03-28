@@ -1,11 +1,8 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
-substs: ["cudf.ocp"]
+substs: "cudf.ocp"
 build: [
   ["ocp-build" "-init"]
   ["ocp-build" "-scan" "cudf" "-v" "0"]
 ]
-depends: [
-  "ocp-build"
-  ("extlib" | "extlib-compat")
-]
+depends: ["ocaml" "ocp-build" ("extlib" | "extlib-compat")]

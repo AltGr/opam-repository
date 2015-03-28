@@ -4,11 +4,13 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "pa_test"]]
-depends: ["camlp4"
-          "ocamlfind"
-          "core_kernel" {>= "109.53.00" & <= "109.60.00"}
-          "type_conv" {>= "109.53.00" & <= "109.60.01"}
-          "sexplib" {>= "109.53.00" & <= "109.60.00"}
-          "comparelib" {>= "109.27.00" & <= "109.60.00"}]
-ocaml-version: [>= "4.00.0"]
+remove: ["ocamlfind" "remove" "pa_test"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "camlp4"
+  "ocamlfind"
+  "core_kernel" {>= "109.53.00" & <= "109.60.00"}
+  "type_conv" {>= "109.53.00" & <= "109.60.01"}
+  "sexplib" {>= "109.53.00" & <= "109.60.00"}
+  "comparelib" {>= "109.27.00" & <= "109.60.00"}
+]

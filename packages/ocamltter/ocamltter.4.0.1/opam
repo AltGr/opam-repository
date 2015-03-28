@@ -9,14 +9,14 @@ remove: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-uninstall"]
 ]
-ocaml-version: [>= "4.02.1"]
 depends: [
+  "ocaml" {>= "4.02.1"}
   "ocamlfind"
   "omake"
   "cryptokit"
-  "ocurl" {>="0.5.3"}
-  "spotlib" {>="2.5.1"}
-  "orakuda" {>="2.0.0"}
-  "ppx_meta_conv" {>="2.0.0"}
-  "ppx_monadic" {>="1.0.2"}
+  "ocurl" {>= "0.5.3"}
+  "spotlib" {>= "2.5.1"}
+  "orakuda" {>= "2.0.0"}
+  "ppx_meta_conv" {>= "2.0.0"}
+  "ppx_monadic" {>= "1.0.2"}
 ]

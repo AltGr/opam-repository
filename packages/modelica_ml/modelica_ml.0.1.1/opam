@@ -13,6 +13,7 @@ install: ["ocaml" "setup.ml" "-install"]
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "modelica_ml"]
 depends: [
+  "ocaml" {>= "4.02.1"}
   "ANSITerminal"
   "batteries"
   "menhir"
@@ -21,4 +22,3 @@ depends: [
   "sedlex"
 ]
 depopts: "ounit"
-available: [ocaml-version >= "4.02.1"]

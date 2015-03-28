@@ -5,10 +5,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "samplerate"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "samplerate"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
   [["debian"] ["libsamplerate0-dev"]]
+  [["homebrew" "osx"] ["libsamplerate"]]
   [["ubuntu"] ["libsamplerate0-dev"]]
-  [["osx" "homebrew"] ["libsamplerate"]]
 ]

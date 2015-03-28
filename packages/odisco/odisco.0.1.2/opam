@@ -5,12 +5,12 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "odisco"]]
+remove: ["ocamlfind" "remove" "odisco"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "sonet"
   "atdgen"
   "biniou"
   "camlzip"
 ]
-ocaml-version: [>= "4.00.0"]

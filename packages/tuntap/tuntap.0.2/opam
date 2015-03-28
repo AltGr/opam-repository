@@ -1,12 +1,9 @@
 opam-version: "1"
 maintainer: "vb@luminar.eu.org"
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
+tags: ["org:mirage" "org:xapi-project"]
 build: [
   [make "PREFIX=%{prefix}%"]
   [make "PREFIX=%{prefix}%" "install"]
 ]
-remove: [["ocamlfind" "remove" "tuntap"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "tuntap"]
+depends: ["ocaml" "ocamlfind"]

@@ -4,9 +4,9 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {< "4.02.0"}
   "ocamlfind"
   "xmlm"
 ]
-ocaml-version: [< "4.02.0"]

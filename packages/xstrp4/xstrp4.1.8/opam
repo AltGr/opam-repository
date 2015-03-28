@@ -5,5 +5,5 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "xstrp4"]]
-depends: ["ocamlfind" "camlp4"]
+remove: ["ocamlfind" "remove" "xstrp4"]
+depends: ["ocaml" "ocamlfind" "camlp4"]

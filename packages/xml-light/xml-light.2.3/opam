@@ -6,4 +6,4 @@ build: [
   [make "install_ocamlfind"]
 ]
 remove: ["ocamlfind" "remove" "xml-light"]
-depends: ["ocamlfind"]
+depends: ["ocaml" "ocamlfind"]

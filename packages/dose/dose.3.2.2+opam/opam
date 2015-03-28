@@ -13,19 +13,23 @@ authors: [
 homepage: "http://www.mancoosi.org/software/"
 license: "LGPL-v3+ with OCaml linking exception"
 build: [
- ["./configure" "--with-ocamlgraph" "--bindir=%{bin}%"]
- [make "TARGETS="]
- [make "install"]
+  ["./configure" "--with-ocamlgraph" "--bindir=%{bin}%"]
+  [make "TARGETS="]
+  [make "install"]
 ]
 remove: [
   ["ocamlfind" "remove" "dose3"]
-  ["rm" "-f"
-      "%{bin}%/distcheck"
-      "%{bin}%/debcheck"
-      "%{bin}%/rpmcheck"
-      "%{bin}%/eclipsecheck"]
+  [
+    "rm"
+    "-f"
+    "%{bin}%/distcheck"
+    "%{bin}%/debcheck"
+    "%{bin}%/rpmcheck"
+    "%{bin}%/eclipsecheck"
+  ]
 ]
 depends: [
+  "ocaml"
   "ocamlgraph" {= "1.8.5"}
   "cudf" {>= "0.7"}
   ("extlib" | "extlib-compat")

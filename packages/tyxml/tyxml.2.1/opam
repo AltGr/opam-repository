@@ -4,11 +4,11 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "tyxml"]]
+remove: ["ocamlfind" "remove" "tyxml"]
 depends: [
+  "ocaml" {>= "3.12.1"}
   "ocamlfind"
   "ocamlnet" {= "3.6.0"}
   "pcre"
   "camlp4"
 ]
-ocaml-version: [>= "3.12.1"]

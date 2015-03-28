@@ -3,9 +3,11 @@ maintainer: "anil@recoil.org"
 tags: ["org:mirage" "org:xapi-project"]
 build: [make "install-types"]
 remove: ["ocamlfind" "remove" "mirage-types"]
-depends: "ocamlfind"
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+]
 depopts: ["lwt" "cstruct" "io-page" "ipaddr"]
 conflicts: [
   "ipaddr" {<= "0.2.0"}
 ]
-ocaml-version: [>= "4.00.0"]

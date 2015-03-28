@@ -4,10 +4,10 @@ build: [
   [make]
   [make "install-findlib"]
 ]
-remove: [["ocamlfind" "remove" "gsl"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "gsl"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
   [["debian"] ["gawk" "libgsl0-dev"]]
+  [["homebrew" "osx"] ["gawk" "gsl"]]
   [["ubuntu"] ["gawk" "libgsl0-dev"]]
-  [["osx" "homebrew"] ["gawk" "gsl"]]
 ]

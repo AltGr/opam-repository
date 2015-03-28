@@ -6,11 +6,11 @@ build: [
   [make]
   [make "install" "BINDIR=%{bin}%"]
 ]
-remove: [["ocamlfind" "remove" "js_of_ocaml"]]
+remove: ["ocamlfind" "remove" "js_of_ocaml"]
 depends: [
+  "ocaml" {<= "4.00.1"}
   "ocamlfind"
   "deriving-ocsigen"
   "lwt"
   "camlp4"
 ]
-ocaml-version: [<= "4.00.1"]

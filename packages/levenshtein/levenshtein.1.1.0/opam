@@ -9,9 +9,9 @@ remove: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-uninstall"]
 ]
-depends: [ 
-  "ocamlfind" 
+depends: [
+  "ocaml" {>= "4.02.1"}
+  "ocamlfind"
   "omake"
-  "ppx_test" {>="1.0.1"}
+  "ppx_test" {>= "1.0.1"}
 ]
-ocaml-version: [>= "4.02.1"]

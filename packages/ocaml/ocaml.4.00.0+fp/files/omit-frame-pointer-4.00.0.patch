@@ -1,0 +1,683 @@
+diff -r -p ocaml-4.00.0/asmcomp/amd64/emit.mlp ocaml-4.00.0-with-fp/asmcomp/amd64/emit.mlp
+*** ocaml-4.00.0/asmcomp/amd64/emit.mlp	2012-07-09 10:35:23.000000000 +0200
+--- ocaml-4.00.0-with-fp/asmcomp/amd64/emit.mlp	2012-08-01 16:21:35.090711675 +0200
+*************** open Emitaux
+*** 26,31 ****
+--- 26,33 ----
+  let macosx = (Config.system = "macosx")
+  let mingw64 = (Config.system = "mingw64")
+  
++ let fp() = !Clflags.no_omit_frame_pointer
++ 
+  (* Tradeoff between code size and code speed *)
+  
+  let fastcode_flag = ref true
+*************** let stack_offset = ref 0
+*** 35,46 ****
+  (* Layout of the stack frame *)
+  
+  let frame_required () =
+!   !contains_calls || num_stack_slots.(0) > 0 || num_stack_slots.(1) > 0
+  
+  let frame_size () =                     (* includes return address *)
+    if frame_required() then begin
+      let sz =
+!       (!stack_offset + 8 * (num_stack_slots.(0) + num_stack_slots.(1)) + 8)
+      in Misc.align sz 16
+    end else
+      !stack_offset + 8
+--- 37,49 ----
+  (* Layout of the stack frame *)
+  
+  let frame_required () =
+!   fp() || !contains_calls || num_stack_slots.(0) > 0 || num_stack_slots.(1) > 0
+  
+  let frame_size () =                     (* includes return address *)
+    if frame_required() then begin
+      let sz =
+!       (!stack_offset + 8 * (num_stack_slots.(0) + num_stack_slots.(1)) + 8
+!       + (if fp() then 8 else 0) )
+      in Misc.align sz 16
+    end else
+      !stack_offset + 8
+*************** let emit_reg = function
+*** 110,122 ****
+  
+  let reg_low_8_name =
+    [| "%al"; "%bl"; "%dil"; "%sil"; "%dl"; "%cl"; "%r8b"; "%r9b";
+!      "%r10b"; "%r11b"; "%bpl"; "%r12b"; "%r13b" |]
+  let reg_low_16_name =
+    [| "%ax"; "%bx"; "%di"; "%si"; "%dx"; "%cx"; "%r8w"; "%r9w";
+!      "%r10w"; "%r11w"; "%bp"; "%r12w"; "%r13w" |]
+  let reg_low_32_name =
+    [| "%eax"; "%ebx"; "%edi"; "%esi"; "%edx"; "%ecx"; "%r8d"; "%r9d";
+!      "%r10d"; "%r11d"; "%ebp"; "%r12d"; "%r13d" |]
+  
+  let emit_subreg tbl r =
+    match r.loc with
+--- 113,125 ----
+  
+  let reg_low_8_name =
+    [| "%al"; "%bl"; "%dil"; "%sil"; "%dl"; "%cl"; "%r8b"; "%r9b";
+!      "%r10b"; "%r11b"; "%r12b"; "%r13b"; "%bpl" |]
+  let reg_low_16_name =
+    [| "%ax"; "%bx"; "%di"; "%si"; "%dx"; "%cx"; "%r8w"; "%r9w";
+!      "%r10w"; "%r11w"; "%r12w"; "%r13w"; "%bp" |]
+  let reg_low_32_name =
+    [| "%eax"; "%ebx"; "%edi"; "%esi"; "%edx"; "%ecx"; "%r8d"; "%r9d";
+!      "%r10d"; "%r11d"; "%r12d"; "%r13d"; "%ebp" |]
+  
+  let emit_subreg tbl r =
+    match r.loc with
+*************** let emit_float_test cmp neg arg lbl =
+*** 319,327 ****
+  
+  let output_epilogue f =
+    if frame_required() then begin
+!     let n = frame_size() - 8 in
+      `	addq	${emit_int n}, %rsp\n`;
+      cfi_adjust_cfa_offset (-n);
+      f ();
+      (* reset CFA back cause function body may continue *)
+      cfi_adjust_cfa_offset n
+--- 322,333 ----
+  
+  let output_epilogue f =
+    if frame_required() then begin
+!     let n = frame_size() - 8 - (if fp() then 8 else 0) in
+      `	addq	${emit_int n}, %rsp\n`;
+      cfi_adjust_cfa_offset (-n);
++     if fp() then begin
++        `	popq	%rbp\n`
++     end;
+      f ();
+      (* reset CFA back cause function body may continue *)
+      cfi_adjust_cfa_offset n
+*************** let emit_profile () =
+*** 674,680 ****
+           We need to preserve r10 and r11 ourselves, since OCaml can
+           use them for argument passing. *)
+        `	pushq	%r10\n`;
+!       `	movq	%rsp, %rbp\n`;
+        `	pushq	%r11\n`;
+        `	{emit_call "mcount"}\n`;
+        `	popq	%r11\n`;
+--- 680,686 ----
+           We need to preserve r10 and r11 ourselves, since OCaml can
+           use them for argument passing. *)
+        `	pushq	%r10\n`;
+!       `	movq	%rsp, %rbp\n`; (* TODO *)
+        `	pushq	%r11\n`;
+        `	{emit_call "mcount"}\n`;
+        `	popq	%r11\n`;
+*************** let fundecl fundecl =
+*** 705,713 ****
+    `{emit_symbol fundecl.fun_name}:\n`;
+    emit_debug_info fundecl.fun_dbg;
+    cfi_startproc ();
+    if !Clflags.gprofile then emit_profile();
+    if frame_required() then begin
+!     let n = frame_size() - 8 in
+      `	subq	${emit_int n}, %rsp\n`;
+      cfi_adjust_cfa_offset n;
+    end;
+--- 711,724 ----
+    `{emit_symbol fundecl.fun_name}:\n`;
+    emit_debug_info fundecl.fun_dbg;
+    cfi_startproc ();
++   if fp() then begin
++        `	pushq	%rbp\n`;
++        cfi_adjust_cfa_offset 8;
++        `	movq	%rsp, %rbp\n`;
++   end;
+    if !Clflags.gprofile then emit_profile();
+    if frame_required() then begin
+!     let n = frame_size() - 8 - (if fp() then 8 else 0) in
+      `	subq	${emit_int n}, %rsp\n`;
+      cfi_adjust_cfa_offset n;
+    end;
+diff -r -p ocaml-4.00.0/asmcomp/amd64/proc.ml ocaml-4.00.0-with-fp/asmcomp/amd64/proc.ml
+*** ocaml-4.00.0/asmcomp/amd64/proc.ml	2012-02-10 17:15:24.000000000 +0100
+--- ocaml-4.00.0-with-fp/asmcomp/amd64/proc.ml	2012-08-01 14:56:56.506763475 +0200
+*************** let masm =
+*** 47,55 ****
+      r9          7
+      r10         8
+      r11         9
+!     rbp         10
+!     r12         11
+!     r13         12
+      r14         trap pointer
+      r15         allocation pointer
+  
+--- 47,55 ----
+      r9          7
+      r10         8
+      r11         9
+!     r12         10
+!     r13         11
+!     rbp         12
+      r14         trap pointer
+      r15         allocation pointer
+  
+*************** let int_reg_name =
+*** 76,85 ****
+    match Config.ccomp_type with
+    | "msvc" ->
+        [| "rax"; "rbx"; "rdi"; "rsi"; "rdx"; "rcx"; "r8"; "r9";
+!          "r10"; "r11"; "rbp"; "r12"; "r13" |]
+    | _ ->
+        [| "%rax"; "%rbx"; "%rdi"; "%rsi"; "%rdx"; "%rcx"; "%r8"; "%r9";
+!          "%r10"; "%r11"; "%rbp"; "%r12"; "%r13" |]
+  
+  let float_reg_name =
+    match Config.ccomp_type with
+--- 76,85 ----
+    match Config.ccomp_type with
+    | "msvc" ->
+        [| "rax"; "rbx"; "rdi"; "rsi"; "rdx"; "rcx"; "r8"; "r9";
+!          "r10"; "r11"; "r12"; "r13"; "rbp" |]
+    | _ ->
+        [| "%rax"; "%rbx"; "%rdi"; "%rsi"; "%rdx"; "%rcx"; "%r8"; "%r9";
+!          "%r10"; "%r11"; "%r12"; "%r13"; "%rbp" |]
+  
+  let float_reg_name =
+    match Config.ccomp_type with
+*************** let phys_reg n =
+*** 132,137 ****
+--- 132,138 ----
+  let rax = phys_reg 0
+  let rcx = phys_reg 5
+  let rdx = phys_reg 4
++ let rbp = phys_reg 12
+  let rxmm15 = phys_reg 115
+  
+  let stack_slot slot ty =
+*************** let loc_results res =
+*** 188,194 ****
+       return value in rax or xmm0.
+    C calling conventions under Win64:
+       first integer args in rcx, rdx, r8, r9
+!      first float args in xmm0 ... xmm3     
+       each integer arg consumes a float reg, and conversely
+       remaining args on stack
+       always 32 bytes reserved at bottom of stack.
+--- 189,195 ----
+       return value in rax or xmm0.
+    C calling conventions under Win64:
+       first integer args in rcx, rdx, r8, r9
+!      first float args in xmm0 ... xmm3
+       each integer arg consumes a float reg, and conversely
+       remaining args on stack
+       always 32 bytes reserved at bottom of stack.
+*************** let destroyed_at_oper = function
+*** 258,280 ****
+    | Iop(Ialloc _ | Iintop(Icomp _) | Iintop_imm((Idiv|Imod|Icomp _), _))
+          -> [| rax |]
+    | Iswitch(_, _) -> [| rax; rdx |]
+!   | _ -> [||]
+  
+  let destroyed_at_raise = all_phys_regs
+  
+  (* Maximal register pressure *)
+  
+  let safe_register_pressure = function
+!     Iextcall(_,_) -> if win64 then 8 else 0
+!   | _ -> 11
+  
+  let max_register_pressure = function
+!     Iextcall(_, _) -> if win64 then [| 8; 10 |] else [| 4; 0 |]
+!   | Iintop(Idiv | Imod) -> [| 11; 16 |]
+!   | Ialloc _ | Iintop(Icomp _) | Iintop_imm((Idiv|Imod|Icomp _), _)
+!         -> [| 12; 16 |]
+!   | Istore(Single, _) -> [| 13; 15 |]
+!   | _ -> [| 13; 16 |]
+  
+  (* Layout of the stack frame *)
+  
+--- 259,294 ----
+    | Iop(Ialloc _ | Iintop(Icomp _) | Iintop_imm((Idiv|Imod|Icomp _), _))
+          -> [| rax |]
+    | Iswitch(_, _) -> [| rax; rdx |]
+!   | _ ->
+!     if !Clflags.no_omit_frame_pointer then
+! (* prevent any use of the frame pointer ! *)
+!       [| rbp |]
+!     else
+!       [||]
+  
+  let destroyed_at_raise = all_phys_regs
+  
+  (* Maximal register pressure *)
+  
++ let fp() = !Clflags.no_omit_frame_pointer
++ 
+  let safe_register_pressure = function
+!     Iextcall(_,_) -> if win64 then if fp() then 7 else 8 else 0
+!   | _ -> if fp() then 10 else 11
+  
+  let max_register_pressure = function
+!     Iextcall(_, _) ->
+!       if win64 then
+!         if fp() then [| 7; 10 |]  else [| 8; 10 |]
+!         else
+!         if fp() then [| 3; 0 |] else  [| 4; 0 |]
+!   | Iintop(Idiv | Imod) ->
+!     if fp() then [| 10; 16 |] else [| 11; 16 |]
+!   | Ialloc _ | Iintop(Icomp _) | Iintop_imm((Idiv|Imod|Icomp _), _) ->
+!     if fp() then [| 11; 16 |] else [| 12; 16 |]
+!   | Istore(Single, _) ->
+!     if fp() then [| 12; 15 |] else [| 13; 15 |]
+!   | _ -> if fp() then [| 12; 16 |] else [| 13; 16 |]
+  
+  (* Layout of the stack frame *)
+  
+*************** let assemble_file infile outfile =
+*** 291,293 ****
+--- 305,313 ----
+    else
+      Ccomp.command (Config.asm ^ " -o " ^
+                     Filename.quote outfile ^ " " ^ Filename.quote infile)
++ 
++ let init () =
++   if !Clflags.no_omit_frame_pointer then begin
++     num_available_registers.(0) <- 12
++   end else
++     num_available_registers.(0) <- 13
+diff -r -p ocaml-4.00.0/asmcomp/arm/proc.ml ocaml-4.00.0-with-fp/asmcomp/arm/proc.ml
+*** ocaml-4.00.0/asmcomp/arm/proc.ml	2012-02-05 09:47:16.000000000 +0100
+--- ocaml-4.00.0-with-fp/asmcomp/arm/proc.ml	2012-08-01 11:38:05.740685048 +0200
+*************** let contains_calls = ref false
+*** 228,230 ****
+--- 228,233 ----
+  let assemble_file infile outfile =
+    Ccomp.command (Config.asm ^ " -o " ^
+                   Filename.quote outfile ^ " " ^ Filename.quote infile)
++ 
++ 
++ let init () = ()
+diff -r -p ocaml-4.00.0/asmcomp/asmgen.ml ocaml-4.00.0-with-fp/asmcomp/asmgen.ml
+*** ocaml-4.00.0/asmcomp/asmgen.ml	2012-03-07 18:50:17.000000000 +0100
+--- ocaml-4.00.0-with-fp/asmcomp/asmgen.ml	2012-08-01 11:36:54.064685779 +0200
+*************** let rec regalloc ppf round fd =
+*** 56,61 ****
+--- 56,62 ----
+  let (++) x f = f x
+  
+  let compile_fundecl (ppf : formatter) fd_cmm =
++   Proc.init ();
+    Reg.reset();
+    fd_cmm
+    ++ Selection.fundecl
+diff -r -p ocaml-4.00.0/asmcomp/i386/proc.ml ocaml-4.00.0-with-fp/asmcomp/i386/proc.ml
+*** ocaml-4.00.0/asmcomp/i386/proc.ml	2011-12-16 18:02:48.000000000 +0100
+--- ocaml-4.00.0-with-fp/asmcomp/i386/proc.ml	2012-08-01 11:38:18.652684916 +0200
+*************** let assemble_file infile outfile =
+*** 203,205 ****
+--- 203,207 ----
+  
+  open Clflags;;
+  open Config;;
++ 
++ let init () = ()
+diff -r -p ocaml-4.00.0/asmcomp/power/proc.ml ocaml-4.00.0-with-fp/asmcomp/power/proc.ml
+*** ocaml-4.00.0/asmcomp/power/proc.ml	2011-07-27 16:17:02.000000000 +0200
+--- ocaml-4.00.0-with-fp/asmcomp/power/proc.ml	2012-08-01 11:39:12.528684367 +0200
+*************** let assemble_file infile outfile =
+*** 239,241 ****
+--- 239,243 ----
+  
+  open Clflags;;
+  open Config;;
++ 
++ let init () = ()
+diff -r -p ocaml-4.00.0/asmcomp/proc.mli ocaml-4.00.0-with-fp/asmcomp/proc.mli
+*** ocaml-4.00.0/asmcomp/proc.mli	2011-07-27 16:17:02.000000000 +0200
+--- ocaml-4.00.0-with-fp/asmcomp/proc.mli	2012-08-01 11:37:36.768685342 +0200
+*************** val contains_calls: bool ref
+*** 48,50 ****
+--- 48,53 ----
+  
+  (* Calling the assembler *)
+  val assemble_file: string -> string -> int
++ 
++ (* Called before translating a fundecl. *)
++ val init : unit -> unit
+diff -r -p ocaml-4.00.0/asmcomp/sparc/proc.ml ocaml-4.00.0-with-fp/asmcomp/sparc/proc.ml
+*** ocaml-4.00.0/asmcomp/sparc/proc.ml	2011-07-27 16:17:02.000000000 +0200
+--- ocaml-4.00.0-with-fp/asmcomp/sparc/proc.ml	2012-08-01 11:38:49.480684602 +0200
+*************** let assemble_file infile outfile =
+*** 213,215 ****
+--- 213,217 ----
+    end in
+    Ccomp.command (Config.asm ^ asflags ^
+                   Filename.quote outfile ^ " " ^ Filename.quote infile)
++ 
++ let init () = ()
+diff -r -p ocaml-4.00.0/asmrun/amd64.S ocaml-4.00.0-with-fp/asmrun/amd64.S
+*** ocaml-4.00.0/asmrun/amd64.S	2012-07-09 10:35:23.000000000 +0200
+--- ocaml-4.00.0-with-fp/asmrun/amd64.S	2012-08-13 09:56:56.265149703 +0200
+***************
+*** 75,80 ****
+--- 75,86 ----
+  #define CFI_ADJUST(n)
+  #endif
+  
++ #define ENTER_FUNCTION \
++         pushq   %rbp          ; \
++         movq    %rsp, %rbp
++ #define LEAVE_FUNCTION \
++         popq    %rbp
++ 
+  #if defined(__PIC__) && !defined(SYS_mingw64)
+  
+  /* Position-independent operations on global variables. */
+***************
+*** 234,239 ****
+--- 240,247 ----
+  
+          .globl  G(caml_system__code_begin)
+  G(caml_system__code_begin):
++         ret  /* just one instruction, so that debuggers don't display
++         caml_system__code_begin instead of caml_call_gc */
+  
+  /* Allocation */
+  
+*************** LBL(caml_call_gc):
+*** 249,257 ****
+          addq    $32768, %rsp
+  #endif
+      /* Build array of registers, save it into caml_gc_regs */
+          pushq   %r13
+          pushq   %r12
+-         pushq   %rbp
+          pushq   %r11
+          pushq   %r10
+          pushq   %r9
+--- 257,265 ----
+          addq    $32768, %rsp
+  #endif
+      /* Build array of registers, save it into caml_gc_regs */
++         ENTER_FUNCTION /* push %rbp too ! */
+          pushq   %r13
+          pushq   %r12
+          pushq   %r11
+          pushq   %r10
+          pushq   %r9
+*************** LBL(caml_call_gc):
+*** 320,328 ****
+          popq    %r9
+          popq    %r10
+          popq    %r11
+-         popq    %rbp
+          popq    %r12
+          popq    %r13
+          CFI_ADJUST(-232)
+      /* Return to caller */
+          ret
+--- 328,336 ----
+          popq    %r9
+          popq    %r10
+          popq    %r11
+          popq    %r12
+          popq    %r13
++         LEAVE_FUNCTION
+          CFI_ADJUST(-232)
+      /* Return to caller */
+          ret
+*************** LBL(caml_alloc1):
+*** 336,344 ****
+--- 344,354 ----
+          ret
+  LBL(100):
+          RECORD_STACK_FRAME(0)
++         ENTER_FUNCTION
+  	subq	$8, %rsp
+          call    LBL(caml_call_gc)
+  	addq	$8, %rsp
++         LEAVE_FUNCTION
+          jmp     LBL(caml_alloc1)
+  
+  FUNCTION(G(caml_alloc2))
+*************** LBL(caml_alloc2):
+*** 349,357 ****
+--- 359,369 ----
+          ret
+  LBL(101):
+          RECORD_STACK_FRAME(0)
++         ENTER_FUNCTION
+  	subq	$8, %rsp
+          call    LBL(caml_call_gc)
+  	addq	$8, %rsp
++         LEAVE_FUNCTION
+          jmp     LBL(caml_alloc2)
+  
+  FUNCTION(G(caml_alloc3))
+*************** LBL(caml_alloc3):
+*** 362,370 ****
+--- 374,384 ----
+          ret
+  LBL(102):
+          RECORD_STACK_FRAME(0)
++         ENTER_FUNCTION
+  	subq	$8, %rsp
+          call    LBL(caml_call_gc)
+  	addq	$8, %rsp
++         LEAVE_FUNCTION
+          jmp     LBL(caml_alloc3)
+  
+  FUNCTION(G(caml_allocN))
+*************** LBL(caml_allocN):
+*** 377,383 ****
+--- 391,399 ----
+          ret
+  LBL(103):
+          RECORD_STACK_FRAME(8)
++         ENTER_FUNCTION
+          call    LBL(caml_call_gc)
++         LEAVE_FUNCTION
+          popq    %rax                      /* recover desired size */
+          jmp     LBL(caml_allocN)
+  
+*************** FUNCTION(G(caml_raise_exn))
+*** 481,490 ****
+          popq    %r14
+          ret
+  LBL(110):
+          movq    %rax, %r12            /* Save exception bucket */
+          movq    %rax, C_ARG_1         /* arg 1: exception bucket */
+!         movq    0(%rsp), C_ARG_2      /* arg 2: pc of raise */
+!         leaq    8(%rsp), C_ARG_3      /* arg 3: sp of raise */
+          movq    %r14, C_ARG_4         /* arg 4: sp of handler */
+  	PREPARE_FOR_C_CALL            /* no need to cleanup after */
+          call    GCALL(caml_stash_backtrace)
+--- 497,507 ----
+          popq    %r14
+          ret
+  LBL(110):
++         ENTER_FUNCTION
+          movq    %rax, %r12            /* Save exception bucket */
+          movq    %rax, C_ARG_1         /* arg 1: exception bucket */
+!         movq    8(%rsp), C_ARG_2      /* arg 2: pc of raise */
+!         leaq    16(%rsp), C_ARG_3      /* arg 3: sp of raise */
+          movq    %r14, C_ARG_4         /* arg 4: sp of handler */
+  	PREPARE_FOR_C_CALL            /* no need to cleanup after */
+          call    GCALL(caml_stash_backtrace)
+*************** FUNCTION(G(caml_raise_exception))
+*** 504,509 ****
+--- 521,527 ----
+          LOAD_VAR(caml_young_ptr, %r15) /* Reload alloc ptr */
+          ret
+  LBL(111):
++         ENTER_FUNCTION
+          movq    C_ARG_1, %r12            /* Save exception bucket */
+                                        /* arg 1: exception bucket */
+  	LOAD_VAR(caml_last_return_address,C_ARG_2)   /* arg 2: pc of raise */
+diff -r -p ocaml-4.00.0/asmrun/Makefile ocaml-4.00.0-with-fp/asmrun/Makefile
+*** ocaml-4.00.0/asmrun/Makefile	2012-05-24 18:17:19.000000000 +0200
+--- ocaml-4.00.0-with-fp/asmrun/Makefile	2012-08-01 15:06:07.146757860 +0200
+*************** include ../config/Makefile
+*** 18,24 ****
+  CC=$(NATIVECC)
+  FLAGS=-I../byterun -DCAML_NAME_SPACE -DNATIVE_CODE \
+        -DTARGET_$(ARCH) -DSYS_$(SYSTEM) $(IFLEXDIR)
+! CFLAGS=$(FLAGS) -O $(NATIVECCCOMPOPTS)
+  DFLAGS=$(FLAGS) -g -DDEBUG $(NATIVECCCOMPOPTS)
+  PFLAGS=$(FLAGS) -pg -O -DPROFILING $(NATIVECCPROFOPTS)
+  
+--- 18,24 ----
+  CC=$(NATIVECC)
+  FLAGS=-I../byterun -DCAML_NAME_SPACE -DNATIVE_CODE \
+        -DTARGET_$(ARCH) -DSYS_$(SYSTEM) $(IFLEXDIR)
+! CFLAGS=$(FLAGS) -g -O $(NATIVECCCOMPOPTS)
+  DFLAGS=$(FLAGS) -g -DDEBUG $(NATIVECCCOMPOPTS)
+  PFLAGS=$(FLAGS) -pg -O -DPROFILING $(NATIVECCPROFOPTS)
+  
+diff -r -p ocaml-4.00.0/driver/main_args.ml ocaml-4.00.0-with-fp/driver/main_args.ml
+*** ocaml-4.00.0/driver/main_args.ml	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.0-with-fp/driver/main_args.ml	2012-08-01 14:38:29.042774772 +0200
+*************** let mk_compact f =
+*** 48,53 ****
+--- 48,56 ----
+    "-compact", Arg.Unit f, " Optimize code size rather than speed"
+  ;;
+  
++ let mk_omit_frame_pointer f =
++   "-fomit-frame-pointer", Arg.Unit f, " Don't optimize away frame pointer"
++ 
+  let mk_config f =
+    "-config", Arg.Unit f, " Print configuration values and exit"
+  ;;
+*************** module type Optcomp_options = sig
+*** 495,500 ****
+--- 498,504 ----
+    val _cclib : string -> unit
+    val _ccopt : string -> unit
+    val _compact : unit -> unit
++   val _omit_frame_pointer : unit -> unit
+    val _config : unit -> unit
+    val _for_pack : string -> unit
+    val _g : unit -> unit
+*************** end;;
+*** 559,564 ****
+--- 563,569 ----
+  module type Opttop_options = sig
+    val _absname : unit -> unit
+    val _compact : unit -> unit
++   val _omit_frame_pointer : unit -> unit
+    val _I : string -> unit
+    val _init : string -> unit
+    val _inline : int -> unit
+*************** struct
+*** 718,723 ****
+--- 723,729 ----
+      mk_cclib F._cclib;
+      mk_ccopt F._ccopt;
+      mk_compact F._compact;
++     mk_omit_frame_pointer F._omit_frame_pointer;
+      mk_config F._config;
+      mk_dtypes F._annot;
+      mk_for_pack_opt F._for_pack;
+*************** module Make_opttop_options (F : Opttop_o
+*** 785,790 ****
+--- 791,797 ----
+    let list = [
+      mk_absname F._absname;
+      mk_compact F._compact;
++     mk_omit_frame_pointer F._omit_frame_pointer;
+      mk_I F._I;
+      mk_init F._init;
+      mk_inline F._inline;
+diff -r -p ocaml-4.00.0/driver/main_args.mli ocaml-4.00.0-with-fp/driver/main_args.mli
+*** ocaml-4.00.0/driver/main_args.mli	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.0-with-fp/driver/main_args.mli	2012-08-01 14:37:46.742775202 +0200
+*************** module type Optcomp_options = sig
+*** 112,117 ****
+--- 112,118 ----
+    val _cclib : string -> unit
+    val _ccopt : string -> unit
+    val _compact : unit -> unit
++   val _omit_frame_pointer : unit -> unit
+    val _config : unit -> unit
+    val _for_pack : string -> unit
+    val _g : unit -> unit
+*************** end;;
+*** 176,181 ****
+--- 177,183 ----
+  module type Opttop_options = sig
+    val _absname : unit -> unit
+    val _compact : unit -> unit
++   val _omit_frame_pointer : unit -> unit
+    val _I : string -> unit
+    val _init : string -> unit
+    val _inline : int -> unit
+diff -r -p ocaml-4.00.0/driver/optmain.ml ocaml-4.00.0-with-fp/driver/optmain.ml
+*** ocaml-4.00.0/driver/optmain.ml	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.0-with-fp/driver/optmain.ml	2012-08-01 14:38:06.970774996 +0200
+*************** module Options = Main_args.Make_optcomp_
+*** 110,115 ****
+--- 110,116 ----
+    let _cclib s = ccobjs := Misc.rev_split_words s @ !ccobjs
+    let _ccopt s = ccopts := s :: !ccopts
+    let _compact = clear optimize_for_speed
++   let _omit_frame_pointer = clear no_omit_frame_pointer
+    let _config () = show_config ()
+    let _for_pack s = for_package := Some s
+    let _g = set debug
+diff -r -p ocaml-4.00.0/Makefile ocaml-4.00.0-with-fp/Makefile
+*** ocaml-4.00.0/Makefile	2012-07-20 10:06:01.000000000 +0200
+--- ocaml-4.00.0-with-fp/Makefile	2012-08-01 15:05:58.766757945 +0200
+*************** include config/Makefile
+*** 18,24 ****
+  include stdlib/StdlibModules
+  
+  CAMLC=boot/ocamlrun boot/ocamlc -nostdlib -I boot
+! CAMLOPT=boot/ocamlrun ./ocamlopt -nostdlib -I stdlib -I otherlibs/dynlink
+  COMPFLAGS= -strict-sequence -warn-error A $(INCLUDES)
+  LINKFLAGS=
+  
+--- 18,24 ----
+  include stdlib/StdlibModules
+  
+  CAMLC=boot/ocamlrun boot/ocamlc -nostdlib -I boot
+! CAMLOPT=boot/ocamlrun ./ocamlopt -g -nostdlib -I stdlib -I otherlibs/dynlink
+  COMPFLAGS= -strict-sequence -warn-error A $(INCLUDES)
+  LINKFLAGS=
+  
+diff -r -p ocaml-4.00.0/tools/ocamloptp.ml ocaml-4.00.0-with-fp/tools/ocamloptp.ml
+*** ocaml-4.00.0/tools/ocamloptp.ml	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.0-with-fp/tools/ocamloptp.ml	2012-08-01 14:58:26.910762554 +0200
+*************** module Options = Main_args.Make_optcomp_
+*** 54,59 ****
+--- 54,60 ----
+    let _cclib s = option_with_arg "-cclib" s
+    let _ccopt s = option_with_arg "-ccopt" s
+    let _compact = option "-compact"
++   let _omit_frame_pointer = option "-fomit-frame-pointer"
+    let _config = option "-config"
+    let _for_pack s = option_with_arg "-for-pack" s
+    let _g = option "-g"
+diff -r -p ocaml-4.00.0/utils/clflags.ml ocaml-4.00.0-with-fp/utils/clflags.ml
+*** ocaml-4.00.0/utils/clflags.ml	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.0-with-fp/utils/clflags.ml	2012-08-01 14:37:24.938775425 +0200
+*************** and dump_instr = ref false
+*** 64,69 ****
+--- 64,70 ----
+  
+  let keep_asm_file = ref false           (* -S *)
+  let optimize_for_speed = ref true       (* -compact *)
++ let no_omit_frame_pointer = ref true   (* -fomit-frame-pointer *)
+  
+  and dump_cmm = ref false                (* -dcmm *)
+  let dump_selection = ref false          (* -dsel *)
+diff -r -p ocaml-4.00.0/utils/clflags.mli ocaml-4.00.0-with-fp/utils/clflags.mli
+*** ocaml-4.00.0/utils/clflags.mli	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.0-with-fp/utils/clflags.mli	2012-08-01 11:03:28.124706238 +0200
+*************** val std_include_dir : unit -> string lis
+*** 81,84 ****
+--- 81,85 ----
+  val shared : bool ref
+  val dlcode : bool ref
+  val runtime_variant : string ref
++ val no_omit_frame_pointer : bool ref
+  

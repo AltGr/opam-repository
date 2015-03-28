@@ -14,15 +14,24 @@ build: [
   [make "install"]
 ]
 build-test: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--%{flow:enable}%-app" "--enable-tests"]
+  [
+    "ocaml"
+    "setup.ml"
+    "-configure"
+    "--prefix"
+    prefix
+    "--%{flow:enable}%-app"
+    "--enable-tests"
+  ]
   [make "test"]
 ]
 build-doc: [
   [make "doc"]
   [make "install-doc" "DOCDIR=%{doc}%"]
 ]
-remove: [["ocamlfind" "remove" "biocaml"]]
+remove: ["ocamlfind" "remove" "biocaml"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "core" {<= "109.17.00"}
   "sexplib"
@@ -30,4 +39,4 @@ depends: [
   "xmlm"
   "pcre"
 ]
-depopts: ["flow"]
+depopts: "flow"

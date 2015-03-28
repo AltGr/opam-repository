@@ -1,23 +1,30 @@
 opam-version: "1.2"
-name:         "tls"
-version:      "0.2.0"
-homepage:     "https://github.com/mirleft/ocaml-tls"
-dev-repo:     "https://github.com/mirleft/ocaml-tls.git"
-bug-reports:  "https://github.com/mirleft/ocaml-tls/issues"
-author:       ["David Kaloper <david@numm.org>" "Hannes Mehnert <hannes@mehnert.org>"]
-maintainer:   ["Hannes Mehnert <hannes@mehnert.org>" "David Kaloper <david@numm.org>"]
-license:      "BSD2"
-
+maintainer: [
+  "Hannes Mehnert <hannes@mehnert.org>" "David Kaloper <david@numm.org>"
+]
+authors: [
+  "David Kaloper <david@numm.org>" "Hannes Mehnert <hannes@mehnert.org>"
+]
+homepage: "https://github.com/mirleft/ocaml-tls"
+bug-reports: "https://github.com/mirleft/ocaml-tls/issues"
+license: "BSD2"
+dev-repo: "https://github.com/mirleft/ocaml-tls.git"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix
+  [
+    "ocaml"
+    "setup.ml"
+    "-configure"
+    "--prefix"
+    prefix
     "--%{lwt:enable}%-lwt"
-    "--%{mirage:enable}%-mirage" ]
+    "--%{mirage:enable}%-mirage"
+  ]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
 remove: ["ocamlfind" "remove" "tls"]
-
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "camlp4"
   "cstruct" {>= "1.2.0"}
@@ -26,12 +33,8 @@ depends: [
   "nocrypto" {>= "0.2.0" & < "0.3.0"}
   "x509" {>= "0.2.0"}
 ]
-depopts: [
-  "lwt"
-  "mirage"
-]
+depopts: ["lwt" "mirage"]
 conflicts: [
-  "mirage" {<"2.0.0" & >"2.2.0"}
-  "mirage-types" {<"2.0.0" & >"2.2.0"}
+  "mirage" {< "2.0.0" & > "2.2.0"}
+  "mirage-types" {< "2.0.0" & > "2.2.0"}
 ]
-ocaml-version: [>="4.01.0"]

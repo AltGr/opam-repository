@@ -5,12 +5,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "lwt-zmq"]]
-depends: [
-  "ocamlfind"
-  "lwt"
-  "ocaml-zmq"
-]
+remove: ["ocamlfind" "remove" "lwt-zmq"]
+depends: ["ocaml" "ocamlfind" "lwt" "ocaml-zmq"]
 depexts: [
   [["debian"] ["libzmq-dev"]]
   [["ubuntu"] ["libzmq-dev"]]

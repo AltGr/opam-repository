@@ -4,8 +4,5 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "diff"]]
-depends: [
-  "ocamlfind"
-  "lablgtk"
-]
+remove: ["ocamlfind" "remove" "diff"]
+depends: ["ocaml" "ocamlfind" "lablgtk"]

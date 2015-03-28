@@ -15,9 +15,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "archimedes"]]
+remove: ["ocamlfind" "remove" "archimedes"]
 depends: [
+  "ocaml" {= "3.12.1"}
   "ocamlfind"
   "cairo2"
 ]
-ocaml-version: [= "3.12.1"]

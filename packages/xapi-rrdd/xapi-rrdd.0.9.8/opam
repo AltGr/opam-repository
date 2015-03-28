@@ -2,10 +2,27 @@ opam-version: "1"
 maintainer: "john.else@eu.citrix.com"
 build: [
   [make]
-  [make "install" "BINDIR=%{bin}%" "SBINDIR=%{bin}%" "LIBEXECDIR=%{bin}%" "SCRIPTSDIR=%{bin}%" "ETCDIR=%{prefix}%/etc"]
+  [
+    make
+    "install"
+    "BINDIR=%{bin}%"
+    "SBINDIR=%{bin}%"
+    "LIBEXECDIR=%{bin}%"
+    "SCRIPTSDIR=%{bin}%"
+    "ETCDIR=%{prefix}%/etc"
+  ]
 ]
-remove: [make "uninstall" "BINDIR=%{bin}%" "SBINDIR=%{bin}%" "LIBEXECDIR=%{bin}%" "SCRIPTSDIR=%{bin}%" "ETCDIR=%{prefix}%/etc"]
+remove: [
+  make
+  "uninstall"
+  "BINDIR=%{bin}%"
+  "SBINDIR=%{bin}%"
+  "LIBEXECDIR=%{bin}%"
+  "SCRIPTSDIR=%{bin}%"
+  "ETCDIR=%{prefix}%/etc"
+]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "obuild" {>= "0.1.1"}
   "ocamlfind"
   "xapi-idl"
@@ -21,5 +38,3 @@ depends: [
   "xapi-rrd-transport"
   "oclock"
 ]
-ocaml-version: [>= "4.01.0"]
-

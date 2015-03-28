@@ -1,9 +1,20 @@
 opam-version: "1.2"
 maintainer: "vb@luminar.eu.org"
 homepage: "http://projects.camlcity.org/projects/ocamlnet.html"
-doc: ["http://projects.camlcity.org/projects/dl/ocamlnet-4.0.1/doc/html-main/index.html"]
+doc:
+  "http://projects.camlcity.org/projects/dl/ocamlnet-4.0.1/doc/html-main/index.html"
 build: [
-  ["./configure" "-bindir" bin "-%{conf-gssapi:enable}%-gssapi" "-%{conf-gnutls:enable}%-gnutls" "-%{pcre:enable}%-pcre" "-%{lablgtk:enable}%-gtk2" "-%{camlzip:enable}%-zip" "-with-nethttpd"]
+  [
+    "./configure"
+    "-bindir"
+    bin
+    "-%{conf-gssapi:enable}%-gssapi"
+    "-%{conf-gnutls:enable}%-gnutls"
+    "-%{pcre:enable}%-pcre"
+    "-%{lablgtk:enable}%-gtk2"
+    "-%{camlzip:enable}%-zip"
+    "-with-nethttpd"
+  ]
   [make "all"]
   [make "opt"]
   [make "install"]
@@ -32,14 +43,9 @@ remove: [
   ["ocamlfind" "remove" "rpc-generator"]
   ["ocamlfind" "remove" "shell"]
   ["ocamlfind" "remove" "smtp"]
-
 ]
-depends: ["ocamlfind" {build}]
-depopts: [
-  "conf-gnutls"
-  "conf-gssapi"
-  "lablgtk"
-  "pcre"
-  "camlzip"
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind" {build}
 ]
-ocaml-version: [>="4.00.0"]
+depopts: ["conf-gnutls" "conf-gssapi" "lablgtk" "pcre" "camlzip"]

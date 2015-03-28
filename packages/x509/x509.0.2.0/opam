@@ -1,21 +1,23 @@
 opam-version: "1.2"
-name:         "x509"
-version:      "0.2.0"
-homepage:     "https://github.com/mirleft/ocaml-x509"
-dev-repo:     "https://github.com/mirleft/ocaml-x509.git"
-bug-reports:  "https://github.com/mirleft/ocaml-x509/issues"
-author:       [ "David Kaloper <david@numm.org>" "Hannes Mehnert <hannes@mehnert.org>" ]
-maintainer:   [ "Hannes Mehnert <hannes@mehnert.org>" "David Kaloper <david@numm.org>" ]
-license:      "BSD2"
-
+maintainer: [
+  "Hannes Mehnert <hannes@mehnert.org>" "David Kaloper <david@numm.org>"
+]
+authors: [
+  "David Kaloper <david@numm.org>" "Hannes Mehnert <hannes@mehnert.org>"
+]
+homepage: "https://github.com/mirleft/ocaml-x509"
+bug-reports: "https://github.com/mirleft/ocaml-x509/issues"
+license: "BSD2"
+tags: "org:mirage"
+dev-repo: "https://github.com/mirleft/ocaml-x509.git"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix ]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
 remove: ["ocamlfind" "remove" "x509"]
-
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "cstruct" {>= "1.2.0"}
   "type_conv"
@@ -23,5 +25,3 @@ depends: [
   "asn1-combinators" {>= "0.1.1"}
   "nocrypto" {>= "0.2.0"}
 ]
-tags: [ "org:mirage" ]
-available: [ ocaml-version >= "4.01.0" ]

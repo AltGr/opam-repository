@@ -1,6 +1,5 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
-build: [[make "world"]]
-patches: [
-  "new-string-syntax.diff"
-]
+build: [make "world"]
+depends: "ocaml"
+patches: "new-string-syntax.diff"

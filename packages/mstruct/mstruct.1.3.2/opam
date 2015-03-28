@@ -1,11 +1,10 @@
 opam-version: "1.2"
-maintainer:   "thomas@gazagnaire.org"
-authors:      "Thomas Gazagnaire"
-license:      "ISC"
-homepage:     "https://github.com/mirage/ocaml-mstruct"
-dev-repo:     "https://github.com/mirage/ocaml-mstruct.git"
-bug-reports:  "https://github.com/mirage/ocaml-mstruct/issues"
-
+maintainer: "thomas@gazagnaire.org"
+authors: "Thomas Gazagnaire"
+homepage: "https://github.com/mirage/ocaml-mstruct"
+bug-reports: "https://github.com/mirage/ocaml-mstruct/issues"
+license: "ISC"
+dev-repo: "https://github.com/mirage/ocaml-mstruct.git"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
@@ -13,8 +12,7 @@ build: [
 install: [make "install"]
 remove: ["ocamlfind" "remove" "mstruct"]
 depends: [
+  "ocaml"
   "cstruct" {>= "1.4.0"}
 ]
-patches: [
-  "build_with_trunk.patch"
-]
+patches: "build_with_trunk.patch"

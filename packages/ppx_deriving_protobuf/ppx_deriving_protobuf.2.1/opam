@@ -8,10 +8,22 @@ doc: "http://whitequark.github.io/ppx_deriving_protobuf"
 tags: "syntax"
 dev-repo: "git://github.com/whitequark/ppx_deriving_protobuf.git"
 substs: "pkg/META"
-build: ["ocaml" "pkg/build.ml" "native=%{ocaml-native}%" "native-dynlink=%{ocaml-native-dynlink}%"]
-build-test: ["ocamlbuild" "-classic-display" "-use-ocamlfind" "src_test/test_ppx_protobuf.byte" "--"]
+build: [
+  "ocaml"
+  "pkg/build.ml"
+  "native=%{ocaml-native}%"
+  "native-dynlink=%{ocaml-native-dynlink}%"
+]
+build-test: [
+  "ocamlbuild"
+  "-classic-display"
+  "-use-ocamlfind"
+  "src_test/test_ppx_protobuf.byte"
+  "--"
+]
 build-doc: [make "doc"]
 depends: [
+  "ocaml"
   "ppx_deriving" {>= "2.0" & < "3.0"}
   "ocamlfind" {build}
   "ounit" {test}

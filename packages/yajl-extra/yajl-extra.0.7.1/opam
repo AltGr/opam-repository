@@ -1,9 +1,5 @@
 opam-version: "1"
 maintainer: "mlin@mlin.net"
-build: [[make "install-extra"]]
-remove: [["ocamlfind" "remove" "yajl-extra"]]
-depends: [
-  "ocamlfind"
-  "batteries"
-  "yajl"
-]
+build: [make "install-extra"]
+remove: ["ocamlfind" "remove" "yajl-extra"]
+depends: ["ocaml" "ocamlfind" "batteries" "yajl"]

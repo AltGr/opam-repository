@@ -13,6 +13,7 @@ remove: [
   ["ocp-build" "uninstall"]
 ]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocp-build" {>= "1.99.8-beta"}
   "camlp4"
   "core" {>= "109.47.00"}
@@ -24,4 +25,3 @@ depopts: ["ounit" "core"]
 conflicts: [
   "core" {< "109.47.00"}
 ]
-ocaml-version: [>= "4.00.1"]

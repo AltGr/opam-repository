@@ -6,8 +6,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "usb"]]
+remove: ["ocamlfind" "remove" "usb"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "oasis" {>= "0.3.0"}
   "lwt" {>= "2.0.0"}

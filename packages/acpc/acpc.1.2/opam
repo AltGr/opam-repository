@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "francois.berenger@inria.fr"
-authors: ["Francois Berenger"]
+authors: "Francois Berenger"
 homepage: "https://github.com/UnixJunkie/ACPC"
 license: "BSD"
 build: [
@@ -19,7 +19,8 @@ build: [
   ["cp" "dist/build/acpc_pltool/acpc_pltool" bin]
 ]
 remove: [
-  ["rm" "-f"
+  "rm"
+  "-f"
   "%{bin}%/acpc"
   "%{bin}%/acpc_par"
   "%{bin}%/acpc_consrank"
@@ -31,9 +32,9 @@ remove: [
   "%{bin}%/acpc_mol2tool"
   "%{bin}%/acpc_pqrtool"
   "%{bin}%/acpc_pltool"
-  ]
 ]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "obuild"
   "base-unix"
   "batteries"
@@ -48,4 +49,3 @@ depexts: [
   [["debian"] ["autoconf"]]
   [["ubuntu"] ["autoconf"]]
 ]
-ocaml-version: [>= "4.00.1"]

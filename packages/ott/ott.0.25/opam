@@ -1,3 +1,4 @@
 opam-version: "1"
 maintainer: "peter.sewell@cl.cam.ac.uk"
-build: [[make "world"]]
+build: [make "world"]
+depends: "ocaml"

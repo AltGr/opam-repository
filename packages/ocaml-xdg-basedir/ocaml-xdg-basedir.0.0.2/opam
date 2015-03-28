@@ -5,9 +5,5 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "xdg-basedir"]]
-depends: [
-  "ocamlfind"
-  "fileutils"
-  "ounit"
-]
+remove: ["ocamlfind" "remove" "xdg-basedir"]
+depends: ["ocaml" "ocamlfind" "fileutils" "ounit"]

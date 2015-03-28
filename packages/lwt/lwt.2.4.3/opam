@@ -17,11 +17,14 @@ build: [
   [make "install"]
 ]
 remove: ["ocamlfind" "remove" "lwt"]
-depends: ["ocamlfind" "camlp4"]
+depends: [
+  "ocaml" {< "4.02.0"}
+  "ocamlfind"
+  "camlp4"
+]
 depopts: [
   "base-threads" "base-unix" "conf-libev" "ssl" "react" "lablgtk" "text"
 ]
 conflicts: [
   "react" {>= "1.0.0"}
 ]
-ocaml-version: [< "4.02.0"]

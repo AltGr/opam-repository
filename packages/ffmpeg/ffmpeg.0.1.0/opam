@@ -5,8 +5,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "ffmpeg"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "ffmpeg"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
   [["debian"] ["libavutil-dev" "libswscale-dev"]]
   [["ubuntu"] ["libavutil-dev" "libswscale-dev"]]

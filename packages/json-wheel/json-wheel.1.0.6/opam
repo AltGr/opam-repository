@@ -4,8 +4,5 @@ build: [
   [make]
   [make "install" "PREFIX=%{prefix}%"]
 ]
-remove: [["ocamlfind" "remove" "json-wheel"]]
-depends: [
-  "ocamlfind"
-  "ocamlnet"
-]
+remove: ["ocamlfind" "remove" "json-wheel"]
+depends: ["ocaml" "ocamlfind" "ocamlnet"]

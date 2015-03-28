@@ -1,14 +1,12 @@
 opam-version: "1"
 maintainer: "Leo White <leo@lpw25.net>"
-authors: ["Leo White <leo@lpw25.net>"]
+authors: "Leo White <leo@lpw25.net>"
 license: "LGPL-2.0 with OCaml linking exception"
-tags: [
-  "async"
-  "graphics"
-]
-build: [["./install.sh"]]
-remove: [["ocamlfind" "remove" "async_graphics"]]
+tags: ["async" "graphics"]
+build: ["./install.sh"]
+remove: ["ocamlfind" "remove" "async_graphics"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "async" {>= "109.09.00"}
 ]

@@ -4,11 +4,13 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "cryptokit"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "cryptokit"]
+depends: [
+  "ocaml" {< "4.03.0"}
+  "ocamlfind"
+]
 depexts: [
+  [["centos"] ["zlib-devel"]]
   [["debian"] ["zlib1g-dev"]]
   [["ubuntu"] ["zlib1g-dev"]]
-  [["centos"] ["zlib-devel"]]
 ]
-ocaml-version: [<"4.03.0"]

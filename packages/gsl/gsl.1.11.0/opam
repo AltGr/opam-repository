@@ -11,8 +11,13 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "gsl"]]
-depends: ["ocamlfind" "camlp4"]
-conflicts: ["ocamlgsl" {= "0.6.0"}]
-ocaml-version: [>= "3.12"]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "gsl"]
+depends: [
+  "ocaml" {>= "3.12"}
+  "ocamlfind"
+  "camlp4"
+]
+conflicts: [
+  "ocamlgsl" {= "0.6.0"}
+]

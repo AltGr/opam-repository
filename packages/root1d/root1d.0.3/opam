@@ -11,7 +11,7 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "root1d"]]
-depends: ["ocamlfind"]
-depopts: ["benchmark"]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "root1d"]
+depends: ["ocaml" "ocamlfind"]
+depopts: "benchmark"

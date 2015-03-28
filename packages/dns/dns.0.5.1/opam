@@ -17,6 +17,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "dns"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "cstruct" {>= "0.5.1" & < "0.6.0"}
   "ocamlfind"
   "cryptokit"
@@ -28,4 +29,3 @@ conflicts: [
   "lwt" {< "2.4.1"}
   "mirage-net" {> "0.9.4"}
 ]
-ocaml-version: [>= "4.00.0"]

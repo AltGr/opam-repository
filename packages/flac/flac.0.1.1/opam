@@ -5,7 +5,4 @@ build: [
   [make "all"]
   [make "install"]
 ]
-depends: [
-  "ocamlfind"
-  "ogg"
-]
+depends: ["ocaml" "ocamlfind" "ogg"]

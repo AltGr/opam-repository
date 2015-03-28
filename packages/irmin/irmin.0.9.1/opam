@@ -1,27 +1,30 @@
 opam-version: "1.2"
-maintainer:   "thomas@gazagnaire.org"
-authors:      "Thomas Gazagnaire"
-license:      "ISC"
-homepage:     "https://github.com/mirage/irmin"
-bug-reports:  "https://github.com/mirage/irmin/issues"
-dev-repo:     "https://github.com/mirage/irmin.git"
-
+maintainer: "thomas@gazagnaire.org"
+authors: "Thomas Gazagnaire"
+homepage: "https://github.com/mirage/irmin"
+bug-reports: "https://github.com/mirage/irmin/issues"
+license: "ISC"
+dev-repo: "https://github.com/mirage/irmin.git"
 build: [
-  ["./configure"
-      "--prefix" prefix
-      "--%{cohttp:enable}%-http"
-      "--%{git:enable}%-git"
-      "--%{base-unix:enable}%-unix"
-      "--%{cohttp+git+alcotest:enable}%-tests"]
+  [
+    "./configure"
+    "--prefix"
+    prefix
+    "--%{cohttp:enable}%-http"
+    "--%{git:enable}%-git"
+    "--%{base-unix:enable}%-unix"
+    "--%{cohttp+git+alcotest:enable}%-tests"
+  ]
   [make]
 ]
-build-test: [make "test"]
 install: [make "install"]
+build-test: [make "test"]
 remove: [
   ["ocamlfind" "remove" "irmin"]
   ["rm" "-f" "%{bin}%/irmin"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ezjsonm" {>= "0.4.0"}
   "ocamlgraph"
   "lwt" {>= "2.4.5"}
@@ -42,7 +45,6 @@ depends: [
   "alcotest" {test}
 ]
 conflicts: [
-  "git"    {!= "1.4.3"}
+  "git" {!= "1.4.3"}
   "cohttp" {< "0.15.0"}
 ]
-available: [ocaml-version >= "4.01.0"]

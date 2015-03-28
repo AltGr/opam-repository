@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "mirage-types-lwt" {>= "2.0.0"}
   "mirage-conduit"
@@ -14,4 +15,3 @@ depends: [
   "camlp4"
   "sexplib"
 ]
-ocaml-version: [>= "4.00.0"]

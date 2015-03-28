@@ -9,11 +9,14 @@ authors: [
   "Thomas Gazagnaire"
 ]
 homepage: "https://github.com/mirage/ocaml-dns"
-license: "
+license:
+  "
+
 LGPL-2.0 &
    LGPL-2.1 with OCaml linking exception &
    ISC
-         "
+         
+  "
 tags: ["org:mirage" "org:xapi-project"]
 build: [
   [
@@ -30,6 +33,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "dns"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "lwt" {>= "2.4.1"}
   "cstruct" {>= "0.7.1" & < "1.0.0"}
   "ocamlfind"
@@ -41,4 +45,3 @@ depopts: "mirage-net"
 conflicts: [
   "mirage-net" {!= "0.9.4"}
 ]
-ocaml-version: [>= "4.00.0"]

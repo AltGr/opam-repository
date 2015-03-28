@@ -9,12 +9,8 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "gmp"]]
-depends: [
-  "conf-gmp"
-  "oasis"
-  "ocamlfind"
-]
+remove: ["ocamlfind" "remove" "gmp"]
+depends: ["ocaml" "conf-gmp" "oasis" "ocamlfind"]
 depexts: [
   [["debian"] ["libmpfr-dev"]]
   [["ubuntu"] ["libmpfr-dev"]]

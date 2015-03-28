@@ -1,19 +1,19 @@
 opam-version: "1.2"
-name: "bap"
-version: "0.9.4"
 maintainer: "Ivan Gotovchits <ivg@ieee.org>"
 authors: "BAP Team"
 homepage: "https://github.com/BinaryAnalysisPlatform/bap/"
 bug-reports: "https://github.com/BinaryAnalysisPlatform/bap/issues"
-dev-repo: "git://github.com/BinaryAnalysisPlatform/bap/"
 license: "MIT"
+dev-repo: "git://github.com/BinaryAnalysisPlatform/bap/"
 build: [
-  ["./configure"
-                 "--prefix=%{prefix}%"
-                 "--with-cxx=`which clang++`"
-                 "--enable-docs"
-                 "--docdir=%{doc}%/bap"
-                 "--mandir=%{man}%"]
+  [
+    "./configure"
+    "--prefix=%{prefix}%"
+    "--with-cxx=`which clang++`"
+    "--enable-docs"
+    "--docdir=%{doc}%/bap"
+    "--mandir=%{man}%"
+  ]
   [make]
   [make "doc"]
 ]
@@ -22,7 +22,6 @@ install: [
   ["cp" "bapbuild" "%{bin}%/bapbuild"]
   ["cp" "baptop" "%{bin}%/baptop"]
 ]
-
 remove: [
   ["ocamlfind" "remove" "bap"]
   ["ocamlfind" "remove" "core_lwt"]
@@ -38,36 +37,36 @@ remove: [
   ["rm" "-f" "%{bin}%/bapbuild"]
   ["rm" "-f" "%{bin}%/baptop"]
 ]
-
 depends: [
- 	"base-unix"
- 	"bitstring"
-    "camlzip"
-	"cmdliner"
-	"cohttp"
-	"core_kernel" {>= "111.28.0"}
-	"ezjsonm" {>= "0.4.0"}
-	"faillib"
-    "fileutils"
-	"lwt"
-	"oasis" {build & >= "0.4.0"}
-    "ocamlgraph"
-    "ocurl"
-	"re"
-	"uri"
-    "utop"
-	"zarith"
+  "ocaml" {>= "4.01"}
+  "base-unix"
+  "bitstring"
+  "camlzip"
+  "cmdliner"
+  "cohttp"
+  "core_kernel" {>= "111.28.0"}
+  "ezjsonm" {>= "0.4.0"}
+  "faillib"
+  "fileutils"
+  "lwt"
+  "oasis" {build & >= "0.4.0"}
+  "ocamlgraph"
+  "ocurl"
+  "re"
+  "uri"
+  "utop"
+  "zarith"
 ]
-
 depexts: [
-    [["ubuntu"] [
-                "libgmp-dev"
-                "libzip-dev"
-                "libcurl4-gnutls-dev"
-                "llvm-3.4-dev"
-                "time" "clang"
-                "llvm" "m4"
-                ]]
+  ["ubuntu"]
+  [
+    "clang"
+    "libcurl4-gnutls-dev"
+    "libgmp-dev"
+    "libzip-dev"
+    "llvm"
+    "llvm-3.4-dev"
+    "m4"
+    "time"
+  ]
 ]
-
-available: [ocaml-version >= "4.01"]

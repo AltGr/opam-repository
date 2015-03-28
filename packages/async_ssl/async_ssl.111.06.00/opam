@@ -4,17 +4,20 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "async_ssl"]]
-depends: ["camlp4"
-          "async" {= "111.03.00"}
-          "herelib" {>= "109.35.00" & <= "109.35.02"}
-          "pa_bench" {>= "109.55.00" & <= "109.55.02"}
-          "pa_ounit" {>= "109.53.00" & <= "109.53.02"}
-          "sexplib" {= "111.03.00"}
-          "ctypes" "ctypes-foreign"]
-ocaml-version: [>= "4.00.0"]
+remove: ["ocamlfind" "remove" "async_ssl"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "camlp4"
+  "async" {= "111.03.00"}
+  "herelib" {>= "109.35.00" & <= "109.35.02"}
+  "pa_bench" {>= "109.55.00" & <= "109.55.02"}
+  "pa_ounit" {>= "109.53.00" & <= "109.53.02"}
+  "sexplib" {= "111.03.00"}
+  "ctypes"
+  "ctypes-foreign"
+]
 depexts: [
+  [["centos"] ["openssl-devel"]]
   [["debian"] ["libssl-dev"]]
   [["ubuntu"] ["libssl-dev"]]
-  [["centos"] ["openssl-devel"]]
 ]

@@ -9,4 +9,4 @@ remove: [
   ["./configure" "--bin-dir" bin]
   [make "uninstall"]
 ]
-depends: ["ocamlfind" "cow" "config-file" "omd"]
+depends: ["ocaml" "ocamlfind" "cow" "config-file" "omd"]

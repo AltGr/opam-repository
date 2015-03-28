@@ -5,15 +5,14 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocaml" "setup.ml" "-uninstall"]
-]
+remove: ["ocaml" "setup.ml" "-uninstall"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "omake"
   "cryptokit"
-  "ocurl" {>="0.5.3"}
-  "tiny_json_conv" {>="1.4.1"}
-  "spotlib" {>="2.4.0"}
-  "orakuda" {>="1.1.1"}
+  "ocurl" {>= "0.5.3"}
+  "tiny_json_conv" {>= "1.4.1"}
+  "spotlib" {>= "2.4.0"}
+  "orakuda" {>= "1.1.1"}
 ]

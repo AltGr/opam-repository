@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "core"]]
+remove: ["ocamlfind" "remove" "core"]
 depends: [
+  "ocaml" {>= "4.00.1" & < "4.01.0"}
   "camlp4"
   "ocamlfind"
   "bin_prot" {= "109.11.00"}
@@ -18,4 +19,3 @@ depends: [
   "ounit"
   "comparelib" {= "109.11.00"}
 ]
-ocaml-version: [>= "4.00.1" & < "4.01.0"]

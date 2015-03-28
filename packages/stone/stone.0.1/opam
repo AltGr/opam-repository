@@ -10,11 +10,9 @@ remove: [
   [make "uninstall"]
 ]
 depends: [
+  "ocaml"
   "ocamlfind"
   "cow" {< "0.6.0"}
   "config-file"
 ]
-patches: [
-  "configure.diff"
-  "configure2.diff"
-]
+patches: ["configure.diff" "configure2.diff"]

@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "dev@domoco.fr"
-authors: ["Incubaid Team"]
+authors: "Incubaid Team"
 homepage: "http://arakoon.org/"
 build: [
   [make]
@@ -11,11 +11,11 @@ remove: [
   [make "uninstall_client" "DESTDIR=%{prefix}%"]
 ]
 depends: [
+  "ocaml" {< "4.02.0"}
   "ocamlfind"
   "lwt" {>= "2.4.3"}
   "ounit"
   "camltc"
   "camlbz2"
 ]
-patches: ["opam.patch"]
-ocaml-version: [< "4.02.0"]
+patches: "opam.patch"

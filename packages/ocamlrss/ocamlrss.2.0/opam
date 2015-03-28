@@ -5,8 +5,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "rss"]]
-depends: [
-  "ocamlfind"
-  "xmlm"
-]
+remove: ["ocamlfind" "remove" "rss"]
+depends: ["ocaml" "ocamlfind" "xmlm"]

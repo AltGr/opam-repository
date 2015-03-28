@@ -5,6 +5,8 @@ build: [
   [make]
   [make "install" "DESTDIR=%{lib}%"]
 ]
-remove: [["ocamlfind" "remove" "ancient"]]
-depends: ["ocamlfind"]
-ocaml-version: [<"4.03.0"]
+remove: ["ocamlfind" "remove" "ancient"]
+depends: [
+  "ocaml" {< "4.03.0"}
+  "ocamlfind"
+]

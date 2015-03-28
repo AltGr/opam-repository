@@ -5,13 +5,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "schroedinger"]]
-depends: [
-  "ocamlfind"
-  "ogg"
-]
+remove: ["ocamlfind" "remove" "schroedinger"]
+depends: ["ocaml" "ocamlfind" "ogg"]
 depexts: [
- [["ubuntu"]["libschroedinger-dev"]]
- [["debian"]["libschroedinger-dev"]]
- [["osx" "homebrew"]["schroedinger"]]
+  [["debian"] ["libschroedinger-dev"]]
+  [["homebrew" "osx"] ["schroedinger"]]
+  [["ubuntu"] ["libschroedinger-dev"]]
 ]

@@ -5,12 +5,5 @@ build: [
   [make]
   [make "PREFIX=%{prefix}%" "install"]
 ]
-remove: [
-  [make "PREFIX=%{prefix}%" "uninstall"]
-]
-depends: [
-  "cmdliner"
-  "obus"
-  "mpris"
-  "spotify-web-api"
-]
+remove: [make "PREFIX=%{prefix}%" "uninstall"]
+depends: ["ocaml" "cmdliner" "obus" "mpris" "spotify-web-api"]

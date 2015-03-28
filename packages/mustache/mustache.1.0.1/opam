@@ -20,10 +20,10 @@ build-test: [
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "mustache"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind" {build}
   "oasis" {build & >= "0.4.0"}
   "ezjsonm" {>= "0.4.0"}
   "sexplib"
   "re"
 ]
-available: [ocaml-version >= "4.01.0"]

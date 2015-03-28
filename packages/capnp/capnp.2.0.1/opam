@@ -4,8 +4,9 @@ build: [
   ["env" "PREFIX=%{prefix}%" "omake"]
   ["env" "PREFIX=%{prefix}%" "omake" "install"]
 ]
-remove: [["env" "PREFIX=%{prefix}%" "omake" "uninstall"]]
+remove: ["env" "PREFIX=%{prefix}%" "omake" "uninstall"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "omake"
   "ocamlfind" {>= "1.5.1"}
   "core"
@@ -14,4 +15,3 @@ depends: [
   "uint"
   "camlp4"
 ]
-ocaml-version: [>= "4.01.0"]

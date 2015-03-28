@@ -17,10 +17,12 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "lacaml"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "lacaml"]
+depends: [
+  "ocaml" {>= "3.12"}
+  "ocamlfind"
+]
 depexts: [
   [["debian"] ["libblas-dev" "liblapack-dev"]]
   [["ubuntu"] ["libblas-dev" "liblapack-dev"]]
 ]
-ocaml-version: [>= "3.12"]

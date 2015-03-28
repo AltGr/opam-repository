@@ -5,11 +5,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "riak"]]
-depends: [
-  "ocamlfind"
-  "ounit"
-  "piqi"
-  "riak-pb"
-  "lwt"
-]
+remove: ["ocamlfind" "remove" "riak"]
+depends: ["ocaml" "ocamlfind" "ounit" "piqi" "riak-pb" "lwt"]

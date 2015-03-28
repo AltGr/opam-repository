@@ -6,7 +6,15 @@ bug-reports: "https://github.com/mirage/irmin/issues"
 license: "ISC"
 dev-repo: "https://github.com/mirage/irmin.git"
 build: [
-  ["./configure" "--prefix" prefix "--%{cohttp:enable}%-http" "--%{git:enable}%-git" "--%{base-unix:enable}%-unix" "--%{cohttp+git+alcotest:enable}%-tests"]
+  [
+    "./configure"
+    "--prefix"
+    prefix
+    "--%{cohttp:enable}%-http"
+    "--%{git:enable}%-git"
+    "--%{base-unix:enable}%-unix"
+    "--%{cohttp+git+alcotest:enable}%-tests"
+  ]
   [make]
 ]
 install: [make "install"]
@@ -16,6 +24,7 @@ remove: [
   ["rm" "-f" "%{bin}%/irmin"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ezjsonm" {>= "0.4.0"}
   "ocamlgraph"
   "lwt" {>= "2.4.7"}
@@ -34,13 +43,9 @@ depends: [
   "cohttp" {test}
   "alcotest" {test}
 ]
-depopts: [
-  "git"
-  "cohttp"
-]
+depopts: ["git" "cohttp"]
 conflicts: [
   "git" {< "1.4.8"}
   "git" {> "1.4.10"}
   "cohttp" {< "0.14.0"}
 ]
-available: [ocaml-version >= "4.01.0"]

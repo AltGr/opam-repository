@@ -1,11 +1,12 @@
 opam-version: "1"
 maintainer: "dave.scott@citrix.com"
 build: [
-  [ "ocaml" "setup.ml" "-configure" ]
-  [ "ocaml" "setup.ml" "-build" ]
-  [ "cp" "main.native" "%{bin}%/xentropyd" ]
+  ["ocaml" "setup.ml" "-configure"]
+  ["ocaml" "setup.ml" "-build"]
+  ["cp" "main.native" "%{bin}%/xentropyd"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "cstruct" {>= "0.6.0"}
   "lwt"
   "sexplib"
@@ -23,9 +24,8 @@ depends: [
   "stringext"
 ]
 depexts: [
+  [["centos"] ["xen-devel"]]
   [["debian"] ["libxen-dev" "uuid-dev"]]
   [["ubuntu"] ["libxen-dev" "uuid-dev"]]
-  [["centos"] ["xen-devel"]]
   [["xenserver"] ["xen-dom0-libs-devel" "xen-libs-devel"]]
 ]
-ocaml-version: [>= "4.01.0"]

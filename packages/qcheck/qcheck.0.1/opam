@@ -6,6 +6,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "qcheck"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "4.00.0"]
+remove: ["ocamlfind" "remove" "qcheck"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+]

@@ -1,22 +1,20 @@
 opam-version: "1"
 maintainer: "n.oje.bar@gmail.com"
-authors: [ "Nicolas Ojeda Bar <n.oje.bar@gmail.com>" ]
+authors: "Nicolas Ojeda Bar <n.oje.bar@gmail.com>"
 license: "MIT"
-ocaml-version: [ >= "4.01.0" ]
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "bt"]
-]
+remove: ["ocamlfind" "remove" "bt"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "bitstring"
   "cmdliner"
   "cohttp" {>= "0.11.2"}
   "cryptokit"
-  "lwt" {<"2.4.7"}
+  "lwt" {< "2.4.7"}
   "ocamlfind"
   "qcheck"
   "uri"

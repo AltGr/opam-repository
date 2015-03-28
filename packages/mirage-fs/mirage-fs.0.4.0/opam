@@ -1,8 +1,8 @@
 opam-version: "1"
 maintainer: "anil@recoil.org"
-tags: [
-  "org:mirage"
-  "org:xapi-project"
+tags: ["org:mirage" "org:xapi-project"]
+build: [make "all"]
+depends: [
+  "ocaml"
+  "cstruct" {>= "0.6.0"}
 ]
-build: [[make "all"]]
-depends: ["cstruct" {>= "0.6.0"}]

@@ -1,11 +1,21 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
 build: [
-  ["./configure" "-camlp5dir" "%{lib}%/camlp5" "--prefix" prefix "-docdir" doc]
+  [
+    "./configure"
+    "-camlp5dir"
+    "%{lib}%/camlp5"
+    "--prefix"
+    prefix
+    "-docdir"
+    doc
+  ]
   [make "-j%{jobs}%" "world"]
   [make "install"]
 ]
-depends: ["camlp5"]
-depopts: ["lablgtk"]
-patches: ["configure.patch"]
-ocaml-version: [< "4.02.0"]
+depends: [
+  "ocaml" {< "4.02.0"}
+  "camlp5"
+]
+depopts: "lablgtk"
+patches: "configure.patch"

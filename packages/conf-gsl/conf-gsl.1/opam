@@ -2,10 +2,11 @@ opam-version: "1"
 maintainer: "blue-prawn"
 homepage: "http://www.gnu.org/software/gsl/"
 license: "GPL"
-build: [["pkg-config" "gsl"]]
+build: ["pkg-config" "gsl"]
+depends: "ocaml"
 depexts: [
   [["debian"] ["libgsl0-dev"]]
+  [["homebrew" "osx"] ["gsl"]]
   [["mageia"] ["libgsl-devel"]]
   [["ubuntu"] ["libgsl0-dev"]]
-  [["osx" "homebrew"] ["gsl"]]
 ]

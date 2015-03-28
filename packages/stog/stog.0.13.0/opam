@@ -13,6 +13,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "stog"]
 depends: [
+  "ocaml" {>= "4.02.0"}
   "ocamlfind"
   "xmlm" {>= "1.1"}
   "xtmpl" {>= "0.10"}
@@ -29,4 +30,3 @@ conflicts: [
   "websocket" {< "0.8.1"}
   "xmldiff" {< "0.3.0"}
 ]
-ocaml-version: [>= "4.02.0"]

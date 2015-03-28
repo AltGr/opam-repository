@@ -5,9 +5,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "gavl"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "gavl"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
- [["debian"] ["libgavl-dev"]]
- [["ubuntu"] ["libgavl-dev"]]
+  [["debian"] ["libgavl-dev"]]
+  [["ubuntu"] ["libgavl-dev"]]
 ]

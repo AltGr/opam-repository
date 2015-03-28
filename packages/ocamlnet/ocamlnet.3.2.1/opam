@@ -26,8 +26,8 @@ remove: [
   ["ocamlfind" "remove" "smtp"]
 ]
 depends: [
+  "ocaml" {< "4.00.0"}
   "ocamlfind"
   "pcre"
   "camlp4"
 ]
-ocaml-version: [< "4.00.0"]

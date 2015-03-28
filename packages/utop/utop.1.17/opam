@@ -1,33 +1,25 @@
 opam-version: "1.2"
 maintainer: "jeremie@dimino.org"
-authors: ["Jérémie Dimino"]
-license: "BSD3"
+authors: "Jérémie Dimino"
 homepage: "https://github.com/diml/utop"
 bug-reports: "https://github.com/diml/utop/issues"
+license: "BSD3"
 dev-repo: "git://github.com/diml/utop.git"
 build: [
   ["./configure" "--prefix" prefix "--%{camlp4:enable}%-camlp4"]
   [make]
 ]
-install: [
-  [make "install"]
-]
-build-doc: [
-  ["ocaml" "setup.ml" "-doc"]
-]
-remove: [
-  ["ocamlfind" "remove" "utop"]
-]
+install: [make "install"]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "utop"]
 depends: [
+  "ocaml" {>= "4.01"}
   "base-unix"
   "base-threads"
-  "ocamlfind"   {>= "1.4.0"}
+  "ocamlfind" {>= "1.4.0"}
   "lambda-term" {>= "1.2"}
   "lwt"
-  "react"       {>= "1.0.0"}
-  "cppo"        {>= "1.1.2"}
+  "react" {>= "1.0.0"}
+  "cppo" {>= "1.1.2"}
 ]
-depopts: [
-  "camlp4"
-]
-available: [ ocaml-version >= "4.01" ]
+depopts: "camlp4"

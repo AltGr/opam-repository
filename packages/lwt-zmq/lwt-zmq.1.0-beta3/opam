@@ -6,8 +6,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "lwt-zmq"]]
+remove: ["ocamlfind" "remove" "lwt-zmq"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "oasis" {= "0.3.0"}
   "lwt"

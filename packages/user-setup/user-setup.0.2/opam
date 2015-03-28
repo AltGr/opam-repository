@@ -14,8 +14,8 @@ install: [
   "merlin" {merlin:installed}
 ]
 depends: [
+  "ocaml" {>= "4.02"}
   "ocamlfind" {build}
   "re"
 ]
 depopts: ["tuareg" "merlin" "ocp-indent" "ocp-index"]
-available: [ocaml-version >= "4.02"]

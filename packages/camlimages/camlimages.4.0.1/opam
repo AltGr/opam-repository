@@ -4,10 +4,10 @@ build: [
   ["omake"]
   ["omake" "install"]
 ]
-remove: [["ocamlfind" "remove" "camlimages"]]
+remove: ["ocamlfind" "remove" "camlimages"]
 depends: [
+  "ocaml" {<= "4.01.0"}
   "ocamlfind"
   "lablgtk"
   "omake"
 ]
-ocaml-version: [<= "4.01.0"]

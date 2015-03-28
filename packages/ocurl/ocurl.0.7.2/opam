@@ -2,20 +2,18 @@ opam-version: "1"
 maintainer: "ygrek@autistici.org"
 homepage: "http://ocurl.forge.ocamlcore.org"
 license: "MIT"
-doc: ["http://ocurl.forge.ocamlcore.org/api/index.html"]
-#dev-repo: "git://github.com/ygrek/ocurl.git"
-#bug-reports: "https://github.com/ygrek/ocurl/issues"
+doc: "http://ocurl.forge.ocamlcore.org/api/index.html"
 build: [
   ["./configure"]
   [make]
   [make "install"]
 ]
-build-doc: [[make "doc"]]
-remove: [["ocamlfind" "remove" "curl"]]
-depends: ["ocamlfind"]
-depopts: ["lwt"]
+build-doc: [make "doc"]
+remove: ["ocamlfind" "remove" "curl"]
+depends: ["ocaml" "ocamlfind"]
+depopts: "lwt"
 depexts: [
+  [["centos"] ["libcurl-devel" "openssl-devel"]]
   [["debian"] ["libcurl4-gnutls-dev"]]
   [["ubuntu"] ["libcurl4-gnutls-dev"]]
-  [["centos"] ["libcurl-devel" "openssl-devel"]]
 ]

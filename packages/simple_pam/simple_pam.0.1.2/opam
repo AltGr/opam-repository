@@ -6,8 +6,5 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "simple_pam"]]
-depends: [
-  "oasis"
-  "ocamlfind"
-]
+remove: ["ocamlfind" "remove" "simple_pam"]
+depends: ["ocaml" "oasis" "ocamlfind"]

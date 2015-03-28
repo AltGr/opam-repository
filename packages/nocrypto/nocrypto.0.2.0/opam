@@ -1,21 +1,19 @@
 opam-version: "1.2"
-name:         "nocrypto"
-version:      "0.2.0"
-homepage:     "https://github.com/mirleft/ocaml-nocrypto"
-dev-repo:     "https://github.com/mirleft/ocaml-nocrypto.git"
-bug-reports:  "https://github.com/mirleft/ocaml-nocrypto/issues"
-author:       "David Kaloper <david@numm.org>"
-maintainer:   "David Kaloper <david@numm.org>"
-license:      "BSD2"
-
+maintainer: "David Kaloper <david@numm.org>"
+authors: "David Kaloper <david@numm.org>"
+homepage: "https://github.com/mirleft/ocaml-nocrypto"
+bug-reports: "https://github.com/mirleft/ocaml-nocrypto/issues"
+license: "BSD2"
+tags: "org:mirage"
+dev-repo: "https://github.com/mirleft/ocaml-nocrypto.git"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix ]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
-remove:  ["ocamlfind" "remove" "nocrypto"]
-
+remove: ["ocamlfind" "remove" "nocrypto"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "cstruct" {>= "1.2.0"}
   "zarith"
@@ -23,5 +21,3 @@ depends: [
   "sexplib"
   "ctypes" {>= "0.3.3" & < "0.4.0"}
 ]
-tags: [ "org:mirage"]
-available: [ ocaml-version >= "4.01.0" ]

@@ -1,15 +1,15 @@
 opam-version: "1.2"
-version: "0.4.7"
-author: "Andrew Ray <andy.ray@ujamjar.com>"
 maintainer: "andy.ray@ujamjar.com"
+authors: "Andrew Ray <andy.ray@ujamjar.com>"
 homepage: "https://github.com/andrewray/iocamlserver"
-dev-repo: "https://github.com/andrewray/iocamlserver.git"
 bug-reports: "https://github.com/andrewray/iocamlserver/issues"
+dev-repo: "https://github.com/andrewray/iocamlserver.git"
 build: [
-  [ "cp" "config.darwin.ml" "config.ml" ] {os = "darwin"}
-  [ make "all" ]
+  ["cp" "config.darwin.ml" "config.ml"] {os = "darwin"}
+  [make "all"]
 ]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "uuidm"
   "yojson"
@@ -23,4 +23,3 @@ depends: [
   "iocaml-kernel" {= "0.4.6"}
   "iocamljs-kernel" {= "0.4.6"}
 ]
-available: [ ocaml-version >= "4.00.1" ]

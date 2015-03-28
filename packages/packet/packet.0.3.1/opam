@@ -5,8 +5,12 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "packet"]
+remove: ["ocamlfind" "remove" "packet"]
+depends: [
+  "ocaml"
+  "ocamlfind"
+  "cstruct" {>= "1.0.1"}
+  "sexplib" {>= "110.01.00"}
+  "type_conv"
 ]
-depends: ["ocamlfind" "cstruct" {>= "1.0.1"} "sexplib" {>= "110.01.00"} "type_conv"]
-depopts: ["quickcheck"]
+depopts: "quickcheck"

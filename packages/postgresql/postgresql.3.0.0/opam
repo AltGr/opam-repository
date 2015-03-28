@@ -1,34 +1,36 @@
 opam-version: "1.2"
-name: "postgresql"
-version: "3.0.0"
 maintainer: "markus.mottl@gmail.com"
-authors: [ "Alain Frisch <alain.frisch@lexifi.com>"
-           "Markus Mottl <markus.mottl@gmail.com>"
-           "Petter Urkedal <paurkedal@gmail.com>" ]
-license: "LGPL-2.1+ with OCaml linking exception"
+authors: [
+  "Alain Frisch <alain.frisch@lexifi.com>"
+  "Markus Mottl <markus.mottl@gmail.com>"
+  "Petter Urkedal <paurkedal@gmail.com>"
+]
 homepage: "http://mmottl.github.io/postgresql-ocaml"
+license: "LGPL-2.1+ with OCaml linking exception"
+tags: "clib:pq"
 dev-repo: "https://github.com/mmottl/postgresql-ocaml.git"
-tags: [ "clib:pq"  ]
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix
-    "--%{lablgtk:enable}%-lablgtk2"]
+  [
+    "ocaml"
+    "setup.ml"
+    "-configure"
+    "--prefix"
+    prefix
+    "--%{lablgtk:enable}%-lablgtk2"
+  ]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "postgresql"]
-]
-build-doc: [ "ocaml" "setup.ml" "-doc" ]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "postgresql"]
 depends: [
+  "ocaml" {>= "3.12"}
   "base-bigarray"
   "base-bytes"
   "base-threads"
   "ocamlfind" {>= "1.5"}
 ]
-depopts: [
-  "lablgtk"
-]
-ocaml-version: [ >= "3.12" ]
+depopts: "lablgtk"
 depexts: [
   [["debian"] ["libpq-dev"]]
   [["ubuntu"] ["libpq-dev"]]

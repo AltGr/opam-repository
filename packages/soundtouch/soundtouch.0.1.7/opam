@@ -5,9 +5,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "soundtouch"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "soundtouch"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
- [["debian"] ["libsoundtouch0-dev"]]
- [["ubuntu"] ["libsoundtouch0-dev"]]
+  [["debian"] ["libsoundtouch0-dev"]]
+  [["ubuntu"] ["libsoundtouch0-dev"]]
 ]

@@ -6,9 +6,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "omonad"]]
+remove: ["ocamlfind" "remove" "omonad"]
 depends: [
+  "ocaml" {>= "4.01.0" & < "4.02"}
   "ocamlfind"
   "oasis"
 ]
-ocaml-version: [>= "4.01.0" & < "4.02"]

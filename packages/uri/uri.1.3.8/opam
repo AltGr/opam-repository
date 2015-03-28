@@ -10,9 +10,12 @@ build: [
 ]
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "uri"]
-depends: ["ocamlfind" "re"]
+depends: [
+  "ocaml" {>= "4.0.0"}
+  "ocamlfind"
+  "re"
+]
 depopts: "ounit"
 conflicts: [
   "ounit" {< "1.0.2"}
 ]
-ocaml-version: [>= "4.0.0"]

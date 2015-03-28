@@ -12,6 +12,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "rdf"]
 depends: [
+  "ocaml" {>= "4.02.0"}
   "ocamlfind"
   "xmlm" {>= "1.1.1"}
   "ocamlnet" {>= "3.6.5"}
@@ -28,4 +29,3 @@ conflicts: [
   "lwt" {< "2.4.5"}
   "mysql" {< "1.1.1"}
 ]
-ocaml-version: [>= "4.02.0"]

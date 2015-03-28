@@ -1,16 +1,13 @@
 opam-version: "1"
 maintainer: "zoggy@bat8.org"
-authors: ["Maxence Guesdon"]
+authors: "Maxence Guesdon"
 homepage: "https://github.com/zoggy/findlib-lint"
 license: "New BSD License"
-doc: ["https://github.com/zoggy/findlib-lint"]
+doc: "https://github.com/zoggy/findlib-lint"
 tags: ["findlib" "ocamlfind" "check" "META"]
-
 build: [
   [make "all"]
   [make "install-lib"]
 ]
-remove: [["ocamlfind" "remove" "findlib-lint"]]
-depends: [
-  "ocamlfind"
-]
+remove: ["ocamlfind" "remove" "findlib-lint"]
+depends: ["ocaml" "ocamlfind"]

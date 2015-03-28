@@ -1,0 +1,9 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  ["./configure" "-prefix" prefix]
+  [make "world"]
+  [make "world.opt"]
+  [make "install"]
+]
+patches: "freebsd10-armv6-natdynlink.patch"

@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "re2"]]
+remove: ["ocamlfind" "remove" "re2"]
 depends: [
+  "ocaml"
   "camlp4"
   "core" {>= "109.32.00" & <= "109.38.00"}
   "sexplib" {= "109.20.00"}

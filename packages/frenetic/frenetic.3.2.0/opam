@@ -1,16 +1,13 @@
 opam-version: "1.2"
-ocaml-version: [ >= "4.01.0" ]
-version: "3.2.0"
 maintainer: "Spiros Eliopoulos <seliopou@gmail.com>"
 build: [
-  ["./configure" "--%{pa_ounit:enable}%-tests" ]
+  ["./configure" "--%{pa_ounit:enable}%-tests"]
   [make]
   [make "install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "netkat"]
-]
+remove: ["ocamlfind" "remove" "netkat"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "core"
   "async"
@@ -24,7 +21,7 @@ depends: [
   "quickcheck"
   "ounit" {test}
   "pa_ounit" {test}
-  "packet"  {>= "0.4.0"}
+  "packet" {>= "0.4.0"}
   "openflow" {>= "0.8.0"}
-  "topology"  {>= "0.4.0"}
+  "topology" {>= "0.4.0"}
 ]

@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "cstruct" {>= "0.8.1"}
   "ocamlfind"
   "lwt" {>= "2.4.3"}
@@ -14,4 +15,3 @@ depends: [
   "tuntap" {>= "0.7.0"}
   "ounit"
 ]
-ocaml-version: [>= "4.00.0"]

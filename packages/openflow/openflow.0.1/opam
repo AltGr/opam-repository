@@ -5,10 +5,5 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "openflow"]]
-depends: [
-  "ocamlfind"
-  "lwt"
-  "cstruct"
-  "packet"
-]
+remove: ["ocamlfind" "remove" "openflow"]
+depends: ["ocaml" "ocamlfind" "lwt" "cstruct" "packet"]

@@ -4,13 +4,5 @@ build: [
   [make "build"]
   [make "install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "caravan"]
-]
-depends: [
-  "ocamlfind"
-  "oasis"
-  "core"
-  "async"
-  "textutils"
-]
+remove: ["ocamlfind" "remove" "caravan"]
+depends: ["ocaml" "ocamlfind" "oasis" "core" "async" "textutils"]

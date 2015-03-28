@@ -5,6 +5,8 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "odepack"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "3.12.1"]
+remove: ["ocamlfind" "remove" "odepack"]
+depends: [
+  "ocaml" {>= "3.12.1"}
+  "ocamlfind"
+]

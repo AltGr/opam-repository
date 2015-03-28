@@ -5,8 +5,11 @@ build: [
   [make]
   [make "install"]
 ]
-build-test: [[make "test"]]
-build-doc: [[make "doc"]]
-remove: [["ocamlfind" "remove" "objsize"]]
-depends: ["ocamlfind" "camlp4"]
-ocaml-version: [>= "3.11"]
+build-test: [make "test"]
+build-doc: [make "doc"]
+remove: ["ocamlfind" "remove" "objsize"]
+depends: [
+  "ocaml" {>= "3.11"}
+  "ocamlfind"
+  "camlp4"
+]

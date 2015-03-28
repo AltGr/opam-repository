@@ -5,6 +5,6 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "sha"]]
-depends: ["ocamlfind"]
-os: ["linux"]
+remove: ["ocamlfind" "remove" "sha"]
+depends: ["ocaml" "ocamlfind"]
+os: "linux"

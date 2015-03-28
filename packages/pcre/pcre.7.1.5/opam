@@ -1,24 +1,19 @@
 opam-version: "1.2"
-name: "pcre"
-version: "7.1.5"
 maintainer: "markus.mottl@gmail.com"
-authors: [ "Markus Mottl <markus.mottl@gmail.com>" ]
-license: "LGPL-2.1+ with OCaml linking exception"
+authors: "Markus Mottl <markus.mottl@gmail.com>"
 homepage: "http://mmottl.github.io/pcre-ocaml"
+license: "LGPL-2.1+ with OCaml linking exception"
 dev-repo: "https://github.com/mmottl/pcre-ocaml.git"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "pcre"]
-]
-build-doc: [ "ocaml" "setup.ml" "-doc" ]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "pcre"]
 depends: [
+  "ocaml" {>= "3.12"}
   "base-bytes"
   "ocamlfind" {>= "1.5"}
-  # Included from _opam file
   "conf-libpcre"
 ]
-ocaml-version: [ >= "3.12" ]

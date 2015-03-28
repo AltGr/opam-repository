@@ -5,10 +5,5 @@ build: [
   [make "opt"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "http"]]
-depends: [
-  "ocamlfind"
-  "camlp4"
-  "ocamlnet"
-  "pcre"
-]
+remove: ["ocamlfind" "remove" "http"]
+depends: ["ocaml" "ocamlfind" "camlp4" "ocamlnet" "pcre"]

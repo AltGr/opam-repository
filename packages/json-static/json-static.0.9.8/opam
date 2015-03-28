@@ -4,9 +4,5 @@ build: [
   [make]
   [make "install" "PREFIX=%{prefix}%"]
 ]
-remove: [["ocamlfind" "remove" "json-static"]]
-depends: [
-  "ocamlfind"
-  "json-wheel"
-  "camlp4"
-]
+remove: ["ocamlfind" "remove" "json-static"]
+depends: ["ocaml" "ocamlfind" "json-wheel" "camlp4"]

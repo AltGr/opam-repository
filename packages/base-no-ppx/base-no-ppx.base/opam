@@ -1,3 +1,5 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
-available: [ ocaml-version < "4.02.0" | ocaml-version >= "4.03.0" ]
+depends: [
+  "ocaml" {< "4.02.0" | >= "4.03.0"}
+]

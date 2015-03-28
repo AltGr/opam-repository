@@ -9,5 +9,10 @@ remove: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-uninstall"]
 ]
-depends: [ "ocamlfind" "spotlib" {>="2.5.1"} "omake" "ppx_meta_conv" {>= "2.0.0"} ]
-ocaml-version: [>= "4.02.1"]
+depends: [
+  "ocaml" {>= "4.02.1"}
+  "ocamlfind"
+  "spotlib" {>= "2.5.1"}
+  "omake"
+  "ppx_meta_conv" {>= "2.0.0"}
+]

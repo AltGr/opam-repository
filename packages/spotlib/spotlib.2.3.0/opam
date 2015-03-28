@@ -6,10 +6,10 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "spotlib"]]
+remove: ["ocamlfind" "remove" "spotlib"]
 depends: [
+  "ocaml" {>= "4.0.1"}
   "ocamlfind"
   "omake"
   "pa_ounit" {>= "109.18.00"}
 ]
-ocaml-version: [>= "4.0.1"]

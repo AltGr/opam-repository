@@ -6,8 +6,5 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "ulib"]]
-depends: [
-  "ocamlfind"
-  "ounit"
-]
+remove: ["ocamlfind" "remove" "ulib"]
+depends: ["ocaml" "ocamlfind" "ounit"]

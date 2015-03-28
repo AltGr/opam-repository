@@ -1,15 +1,13 @@
 opam-version: "1"
 maintainer: "dave@recoil.org"
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
+tags: ["org:mirage" "org:xapi-project"]
 build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "pcap"]]
+remove: ["ocamlfind" "remove" "pcap"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "cstruct" {>= "0.5.0" & < "0.6.0"}
 ]

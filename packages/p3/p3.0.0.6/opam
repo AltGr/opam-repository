@@ -4,6 +4,8 @@ build: [
   [make "all"]
   [make "ocamlfind_install" "PREFIX=%{prefix}%"]
 ]
-remove: [["ocamlfind" "remove" "p3"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "4.01.0"]
+remove: ["ocamlfind" "remove" "p3"]
+depends: [
+  "ocaml" {>= "4.01.0"}
+  "ocamlfind"
+]

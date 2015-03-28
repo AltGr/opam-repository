@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
-authors: ["Gerd Stolpmann"]
+authors: "Gerd Stolpmann"
 homepage: "http://projects.camlcity.org/projects/cache.html"
 license: "BSD-3-Clause"
 build: [
@@ -8,10 +8,10 @@ build: [
   [make "opt"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "cache"]]
+remove: ["ocamlfind" "remove" "cache"]
 depends: [
+  "ocaml" {< "4.02.0"}
   "ocamlfind"
   "omake"
   "ocamlnet" {>= "3.6.0"}
 ]
-ocaml-version: [<"4.02.0"]

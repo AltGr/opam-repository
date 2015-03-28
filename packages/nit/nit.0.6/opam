@@ -10,6 +10,7 @@ remove: [
   [make "uninstall"]
 ]
 depends: [
+  "ocaml"
   "javalib" {= "2.3"}
   "sawja" {= "1.5"}
 ]

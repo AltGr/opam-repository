@@ -4,8 +4,8 @@ build: [
   [make]
   [make "PREFIX=%{prefix}%" "install"]
 ]
-remove: [
-  [make "PREFIX=%{prefix}%" "uninstall"]
+remove: [make "PREFIX=%{prefix}%" "uninstall"]
+depends: [
+  "ocaml" {>= "4.00.1"}
+  "obus"
 ]
-depends: ["obus"]
-ocaml-version: [ >= "4.00.1" ]

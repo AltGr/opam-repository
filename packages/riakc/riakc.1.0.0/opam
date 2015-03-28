@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "riakc"]]
+remove: ["ocamlfind" "remove" "riakc"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "core" {>= "109.12.00"}
   "async" {< "109.58.00"}

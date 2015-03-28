@@ -5,7 +5,7 @@ build: [
   [make "install"]
 ]
 remove: ["ocamlfind" "remove" "deriving-ocsigen"]
-depends: ["ocamlfind" "optcomp" "camlp4"]
+depends: ["ocaml" "ocamlfind" "optcomp" "camlp4"]
 depopts: "type_conv"
 conflicts: [
   "type_conv" {< "108.07.00"}

@@ -4,13 +4,6 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "missinglib"]]
-depends: [
-  "ocamlfind"
-  "ounit"
-  "camlp4"
-]
-patches: [
-  "opam.patch"
-  "meta-0.4.1.patch"
-]
+remove: ["ocamlfind" "remove" "missinglib"]
+depends: ["ocaml" "ocamlfind" "ounit" "camlp4"]
+patches: ["opam.patch" "meta-0.4.1.patch"]

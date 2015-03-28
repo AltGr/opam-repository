@@ -1,11 +1,11 @@
 opam-version: "1"
+maintainer: "jhw@conjury.org"
 homepage: "https://bitbucket.org/jhw/oni"
 license: "BSD-2-Clause"
-maintainer: "jhw@conjury.org"
-build: [["./etc/install.sh" "install"]]
-remove: [["./etc/install.sh" "remove"]]
-available: [ ocaml-version >= "4.02" ]
+build: ["./etc/install.sh" "install"]
+remove: ["./etc/install.sh" "remove"]
 depends: [
+  "ocaml" {>= "4.02"}
   "ocamlfind"
   "omake"
   "ounit"

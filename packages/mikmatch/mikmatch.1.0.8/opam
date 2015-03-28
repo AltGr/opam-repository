@@ -1,7 +1,7 @@
 opam-version: "1"
 maintainer: "andy.ray@ujamjar.com"
 homepage: "http://mjambon.com/micmatch.html"
-doc: ["http://mjambon.com/mikmatch-manual.html"]
+doc: "http://mjambon.com/mikmatch-manual.html"
 build: [
   [make "str"]
   [make "install-str"]
@@ -13,11 +13,9 @@ remove: [
   [make "uninstall"] {"%{pcre:installed}%"}
 ]
 depends: [
+  "ocaml" {>= "4.01"}
   "ocamlfind"
   "camlp4"
   "tophide" {>= "1.0.2"}
 ]
-depopts: [
-  "pcre"
-]
-ocaml-version: [>= "4.01"]
+depopts: "pcre"

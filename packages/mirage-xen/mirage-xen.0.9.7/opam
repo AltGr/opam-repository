@@ -4,8 +4,9 @@ build: [
   [make "xen-build"]
   [make "xen-install" "PREFIX=%{prefix}%"]
 ]
-remove: [[make "xen-uninstall" "PREFIX=%{prefix}%"]]
+remove: [make "xen-uninstall" "PREFIX=%{prefix}%"]
 depends: [
+  "ocaml" {>= "4.00.1" & < "4.02.0"}
   "cstruct" {>= "0.7.1"}
   "ocamlfind"
   "lwt" {>= "2.4.3"}
@@ -13,6 +14,5 @@ depends: [
   "xenstore" {>= "1.2.5"}
   "ipaddr" {>= "0.2.2"}
 ]
-conflicts: ["mirage-unix"]
-os: ["linux"]
-ocaml-version: [>= "4.00.1" & <"4.02.0"]
+conflicts: "mirage-unix"
+os: "linux"

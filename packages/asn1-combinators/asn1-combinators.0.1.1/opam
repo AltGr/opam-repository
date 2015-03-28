@@ -1,24 +1,20 @@
 opam-version: "1.2"
-name:         "asn1-combinators"
-version:      "0.1.1"
-homepage:     "https://github.com/mirleft/ocaml-asn1-combinators"
-dev-repo:     "https://github.com/mirleft/ocaml-asn1-combinators.git"
-bug-reports:  "https://github.com/mirleft/ocaml-asn1-combinators/issues"
-author:       "David Kaloper <david@numm.org>"
-maintainer:   "David Kaloper <david@numm.org>"
-license:      "BSD2"
-
+maintainer: "David Kaloper <david@numm.org>"
+authors: "David Kaloper <david@numm.org>"
+homepage: "https://github.com/mirleft/ocaml-asn1-combinators"
+bug-reports: "https://github.com/mirleft/ocaml-asn1-combinators/issues"
+license: "BSD2"
+tags: "org:mirage"
+dev-repo: "https://github.com/mirleft/ocaml-asn1-combinators.git"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix ]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
 remove: ["ocamlfind" "remove" "asn1-combinators"]
-
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "cstruct" {>= "1.2.0"}
   "zarith"
 ]
-tags: [ "org:mirage" ]
-available: [ ocaml-version >= "4.01.0" ]

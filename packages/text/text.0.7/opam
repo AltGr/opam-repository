@@ -5,6 +5,6 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "text"]]
-depends: ["ocamlfind"]
-depopts: ["pcre"]
+remove: ["ocamlfind" "remove" "text"]
+depends: ["ocaml" "ocamlfind"]
+depopts: "pcre"

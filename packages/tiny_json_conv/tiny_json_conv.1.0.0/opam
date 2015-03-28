@@ -7,9 +7,9 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "tiny_json_conv"]
 depends: [
+  "ocaml" {>= "4.0.0"}
   "ocamlfind"
   "omake"
   "tiny_json"
   "meta_conv" {= "0.9.0"}
 ]
-ocaml-version: [>= "4.0.0"]

@@ -1,18 +1,9 @@
 opam-version: "1.1"
-maintainer: [
-  "anil@recoil.org"
-  "thomas@gazagnaire.org"
-]
+maintainer: ["anil@recoil.org" "thomas@gazagnaire.org"]
 authors: [
-  "Anil Madhavapeddy"
-  "Thomas Gazagnaire"
-  "Dave Scott"
-  "Richard Mortier"
+  "Anil Madhavapeddy" "Thomas Gazagnaire" "Dave Scott" "Richard Mortier"
 ]
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
+tags: ["org:mirage" "org:xapi-project"]
 build: [
   ["./configure" "--bindir" "%{bin}%"]
   [make]
@@ -23,6 +14,7 @@ remove: [
   ["ocamlfind" "remove" "mirage"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ipaddr" {>= "1.0.0"}
   "mirage-types" {>= "2.3.0"}
   "re" {>= "1.2.1"}
@@ -33,4 +25,3 @@ depends: [
   "crunch" {>= "1.2.2"}
   "sexplib"
 ]
-ocaml-version: [>="4.01.0"]

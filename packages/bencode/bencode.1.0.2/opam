@@ -1,13 +1,13 @@
 opam-version: "1"
 maintainer: "rudi.grinberg@gmail.com"
-authors: [ "Rudi Grinberg" "Simon Cruanes" ]
+authors: ["Rudi Grinberg" "Simon Cruanes"]
 license: "MIT"
 build: [
   [make "all"]
   [make "install"]
 ]
-remove: [
-    ["ocamlfind" "remove" "bencode"]
+remove: ["ocamlfind" "remove" "bencode"]
+depends: [
+  "ocaml" {>= "4.00.1"}
+  "ocamlfind"
 ]
-depends: ["ocamlfind"]
-ocaml-version: [>="4.00.1"]

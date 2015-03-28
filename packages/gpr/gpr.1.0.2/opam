@@ -5,12 +5,7 @@ build: [
   [make]
   [make "install"]
 ]
-depends: [
-  "ocamlfind"
-  "core"
-  "lacaml"
-  "gsl"
-]
+depends: ["ocaml" "ocamlfind" "core" "lacaml" "gsl"]
 depexts: [
   [["debian"] ["libgsl0-dev"]]
   [["ubuntu"] ["libgsl0-dev"]]

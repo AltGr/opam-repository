@@ -1,8 +1,5 @@
 opam-version: "1"
 maintainer: "anil@recoil.org"
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
-build: [[make "all"]]
-depends: ["ocamlfind"]
+tags: ["org:mirage" "org:xapi-project"]
+build: [make "all"]
+depends: ["ocaml" "ocamlfind"]

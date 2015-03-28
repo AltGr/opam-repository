@@ -4,6 +4,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "type_conv"]]
-depends: ["camlp4"
-          "ocamlfind"]
+remove: ["ocamlfind" "remove" "type_conv"]
+depends: ["ocaml" "camlp4" "ocamlfind"]

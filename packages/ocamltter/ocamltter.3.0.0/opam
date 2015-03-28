@@ -9,13 +9,13 @@ remove: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-uninstall"]
 ]
-ocaml-version: [>= "4.02.0"]
 depends: [
+  "ocaml" {>= "4.02.0"}
   "ocamlfind"
   "omake"
   "cryptokit"
-  "ocurl" {>="0.5.3"}
-  "tiny_json_conv" {>="1.4.1"}
-  "spotlib" {>="2.5.0"}
-  "orakuda" {>="1.2.2" & < "2.0.0"}
+  "ocurl" {>= "0.5.3"}
+  "tiny_json_conv" {>= "1.4.1"}
+  "spotlib" {>= "2.5.0"}
+  "orakuda" {>= "1.2.2" & < "2.0.0"}
 ]

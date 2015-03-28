@@ -4,12 +4,12 @@ build: [
   ["omake"]
   ["omake" "install"]
 ]
-remove: [["ocamlfind" "remove" "flow"]]
+remove: ["ocamlfind" "remove" "flow"]
 depends: [
+  "ocaml" {< "4.01.0"}
   "ocamlfind"
   "omake"
   "lwt"
   "core"
   "ssl"
 ]
-ocaml-version: [<"4.01.0"]

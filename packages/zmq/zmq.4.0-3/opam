@@ -7,17 +7,6 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "ZMQ"]
-]
-depends: [
-  "conf-zmq"
-  "ocamlfind"
-  "base-unix"
-  "ounit"
-  "uint"
-  "oasis"
-]
-conflicts: [
-  "ocaml-zmq"
-]
+remove: ["ocamlfind" "remove" "ZMQ"]
+depends: ["ocaml" "conf-zmq" "ocamlfind" "base-unix" "ounit" "uint" "oasis"]
+conflicts: "ocaml-zmq"

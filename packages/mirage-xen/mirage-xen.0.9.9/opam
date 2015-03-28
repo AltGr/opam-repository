@@ -4,8 +4,9 @@ build: [
   [make "xen-build"]
   [make "xen-install" "PREFIX=%{prefix}%"]
 ]
-remove: [[make "xen-uninstall" "PREFIX=%{prefix}%"]]
+remove: [make "xen-uninstall" "PREFIX=%{prefix}%"]
 depends: [
+  "ocaml" {>= "4.00.1" & < "4.02.0"}
   "cstruct" {>= "1.0.1"}
   "ocamlfind"
   "io-page-xen" {>= "0.9.9"}
@@ -14,5 +15,4 @@ depends: [
   "shared-memory-ring" {>= "0.4.3"}
   "xenstore" {>= "1.2.5"}
 ]
-ocaml-version: [>= "4.00.1" & <"4.02.0"]
-os: ["linux"]
+os: "linux"

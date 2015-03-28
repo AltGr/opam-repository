@@ -1,16 +1,13 @@
 opam-version: "1"
 maintainer: "dave@recoil.org"
-
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
+tags: ["org:mirage" "org:xapi-project"]
 build: [
   [make]
   [make "install" "BINDIR=%{bin}%"]
 ]
-remove: [[make "uninstall" "BINDIR=%{bin}%"]]
+remove: [make "uninstall" "BINDIR=%{bin}%"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "cmdliner"
   "lwt" {>= "2.4.3"}
@@ -19,7 +16,6 @@ depends: [
   "mirage-types" {>= "1.1.0"}
   "ipaddr"
   "io-page" {>= "1.4.0"}
-  "mirage-xen" {>= "1.0.1" }
+  "mirage-xen" {>= "1.0.1"}
 ]
-ocaml-version: [>= "4.00.0"]
-os: ["linux"]
+os: "linux"

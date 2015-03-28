@@ -1,9 +1,20 @@
 opam-version: "1"
 maintainer: "vb@luminar.eu.org"
 homepage: "http://projects.camlcity.org/projects/ocamlnet.html"
-doc: ["http://projects.camlcity.org/projects/dl/ocamlnet-3.6.3/doc/html-main/index.html"]
+doc:
+  "http://projects.camlcity.org/projects/dl/ocamlnet-3.6.3/doc/html-main/index.html"
 build: [
-  ["./configure" "-bindir" bin "-%{pcre:enable}%-pcre" "-%{lablgtk:enable}%-gtk2" "-%{ssl:enable}%-ssl" "-%{camlzip:enable}%-zip" "-%{cryptokit:enable}%-crypto" "-with-nethttpd"]
+  [
+    "./configure"
+    "-bindir"
+    bin
+    "-%{pcre:enable}%-pcre"
+    "-%{lablgtk:enable}%-gtk2"
+    "-%{ssl:enable}%-ssl"
+    "-%{camlzip:enable}%-zip"
+    "-%{cryptokit:enable}%-crypto"
+    "-with-nethttpd"
+  ]
   [make "all"]
   [make "opt"]
   [make "install"]
@@ -35,12 +46,9 @@ remove: [
   ["ocamlfind" "remove" "shell"]
   ["ocamlfind" "remove" "smtp"]
 ]
-depends: ["ocamlfind" "camlp4"]
-depopts: [
-  "lablgtk"
-  "pcre"
-  "ssl"
-  "camlzip"
-  "cryptokit"
+depends: [
+  "ocaml" {< "4.01.0"}
+  "ocamlfind"
+  "camlp4"
 ]
-ocaml-version: [< "4.01.0"]
+depopts: ["lablgtk" "pcre" "ssl" "camlzip" "cryptokit"]

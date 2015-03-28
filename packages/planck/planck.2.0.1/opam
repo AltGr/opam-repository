@@ -6,12 +6,12 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "planck"]]
+remove: ["ocamlfind" "remove" "planck"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "sexplib" {>= "108.07.00"}
   "spotlib" {= "2.0.1"}
   "omake"
 ]
-ocaml-version: [>= "4.00.0"]
-os: ["linux"]
+os: "linux"

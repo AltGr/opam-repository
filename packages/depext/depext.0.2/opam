@@ -6,5 +6,7 @@ bug-reports: "https://github.com/AltGr/opam-depext/issues"
 license: "LGPL-3.0 with OCaml linking exception"
 dev-repo: "https://github.com/AltGr/opam-depext.git"
 build: [make]
-depends: "cmdliner"
-available: [ ocaml-version >= "4.02" ]
+depends: [
+  "ocaml" {>= "4.02"}
+  "cmdliner"
+]

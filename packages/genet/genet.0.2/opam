@@ -7,6 +7,7 @@ build: [
 ]
 remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "config-file" {>= "1.1"}
   "lablgtk-extras" {>= "1.2"}
@@ -19,4 +20,3 @@ depends: [
   "ocamldot" {>= "1.0"}
   "rdf" {>= "0.3"}
 ]
-ocaml-version: [>= "4.00.0"]

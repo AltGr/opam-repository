@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "mfp@acm.org"
-authors: ["Mike Wells"]
+authors: "Mike Wells"
 homepage: "https://github.com/mfp/ocaml-statsd-client/"
 license: "BSD3"
 build: [
@@ -8,5 +8,5 @@ build: [
   [make "opt"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "statsd-client"]]
-depends: ["ocamlfind" "lwt"]
+remove: ["ocamlfind" "remove" "statsd-client"]
+depends: ["ocaml" "ocamlfind" "lwt"]

@@ -9,4 +9,6 @@ substs: "Makefile.conf"
 build: [make]
 install: [make "install"]
 remove: [make "uninstall"]
-available: [ ocaml-version >= "4.02.0" ]
+depends: [
+  "ocaml" {>= "4.02.0"}
+]

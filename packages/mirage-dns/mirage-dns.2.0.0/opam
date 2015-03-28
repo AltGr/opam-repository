@@ -1,15 +1,13 @@
 opam-version: "1"
 maintainer: "anil@recoil.org"
-build: [ 
-  [ "ocamlfind" "query" "dns.mirage" ]
-]
-remove: []
+build: ["ocamlfind" "query" "dns.mirage"]
+
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
-  "dns" {>= "0.11.0" }
+  "dns" {>= "0.11.0"}
   "tcpip"
   "mirage-types-lwt" {>= "2.0.0"}
   "lwt" {>= "2.4.3"}
   "cstruct" {>= "1.0.0"}
 ]
-ocaml-version: [>= "4.01.0"]

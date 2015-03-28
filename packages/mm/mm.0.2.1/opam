@@ -5,15 +5,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "mm"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "mm"]
+depends: ["ocaml" "ocamlfind"]
 depopts: [
-  "alsa"
-  "ao"
-  "pulseaudio"
-  "gstreamer"
-  "mad"
-  "ogg"
-  "ocamlsdl"
-  "theora"
+  "alsa" "ao" "pulseaudio" "gstreamer" "mad" "ogg" "ocamlsdl" "theora"
 ]

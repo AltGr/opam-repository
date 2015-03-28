@@ -1,10 +1,6 @@
 opam-version: "1"
 maintainer: "Christophe.Troestler@umons.ac.be"
-authors: [
-  "Christophe Troestler"
-  "Noémie Meunier"
-  "Pierre Hauweele"
-]
+authors: ["Christophe Troestler" "Noémie Meunier" "Pierre Hauweele"]
 homepage: "https://forge.ocamlcore.org/projects/ml-gammu/"
 license: "LGPL-3.0 with OCaml linking exception"
 build: [
@@ -12,10 +8,10 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "gammu"]]
-depends: ["ocamlfind"]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "gammu"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
-  [["ubuntu"]["libgammu-dev"]]
-  [["debian"]["libgammu-dev"]]
+  [["debian"] ["libgammu-dev"]]
+  [["ubuntu"] ["libgammu-dev"]]
 ]

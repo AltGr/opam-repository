@@ -1,9 +1,10 @@
 opam-version: "1"
 maintainer: "blue-prawn"
-authors: ["Sam Lantinga"]
+authors: "Sam Lantinga"
 homepage: "http://wiki.libsdl.org/FrontPage"
 license: "Zlib"
-build: [["pkg-config" "sdl2"]]
+build: ["pkg-config" "sdl2"]
+depends: "ocaml"
 depexts: [
   [["debian"] ["libsdl2-dev"]]
   [["mageia"] ["libsdl2-devel"]]

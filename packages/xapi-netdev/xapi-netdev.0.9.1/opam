@@ -8,9 +8,5 @@ remove: [
   [make "uninstall" "BINDIR=%{bin}%"]
   ["ocamlfind" "remove" "netdev"]
 ]
-os: [ "linux" ]
-depends: [
-  "ocamlfind"
-  "xapi-stdext"
-  "xapi-forkexecd"
-]
+depends: ["ocaml" "ocamlfind" "xapi-stdext" "xapi-forkexecd"]
+os: "linux"

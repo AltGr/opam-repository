@@ -1,26 +1,18 @@
 opam-version: "1.2"
 maintainer: "anil@recoil.org"
-authors: [ "Anil Madhavapeddy" "Thomas Gazagnaire" ]
-license: "ISC"
+authors: ["Anil Madhavapeddy" "Thomas Gazagnaire"]
 homepage: "https://github.com/mirage/ocaml-crunch"
-dev-repo: "https://github.com/mirage/ocaml-crunch.git"
 bug-reports: "https://github.com/mirage/ocaml-crunch/issues"
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
+license: "ISC"
+tags: ["org:mirage" "org:xapi-project"]
+dev-repo: "https://github.com/mirage/ocaml-crunch.git"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
 ]
-install: [
-  ["ocaml" "setup.ml" "-install"]
-]
+install: ["ocaml" "setup.ml" "-install"]
 remove: [
   ["rm" "-f" "%{bin}%/ocaml-crunch"]
   ["ocamlfind" "remove" "crunch"]
 ]
-depends: [
-  "ocamlfind"
-  "cmdliner"
-]
+depends: ["ocaml" "ocamlfind" "cmdliner"]

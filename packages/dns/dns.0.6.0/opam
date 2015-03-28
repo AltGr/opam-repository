@@ -17,6 +17,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "dns"]
 depends: [
+  "ocaml"
   "cstruct" {>= "0.6.0" & < "1.0.0"}
   "ocamlfind"
   "cryptokit"

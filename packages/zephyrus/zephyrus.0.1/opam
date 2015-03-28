@@ -1,7 +1,8 @@
 opam-version: "1"
 maintainer: "jakub.zwolakowski@inria.fr"
-build: [[make]]
+build: [make]
 depends: [
+  "ocaml"
   "atd" {>= "1.0.3" & <= "2"}
   "atdgen" {>= "1.2.4" & < "1.4.0"}
   "menhir"

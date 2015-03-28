@@ -32,6 +32,7 @@ build: [
 ]
 remove: ["rm" "-rf" "%{lib}%/ocsigenserver"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "base-unix"
   "base-threads"

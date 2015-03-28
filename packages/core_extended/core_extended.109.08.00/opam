@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "core_extended"]]
+remove: ["ocamlfind" "remove" "core_extended"]
 depends: [
+  "ocaml"
   "camlp4"
   "pcre"
   "core" {= "109.08.00"}

@@ -7,6 +7,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "conduit"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "sexplib" {>= "109.15.00"}
 ]
@@ -15,4 +16,3 @@ conflicts: [
   "async" {< "109.15.00"}
   "lwt" {< "2.4.3"}
 ]
-ocaml-version: [>= "4.00.0"]

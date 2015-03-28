@@ -5,9 +5,9 @@ build: [
   ["cp" "config.darwin.ml" "config.ml"] {os = "darwin"}
   [make "all"]
 ]
-remove: [
-]
+
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "uuidm"
   "yojson"
@@ -21,4 +21,3 @@ depends: [
   "iocaml-kernel" {= "0.4.0"}
   "iocamljs-kernel" {= "0.4.0"}
 ]
-ocaml-version: [ >= "4.01.0" ]

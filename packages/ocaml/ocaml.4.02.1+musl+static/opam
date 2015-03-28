@@ -1,0 +1,21 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  [
+    "./configure"
+    "-prefix"
+    prefix
+    "-with-debug-runtime"
+    "-cc"
+    "musl-gcc -Os"
+    "-aspp"
+    "musl-gcc -c"
+    "-libs"
+    "-static"
+    "-no-curses"
+    "-no-graph"
+    "-no-shared-libs"
+  ]
+  [make "world.opt"]
+  [make "install"]
+]

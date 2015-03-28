@@ -10,6 +10,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "vchan"]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "lwt" {>= "2.4.4"}
   "cstruct" {>= "1.0.1"}
@@ -24,4 +25,3 @@ depopts: ["xen-evtchn" "xen-gnt" "mirage-xen"]
 conflicts: [
   "xen-evtchn" {< "1.0.3"}
 ]
-ocaml-version: [>= "4.00.1"]

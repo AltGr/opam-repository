@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "yojson"]]
+remove: ["ocamlfind" "remove" "yojson"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "cppo"
   "easy-format"

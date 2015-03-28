@@ -19,6 +19,7 @@ build: [
   ]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "uucp" {>= "0.9.1"}
 ]
@@ -28,4 +29,3 @@ depopts: [
   "uutf" {test}
   "cmdliner" {test}
 ]
-available: [ocaml-version >= "4.01.0"]

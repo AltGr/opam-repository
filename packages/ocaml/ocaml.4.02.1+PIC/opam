@@ -1,0 +1,17 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  [
+    "./configure"
+    "-cc"
+    "cc -fPIC"
+    "-aspp"
+    "cc -c -fPIC"
+    "-prefix"
+    prefix
+    "-with-debug-runtime"
+  ]
+  [make "world"]
+  [make "world.opt"]
+  [make "install"]
+]

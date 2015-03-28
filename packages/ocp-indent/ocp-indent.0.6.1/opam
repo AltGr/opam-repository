@@ -13,3 +13,4 @@ remove: [
   ["./configure" "--prefix" prefix]
   [make "uninstall"]
 ]
+depends: "ocaml"

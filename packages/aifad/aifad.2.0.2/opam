@@ -6,10 +6,4 @@ build: [
   [make]
   [make "install"]
 ]
-depends: [
-  "ocamlfind"
-  "menhir"
-  "cfg"
-  "pcre"
-  "res"
-]
+depends: ["ocaml" "ocamlfind" "menhir" "cfg" "pcre" "res"]

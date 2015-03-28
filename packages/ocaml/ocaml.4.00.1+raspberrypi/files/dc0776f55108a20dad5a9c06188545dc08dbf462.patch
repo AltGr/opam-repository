@@ -1,0 +1,268 @@
+From dc0776f55108a20dad5a9c06188545dc08dbf462 Mon Sep 17 00:00:00 2001
+From: Benedikt Meurer <benedikt.meurer@googlemail.com>
+Date: Wed, 24 Oct 2012 06:20:45 +0000
+Subject: [PATCH] #5798: Apply patch to add VFPv2 and ARMv6 hard-float support
+ (Jeffrey Scofield, Anil Madhavapeddy).
+
+[PATCH] Detect and support armv6/VFPE2, which is sufficient to get
+ocamlopt working on the Raspberry Pi hardfloat Debian variant
+
+Original patch: Jeffrey Scofield via http://psellos.com/pub/ocamlxarm/ocaml4-vfpv2.diff
+Fixes from: Anil Madhavapeddy <anil@recoil.org>
+
+
+
+git-svn-id: http://caml.inria.fr/svn/ocaml/trunk@13042 f963ae5c-01c2-4b8c-9fe0-0dff7051ff02
+---
+ asmcomp/arm/arch.ml       |  5 ++++-
+ asmcomp/arm/emit.mlp      | 11 ++++++++---
+ asmcomp/arm/proc.ml       |  9 +++++----
+ asmcomp/arm/scheduling.ml |  4 ++--
+ asmcomp/arm/selection.ml  | 10 +++++-----
+ asmrun/Makefile           |  2 +-
+ asmrun/arm.S              | 12 +++++++++++-
+ configure                 |  1 +
+ 8 files changed, 37 insertions(+), 17 deletions(-)
+
+diff --git a/asmcomp/arm/arch.ml b/asmcomp/arm/arch.ml
+index 8822d38..a12d6d3 100644
+--- a/asmcomp/arm/arch.ml
++++ b/asmcomp/arm/arch.ml
+@@ -17,7 +17,7 @@ open Format
+ 
+ type abi = EABI | EABI_VFP
+ type arch = ARMv4 | ARMv5 | ARMv5TE | ARMv6 | ARMv6T2 | ARMv7
+-type fpu = Soft | VFPv3_D16 | VFPv3
++type fpu = Soft | VFPv2 | VFPv3_D16 | VFPv3
+ 
+ let abi =
+   match Config.system with
+@@ -35,6 +35,7 @@ let string_of_arch = function
+ 
+ let string_of_fpu = function
+     Soft      -> "soft"
++  | VFPv2     -> "vfpv2"
+   | VFPv3_D16 -> "vfpv3-d16"
+   | VFPv3     -> "vfpv3"
+ 
+@@ -50,6 +51,7 @@ let (arch, fpu, thumb) =
+     | EABI, "armv6t2" -> ARMv6T2, Soft,      false
+     | EABI, "armv7"   -> ARMv7,   Soft,      false
+     | EABI, _         -> ARMv4,   Soft,      false
++    | EABI_VFP, "armv6" -> ARMv6, VFPv2,     false
+     | EABI_VFP, _     -> ARMv7,   VFPv3_D16, true
+     end in
+   (ref def_arch, ref def_fpu, ref def_thumb)
+@@ -69,6 +71,7 @@ let farch spec =
+ let ffpu spec =
+   fpu := (match spec with
+             "soft" when abi <> EABI_VFP     -> Soft
++          | "vfpv2" when abi = EABI_VFP     -> VFPv2
+           | "vfpv3-d16" when abi = EABI_VFP -> VFPv3_D16
+           | "vfpv3" when abi = EABI_VFP     -> VFPv3
+           | spec -> raise (Arg.Bad spec))
+diff --git a/asmcomp/arm/emit.mlp b/asmcomp/arm/emit.mlp
+index 2c6eb72..e0c531c 100644
+--- a/asmcomp/arm/emit.mlp
++++ b/asmcomp/arm/emit.mlp
+@@ -399,6 +399,10 @@ let emit_instr i =
+           `	ldr	{emit_reg i.res.(1)}, {emit_label lbl} + 4\n`;
+           2
+         end
++    | Lop(Iconst_float f) when !fpu = VFPv2 ->
++        let lbl = float_literal f in
++        `	fldd	{emit_reg i.res.(0)}, {emit_label lbl} @ {emit_string f}\n`;
++        1
+     | Lop(Iconst_float f) ->
+         let encode imm =
+           let sg = Int64.to_int (Int64.shift_right_logical imm 63) in
+@@ -465,7 +469,7 @@ let emit_instr i =
+         let ninstr = emit_stack_adjustment (-n) in
+         stack_offset := !stack_offset + n;
+         ninstr
+-    | Lop(Iload(Single, addr)) when !fpu >= VFPv3_D16 ->
++    | Lop(Iload(Single, addr)) when !fpu >= VFPv2 ->
+         `	flds	s14, {emit_addressing addr i.arg 0}\n`;
+         `	fcvtds	{emit_reg i.res.(0)}, s14\n`; 2
+     | Lop(Iload((Double | Double_u), addr)) when !fpu = Soft ->
+@@ -499,7 +503,7 @@ let emit_instr i =
+           | Double_u -> "fldd"
+           | _ (* 32-bit quantities *) -> "ldr" in
+         `	{emit_string instr}	{emit_reg r}, {emit_addressing addr i.arg 0}\n`; 1
+-    | Lop(Istore(Single, addr)) when !fpu >= VFPv3_D16 ->
++    | Lop(Istore(Single, addr)) when !fpu >= VFPv2 ->
+         `	fcvtsd	s14, {emit_reg i.arg.(0)}\n`;
+         `	fsts	s14, {emit_addressing addr i.arg 1}\n`; 2
+     | Lop(Istore((Double | Double_u), addr)) when !fpu = Soft ->
+@@ -805,7 +809,7 @@ let rec emit_all ninstr i =
+     let n = emit_instr i in
+     let ninstr' = ninstr + n in
+     (* fldd can address up to +/-1KB, ldr can address up to +/-4KB *)
+-    let limit = (if !fpu >= VFPv3_D16 && !float_literals <> []
++    let limit = (if !fpu >= VFPv2 && !float_literals <> []
+                  then 127
+                  else 511) in
+     let limit = limit - !num_literals in
+@@ -907,6 +911,7 @@ let begin_assembly() =
+   end;
+   begin match !fpu with
+     Soft      -> `	.fpu	softvfp\n`
++  | VFPv2     -> `	.fpu	vfpv2\n`
+   | VFPv3_D16 -> `	.fpu	vfpv3-d16\n`
+   | VFPv3     -> `	.fpu	vfpv3\n`
+   end;
+diff --git a/asmcomp/arm/proc.ml b/asmcomp/arm/proc.ml
+index f42749c..58f1c72 100644
+--- a/asmcomp/arm/proc.ml
++++ b/asmcomp/arm/proc.ml
+@@ -36,7 +36,7 @@ let word_addressed = false
+     r13                   stack pointer
+     r14                   return address
+     r15                   program counter
+-   Floatinng-point register map (VFPv3):
++   Floating-point register map (VFPv{2,3}):
+     d0 - d7               general purpose (not preserved)
+     d8 - d15              general purpose (preserved)
+     d16 - d31             generat purpose (not preserved), VFPv3 only
+@@ -53,9 +53,9 @@ let float_reg_name =
+ 
+ (* We have three register classes:
+     0 for integer registers
+-    1 for VFPv3-D16
++    1 for VFPv2 and VFPv3-D16
+     2 for VFPv3
+-   This way we can choose between VFPv3-D16 and VFPv3
++   This way we can choose between VFPv2/VFPv3-D16 and VFPv3
+    at (ocamlopt) runtime using command line switches.
+ *)
+ 
+@@ -64,6 +64,7 @@ let num_register_classes = 3
+ let register_class r =
+   match (r.typ, !fpu) with
+     (Int | Addr), _  -> 0
++  | Float, VFPv2     -> 1
+   | Float, VFPv3_D16 -> 1
+   | Float, _         -> 2
+ 
+@@ -123,7 +124,7 @@ let calling_conventions
+         end
+     | Float ->
+         assert (abi = EABI_VFP);
+-        assert (!fpu >= VFPv3_D16);
++        assert (!fpu >= VFPv2);
+         if !float <= last_float then begin
+           loc.(i) <- phys_reg !float;
+           incr float
+diff --git a/asmcomp/arm/scheduling.ml b/asmcomp/arm/scheduling.ml
+index 58446d0..9e2d65b 100644
+--- a/asmcomp/arm/scheduling.ml
++++ b/asmcomp/arm/scheduling.ml
+@@ -40,7 +40,7 @@ method oper_latency = function
+   | Imulf | Ispecific Inegmulf
+   | Ispecific(Imuladdf | Inegmuladdf | Imulsubf | Inegmulsubf)
+   | Ispecific Isqrtf
+-  | Inegf | Iabsf when !fpu >= VFPv3_D16 -> 2
++  | Inegf | Iabsf when !fpu >= VFPv2 -> 2
+   (* Everything else *)
+   | _ -> 1
+ 
+@@ -70,7 +70,7 @@ method oper_issue_cycles = function
+   | Ispecific(Imuladdf | Inegmuladdf | Imulsubf | Inegmulsubf) -> 17
+   | Idivf
+   | Ispecific Isqrtf -> 27
+-  | Inegf | Iabsf | Iconst_float _ when !fpu >= VFPv3_D16 -> 4
++  | Inegf | Iabsf | Iconst_float _ when !fpu >= VFPv2 -> 4
+   (* Everything else *)
+   | _ -> 1
+ 
+diff --git a/asmcomp/arm/selection.ml b/asmcomp/arm/selection.ml
+index e84366a..bded362 100644
+--- a/asmcomp/arm/selection.ml
++++ b/asmcomp/arm/selection.ml
+@@ -20,9 +20,9 @@ open Mach
+ 
+ let is_offset chunk n =
+   match chunk with
+-  (* VFPv3 load/store have -1020 to 1020 *)
++  (* VFPv{2,3} load/store have -1020 to 1020 *)
+     Single | Double | Double_u
+-    when !fpu >= VFPv3_D16 ->
++    when !fpu >= VFPv2 ->
+       n >= -1020 && n <= 1020
+   (* ARM load/store byte/word have -4095 to 4095 *)
+   | Byte_unsigned | Byte_signed
+@@ -57,7 +57,7 @@ let pseudoregs_for_operation op arg res =
+   (* Soft-float Iabsf and Inegf: arg.(0) and res.(0) must be the same *)
+   | Iabsf | Inegf when !fpu = Soft ->
+       ([|res.(0); arg.(1)|], res)
+-  (* VFPv3 Imuladdf...Inegmulsubf: arg.(0) and res.(0) must be the same *)
++  (* VFPv{2,3} Imuladdf...Inegmulsubf: arg.(0) and res.(0) must be the same *)
+   | Ispecific(Imuladdf | Inegmuladdf | Imulsubf | Inegmulsubf) ->
+       let arg' = Array.copy arg in
+       arg'.(0) <- res.(0);
+@@ -91,7 +91,7 @@ method is_immediate n =
+ 
+ method! is_simple_expr = function
+   (* inlined floating-point ops are simple if their arguments are *)
+-  | Cop(Cextcall("sqrt", _, _, _), args) when !fpu >= VFPv3_D16 ->
++  | Cop(Cextcall("sqrt", _, _, _), args) when !fpu >= VFPv2 ->
+       List.for_all self#is_simple_expr args
+   | e -> super#is_simple_expr e
+ 
+@@ -176,7 +176,7 @@ method! select_operation op args =
+       (Iextcall("__aeabi_idivmod", false), args)
+   (* Turn floating-point operations into runtime ABI calls for softfp *)
+   | (op, args) when !fpu = Soft -> self#select_operation_softfp op args
+-  (* Select operations for VFPv3 *)
++  (* Select operations for VFPv{2,3} *)
+   | (op, args) -> self#select_operation_vfpv3 op args
+ 
+ method private select_operation_softfp op args =
+diff --git a/asmrun/Makefile b/asmrun/Makefile
+index 03716c4..425be06 100644
+--- a/asmrun/Makefile
++++ b/asmrun/Makefile
+@@ -170,7 +170,7 @@ clean::
+ .SUFFIXES: .S .d.o .p.o
+ 
+ .S.o:
+-	$(ASPP) -DSYS_$(SYSTEM) -o $*.o $*.S || \
++	$(ASPP) -DSYS_$(SYSTEM) -DMODEL_$(MODEL) -o $*.o $*.S || \
+ 	{ echo "If your assembler produced syntax errors, it is probably unhappy with the"; echo "preprocessor. Check your assembler, or try producing $*.o by hand."; exit 2; }
+ 
+ .S.p.o:
+diff --git a/asmrun/arm.S b/asmrun/arm.S
+index 2a70b8c..64a5544 100644
+--- a/asmrun/arm.S
++++ b/asmrun/arm.S
+@@ -17,7 +17,17 @@
+ 
+         .syntax unified
+         .text
+-#if defined(SYS_linux_eabihf)
++#if defined(SYS_linux_eabihf) && defined(MODEL_armv6)
++        .arch   armv6
++        .fpu    vfpv2
++        .arm
++
++    /* Compatibility macros */
++        .macro  cbz reg, lbl
++        cmp     \reg, #0
++        beq     \lbl
++        .endm
++#elif defined(SYS_linux_eabihf)
+         .arch   armv7-a
+         .fpu    vfpv3-d16
+         .thumb
+diff --git a/configure b/configure
+index e79e461..139fdd5 100755
+--- a/configure
++++ b/configure
+@@ -689,6 +689,7 @@ case "$host" in
+   powerpc-*-rhapsody*)          arch=power; model=ppc; system=rhapsody;;
+   powerpc-*-darwin*)            arch=power; system=rhapsody
+                                 if $arch64; then model=ppc64; else model=ppc; fi;;
++  armv6*-*-linux-gnueabihf)     arch=arm; model=armv6; system=linux_eabihf;;
+   arm*-*-linux-gnueabihf)       arch=arm; system=linux_eabihf;;
+   armv7*-*-linux-gnueabi)       arch=arm; model=armv7; system=linux_eabi;;
+   armv6t2*-*-linux-gnueabi)     arch=arm; model=armv6t2; system=linux_eabi;;

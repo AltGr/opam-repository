@@ -6,10 +6,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "message_switch"]
-]
+remove: ["ocamlfind" "remove" "message_switch"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "cohttp" {>= "0.10.0" & < "0.12.0"}
   "rpc"

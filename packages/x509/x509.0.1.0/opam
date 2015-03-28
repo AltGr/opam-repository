@@ -1,13 +1,13 @@
 opam-version: "1"
+tags: "org:mirage"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix ]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "x509"]
-]
+remove: ["ocamlfind" "remove" "x509"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "cstruct" {>= "1.2.0"}
   "type_conv"
@@ -15,5 +15,3 @@ depends: [
   "nocrypto" {= "0.1.0"}
   "asn1-combinators"
 ]
-tags: [ "org:mirage" ]
-ocaml-version: [>="4.01.0"]

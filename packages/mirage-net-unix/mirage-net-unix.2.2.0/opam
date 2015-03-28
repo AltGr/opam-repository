@@ -3,13 +3,14 @@ maintainer: "anil@recoil.org"
 authors: "Anil Madhavapeddy <anil@recoil.org>"
 homepage: "https://github.com/mirage/mirage-net-unix"
 bug-reports: "https://github.com/mirage/mirage-net-unix/issues"
-dev-repo: "https://github.com/mirage/mirage-net-unix.git"
 license: "ISC"
+dev-repo: "https://github.com/mirage/mirage-net-unix.git"
 build: [make]
+install: [make "install"]
 build-test: [make "test"]
-install: [ [make "install"] ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "cstruct" {>= "1.0.1"}
   "ocamlfind"
   "lwt" {>= "2.4.3"}
@@ -18,4 +19,3 @@ depends: [
   "tuntap" {>= "0.7.0"}
   "ounit" {test}
 ]
-available: [ ocaml-version >= "4.00.0"]

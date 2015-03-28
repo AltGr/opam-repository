@@ -5,8 +5,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocaml" "setup.ml" "-uninstall"]]
+remove: ["ocaml" "setup.ml" "-uninstall"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "omake"
   "cryptokit"
@@ -15,4 +16,3 @@ depends: [
   "spotlib" {>= "2.3.0" & <= "2.3.1"}
   "orakuda" {>= "1.1.0"}
 ]
-

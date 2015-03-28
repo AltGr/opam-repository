@@ -6,8 +6,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "bin_prot"]]
-depends: ["camlp4"
-          "ocamlfind"
-          "type_conv" {>= "112.01.00" & < "112.02.00"}]
-ocaml-version: [>= "4.02.1"]
+remove: ["ocamlfind" "remove" "bin_prot"]
+depends: [
+  "ocaml" {>= "4.02.1"}
+  "camlp4"
+  "ocamlfind"
+  "type_conv" {>= "112.01.00" & < "112.02.00"}
+]

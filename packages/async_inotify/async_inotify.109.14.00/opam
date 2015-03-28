@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "async_inotify"]]
+remove: ["ocamlfind" "remove" "async_inotify"]
 depends: [
+  "ocaml"
   "camlp4"
   "inotify" {< "2.0"}
   "async" {= "109.14.00"}

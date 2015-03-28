@@ -10,8 +10,8 @@ remove: [
   ["ocaml" "setup.ml" "-uninstall"]
 ]
 depends: [
+  "ocaml" {= "4.02.1"}
   "ocamlfind"
   "omake"
   "ppx_tools"
 ]
-ocaml-version: [= "4.02.1"]

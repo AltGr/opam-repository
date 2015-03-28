@@ -2,7 +2,8 @@ opam-version: "1"
 maintainer: "mfp@acm.org"
 homepage: "http://code.google.com/p/leveldb/"
 license: "BSD"
-build: [["cc" "-c" "test.cc"]]
+build: ["cc" "-c" "test.cc"]
+depends: "ocaml"
 depexts: [
   [["debian"] ["libleveldb-dev"]]
   [["ubuntu"] ["libleveldb-dev"]]

@@ -1,17 +1,15 @@
 opam-version: "1.2"
 maintainer: "alix.trieu@ens-rennes.fr"
-authors: [ "Alix Trieu <alix.trieu@ens-rennes.fr>" ]
-license: "Apache-2.0"
+authors: "Alix Trieu <alix.trieu@ens-rennes.fr>"
 homepage: "https://github.com/atrieu/Oolc"
+license: "Apache-2.0"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "oolc"]
-]
+remove: ["ocamlfind" "remove" "oolc"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
 ]
-available: [ ocaml-version >= "4.01.0" ]

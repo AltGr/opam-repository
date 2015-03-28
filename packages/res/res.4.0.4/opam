@@ -7,4 +7,4 @@ build: [
   [make "install"]
 ]
 remove: ["ocamlfind" "remove" "res"]
-depends: ["ocamlfind"]
+depends: ["ocaml" "ocamlfind"]

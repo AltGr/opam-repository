@@ -3,8 +3,8 @@ maintainer: "Anil Madhavapeddy <anil@recoil.org>"
 authors: "Anil Madhavapeddy <anil@recoil.org>"
 homepage: "https://github.com/avsm/ocaml-dockerfile"
 bug-reports: "https://github.com/avsm/ocaml-dockerfile/issues"
-tags: [ "org:mirage" "org:ocamllabs" ]
 license: "ISC"
+tags: ["org:mirage" "org:ocamllabs"]
 build: [
   ["./configure" "--prefix=%{prefix}%"]
   [make]
@@ -12,6 +12,7 @@ build: [
 install: [make "install"]
 remove: ["ocamlfind" "remove" "dockerfile"]
 depends: [
-  "ocamlfind" {build} 
+  "ocaml"
+  "ocamlfind" {build}
   "cmdliner"
 ]

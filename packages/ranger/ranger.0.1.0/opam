@@ -18,9 +18,9 @@ build-test: [
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "ranger"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind" {build}
   "kaputt" {test}
   "base-bytes"
   "oasis" {build}
 ]
-available: [ocaml-version >= "4.01.0"]

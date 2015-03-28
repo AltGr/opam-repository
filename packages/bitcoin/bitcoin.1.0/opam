@@ -6,8 +6,9 @@ build: [
   [make "doc"]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml"
   "yojson"
   "ocamlnet" {< "4"}
   "ocsigenserver"

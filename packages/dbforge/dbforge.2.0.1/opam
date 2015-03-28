@@ -1,10 +1,6 @@
 opam-version: "1"
 maintainer: "zoggy@bat8.org"
-authors: [
-  "Maxence Guesdon"
-  "Pierre-Yves Strub"
-  "Nadji Gauthier"
-]
+authors: ["Maxence Guesdon" "Pierre-Yves Strub" "Nadji Gauthier"]
 homepage: "http://zoggy.github.io/dbforge/"
 license: "LGPL v3"
 build: [
@@ -17,6 +13,7 @@ remove: [
   [make "uninstall-lib"]
 ]
 depends: [
+  "ocaml"
   "ocamlfind"
   "config-file" {>= "1.1"}
   "lablgtk-extras" {>= "1.2"}

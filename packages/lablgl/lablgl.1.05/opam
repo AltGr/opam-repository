@@ -6,12 +6,26 @@ build: [
   ["mkdir" "-p" bin]
   [make "glut"]
   [make "glutopt"]
-  [make "install" "-C" "src" "BINDIR=%{bin}%" "INSTALLDIR=%{lib}%/lablgl" "DLLDIR=%{lib}%/stublibs"]
-  [make "install" "-C" "LablGlut/src" "BINDIR=%{bin}%" "INSTALLDIR=%{lib}%/lablgl" "DLLDIR=%{lib}%/stublibs"]
+  [
+    make
+    "install"
+    "-C"
+    "src"
+    "BINDIR=%{bin}%"
+    "INSTALLDIR=%{lib}%/lablgl"
+    "DLLDIR=%{lib}%/stublibs"
+  ]
+  [
+    make
+    "install"
+    "-C"
+    "LablGlut/src"
+    "BINDIR=%{bin}%"
+    "INSTALLDIR=%{lib}%/lablgl"
+    "DLLDIR=%{lib}%/stublibs"
+  ]
 ]
-depends: [
-  "camlp4"
-]
+depends: ["ocaml" "camlp4"]
 depexts: [
   [["debian"] ["freeglut3-dev" "libglu1-mesa-dev" "mesa-common-dev"]]
   [["ubuntu"] ["freeglut3-dev" "libglu1-mesa-dev" "mesa-common-dev"]]

@@ -6,6 +6,7 @@ build: [
 ]
 remove: [make "PREFIX=%{prefix}%" "uninstall"]
 depends: [
+  "ocaml"
   "rpc"
   "xapi-forkexecd"
   "xapi-stdext"

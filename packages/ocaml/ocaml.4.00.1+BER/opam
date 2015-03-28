@@ -1,0 +1,13 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  ["./configure" "-prefix" prefix "-no-tk"]
+  [make "core"]
+  [make "coreboot"]
+  [make "all"]
+  [make "ocamlopt"]
+  [make "-i" "install"]
+  [make "-C" "ber-metaocaml-100" "all"]
+  [make "-C" "ber-metaocaml-100" "install"]
+]
+patches: "ber.patch"

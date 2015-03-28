@@ -6,6 +6,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "mirage-net-xen"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
   "cstruct" {>= "1.0.1"}
   "lwt" {>= "2.4.3"}
@@ -14,4 +15,3 @@ depends: [
   "mirage-xen" {>= "0.9.9"}
   "ipaddr" {>= "1.0.0"}
 ]
-ocaml-version: [>= "4.00.0"]

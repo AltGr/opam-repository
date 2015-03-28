@@ -15,10 +15,6 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "archimedes"]]
-depends: [
-  "cairo2"
-  "ocamlfind"
-  "camlp4"
-]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "archimedes"]
+depends: ["ocaml" "cairo2" "ocamlfind" "camlp4"]

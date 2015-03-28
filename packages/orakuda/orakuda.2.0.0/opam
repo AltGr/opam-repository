@@ -10,10 +10,10 @@ remove: [
   ["ocaml" "setup.ml" "-uninstall"]
 ]
 depends: [
+  "ocaml" {>= "4.02.1"}
   "ocamlfind"
   "omake"
-  "spotlib" {>="2.5.1"}
-  "pcre" 
+  "spotlib" {>= "2.5.1"}
+  "pcre"
   "ppx_tools"
 ]
-ocaml-version: [>= "4.02.1"]

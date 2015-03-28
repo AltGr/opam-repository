@@ -8,9 +8,5 @@ remove: [
   [make "uninstall" "BINDIR=%{bin}%"]
   ["ocamlfind" "remove" "stdext"]
 ]
-os: [ "linux" ]
-depends: [
-  "ocamlfind"
-  "uuidm"
-  "fd-send-recv"
-] 
+depends: ["ocaml" "ocamlfind" "uuidm" "fd-send-recv"]
+os: "linux"

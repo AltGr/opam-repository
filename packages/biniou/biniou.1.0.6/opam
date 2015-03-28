@@ -6,8 +6,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "biniou"]]
-depends: [
-  "ocamlfind"
-  "easy-format"
-]
+remove: ["ocamlfind" "remove" "biniou"]
+depends: ["ocaml" "ocamlfind" "easy-format"]

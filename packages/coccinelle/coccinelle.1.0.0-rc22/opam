@@ -1,5 +1,5 @@
 opam-version: "1"
-authors: ["Julia Lawall et. al."]
+authors: "Julia Lawall et. al."
 homepage: "http://coccinelle.lip6.fr/"
 license: "GPL"
 build: [
@@ -8,10 +8,9 @@ build: [
   [make "all.opt"]
   [make "install"]
 ]
-remove: [
-  [make "uninstall"]
-]
+remove: [make "uninstall"]
 depends: [
+  "ocaml"
   "menhir"
   "ocamlfind"
   "pcre" {<= "7.1.1"}
@@ -19,6 +18,4 @@ depends: [
   "conf-python-2-7"
   "conf-python-2-7-dev"
 ]
-patches: [
-  "opam.patch"
-]
+patches: "opam.patch"

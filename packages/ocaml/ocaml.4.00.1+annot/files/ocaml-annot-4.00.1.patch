@@ -1,0 +1,56 @@
+diff -r a1487e7d929b README.annot.rst
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/README.annot.rst	Mon Nov 05 00:14:05 2012 -0800
+@@ -0,0 +1,13 @@
++=====================
++OCaml annot patch
++=====================
++
++This small modification to OCaml compiler introduces OCAML_ANNOT environment variable which enables annotation file creation by default without the compiler switch -annot and -bin-annot.
++
++For example::
++
++   OCAML_ANNOT=1 ocamlc hello.ml
++
++creates hello.annot and hello.cmt even without -annot or -bin-annot.
++
++
+diff -r a1487e7d929b VERSION
+--- a/VERSION	Sat Oct 06 13:48:13 2012 +0900
++++ b/VERSION	Mon Nov 05 00:14:05 2012 -0800
+@@ -1,4 +1,4 @@
+-4.00.1
++4.00.1+annot
+ 
+ # The version string is the first line of this file.
+ # It must be in the format described in stdlib/sys.mli
+diff -r a1487e7d929b driver/main.ml
+--- a/driver/main.ml	Sat Oct 06 13:48:13 2012 +0900
++++ b/driver/main.ml	Mon Nov 05 00:14:05 2012 -0800
+@@ -160,6 +160,11 @@
+ 
+ let main () =
+   try
++    (* OCAML_ANNOT env variable to turn on -annot by default *)
++    (try ignore (Sys.getenv "OCAML_ANNOT"); 
++         Clflags.annotations := true;
++         Clflags.binary_annotations := true;
++    with Not_found -> ()); 
+     Arg.parse Options.list anonymous usage;
+     if
+       List.length (List.filter (fun x -> !x)
+diff -r a1487e7d929b driver/optmain.ml
+--- a/driver/optmain.ml	Sat Oct 06 13:48:13 2012 +0900
++++ b/driver/optmain.ml	Mon Nov 05 00:14:05 2012 -0800
+@@ -175,6 +175,11 @@
+   native_code := true;
+   let ppf = Format.err_formatter in
+   try
++    (* OCAML_ANNOT env variable to turn on -annot by default *)
++    (try ignore (Sys.getenv "OCAML_ANNOT"); 
++         Clflags.annotations := true;
++         Clflags.binary_annotations := true;
++    with Not_found -> ()); 
+     Arg.parse (Arch.command_line_options @ Options.list) anonymous usage;
+     if
+       List.length (List.filter (fun x -> !x)

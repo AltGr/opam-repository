@@ -6,6 +6,11 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "aacplus"]]
-depends: ["ocamlfind"]
-depexts: [[["source" "linux"] ["https://gist.githubusercontent.com/avsm/11409198/raw/8a67c518ad9e030725bb67f25119940eb8da2fa4/install-aacplus.sh"]]]
+remove: ["ocamlfind" "remove" "aacplus"]
+depends: ["ocaml" "ocamlfind"]
+depexts: [
+  ["linux" "source"]
+  [
+    "https://gist.githubusercontent.com/avsm/11409198/raw/8a67c518ad9e030725bb67f25119940eb8da2fa4/install-aacplus.sh"
+  ]
+]

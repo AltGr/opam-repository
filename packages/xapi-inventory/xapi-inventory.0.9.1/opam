@@ -5,11 +5,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [
-  [make "uninstall"]
-]
-depends: [
-  "ocamlfind"
-  "xapi-stdext"
-  "cmdliner"
-] 
+remove: [make "uninstall"]
+depends: ["ocaml" "ocamlfind" "xapi-stdext" "cmdliner"]

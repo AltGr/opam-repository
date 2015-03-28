@@ -7,10 +7,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "slacko"]
-]
+remove: ["ocamlfind" "remove" "slacko"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "camlp4"
   "cmdliner"
@@ -19,4 +18,3 @@ depends: [
   "ssl"
   "cohttp" {>= "0.10.0"}
 ]
-available: [ ocaml-version >= "4.01.0" ]

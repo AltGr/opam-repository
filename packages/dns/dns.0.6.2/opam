@@ -2,11 +2,14 @@ opam-version: "1"
 maintainer: "anil@recoil.org"
 authors: ["Anil Madhavapeddy" "Tim Deegan" "Richard Mortier" "Haris Rotsos"]
 homepage: "https://github.com/mirage/ocaml-dns"
-license: "
+license:
+  "
+
 LGPL-2.0 &
    LGPL-2.1 with OCaml linking exception &
    ISC
-         "
+         
+  "
 tags: ["org:mirage" "org:xapi-project"]
 build: [
   [
@@ -23,6 +26,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "dns"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "lwt" {>= "2.4.1"}
   "cstruct" {>= "0.6.0" & < "1.0.0"}
   "ocamlfind"
@@ -36,4 +40,3 @@ conflicts: [
   "mirage-net" {> "0.9.4"}
   "mirage-net" {< "0.5.2"}
 ]
-ocaml-version: [>= "4.00.0"]

@@ -1,26 +1,19 @@
 opam-version: "1.2"
-name: "benchmark"
-version: "1.4"
 maintainer: "Christophe Troestler <Christophe.Troestler@umons.ac.be>"
-authors: [ "Christophe Troestler <Christophe.Troestler@umons.ac.be>" ]
-license: "LGPL-3.0 with OCaml linking exception"
+authors: "Christophe Troestler <Christophe.Troestler@umons.ac.be>"
 homepage: "http://ocaml-benchmark.forge.ocamlcore.org/"
+license: "LGPL-3.0 with OCaml linking exception"
 dev-repo: "https://github.com/Chris00/ocaml-benchmark.git"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
-remove: [
-  ["ocamlfind" "remove" "benchmark"]
-]
-build-doc: [ "ocaml" "setup.ml" "-doc" ]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "benchmark"]
 depends: [
+  "ocaml" {>= "3.12.0"}
   "base-unix"
   "ocamlfind"
 ]
-depopts: [
-  "base-bigarray"
-  "pcre"
-]
-ocaml-version: [ >= "3.12.0" ]
+depopts: ["base-bigarray" "pcre"]

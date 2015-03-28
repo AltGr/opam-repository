@@ -12,6 +12,7 @@ remove: [
   ["ocamlfind" "remove" "ptrees"]
 ]
 depends: [
+  "ocaml"
   "ocamlfind"
   "camlzip" {= "1.05"}
   ("extlib" {>= "1.5.1" & <= "1.6.0"} | "extlib-compat")

@@ -5,9 +5,6 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "zarith"]]
-depends: [
-  "conf-gmp"
-  "ocamlfind"
-]
-patches: ["install_fix.patch"]
+remove: ["ocamlfind" "remove" "zarith"]
+depends: ["ocaml" "conf-gmp" "ocamlfind"]
+patches: "install_fix.patch"

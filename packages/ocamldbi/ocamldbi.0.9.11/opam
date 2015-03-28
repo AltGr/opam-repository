@@ -4,16 +4,7 @@ build: [
   [make]
   [make "install" "OCAMLDBIDIR=%{lib}%/ocamldbi" "DOCDIR=%{doc}%/ocamldbi"]
 ]
-remove: [["ocamlfind" "remove" "ocamldbi"]]
-depends: [
-  "ocamlfind"
-  "pcre"
-]
-depopts: [
-  "postgres"
-  "mysql"
-]
-conflicts: [
-  "postgresql"
-  "freetds"
-]
+remove: ["ocamlfind" "remove" "ocamldbi"]
+depends: ["ocaml" "ocamlfind" "pcre"]
+depopts: ["postgres" "mysql"]
+conflicts: ["postgresql" "freetds"]

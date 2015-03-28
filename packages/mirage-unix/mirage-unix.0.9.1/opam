@@ -4,8 +4,9 @@ build: [
   [make "unix-build"]
   [make "unix-install" "PREFIX=%{prefix}%"]
 ]
-remove: [["ocamlfind" "remove" "mirage"]]
+remove: ["ocamlfind" "remove" "mirage"]
 depends: [
+  "ocaml"
   "cstruct" {>= "0.7.1"}
   "ocamlfind"
   "lwt" {>= "2.4.0"}
@@ -13,4 +14,4 @@ depends: [
   "tuntap" {= "0.5"}
   "fd-send-recv"
 ]
-conflicts: ["mirage-xen"]
+conflicts: "mirage-xen"

@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "netamqp"]]
+remove: ["ocamlfind" "remove" "netamqp"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "ocamlnet" {= "3.6.0"}
   "pcre"

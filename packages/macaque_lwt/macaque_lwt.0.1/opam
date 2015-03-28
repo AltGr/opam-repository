@@ -4,9 +4,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "macaque_lwt"]]
-depends: [
-  "ocamlfind"
-  "macaque"
-  "lwt"
-]
+remove: ["ocamlfind" "remove" "macaque_lwt"]
+depends: ["ocaml" "ocamlfind" "macaque" "lwt"]

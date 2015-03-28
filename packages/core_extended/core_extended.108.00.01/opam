@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "core_extended"]]
+remove: ["ocamlfind" "remove" "core_extended"]
 depends: [
+  "ocaml" {= "3.12.1"}
   "camlp4"
   "ocamlfind"
   "bin_prot"
@@ -17,5 +18,4 @@ depends: [
   "res"
   "sexplib"
 ]
-ocaml-version: [= "3.12.1"]
 os: [!"openbsd"]

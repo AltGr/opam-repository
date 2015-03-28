@@ -4,10 +4,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "gen_server"]]
+remove: ["ocamlfind" "remove" "gen_server"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "core" {>= "109.12.00"}
   "async"
 ]
-

@@ -10,4 +10,7 @@ remove: [
   ["./configure" "--prefix" prefix]
   [make "uninstall"]
 ]
-depends: ["ocp-build" {>= "1.99.4-beta"}]
+depends: [
+  "ocaml"
+  "ocp-build" {>= "1.99.4-beta"}
+]

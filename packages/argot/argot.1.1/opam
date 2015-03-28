@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "superbobry@gmail.com"
-authors: ["Xavier Clerc"]
+authors: "Xavier Clerc"
 homepage: "http://argot.x9c.fr/"
 license: "GPL v3"
 build: [
@@ -8,6 +8,8 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "argot"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "4.0.0" & < "4.02.0"]
+remove: ["ocamlfind" "remove" "argot"]
+depends: [
+  "ocaml" {>= "4.0.0" & < "4.02.0"}
+  "ocamlfind"
+]

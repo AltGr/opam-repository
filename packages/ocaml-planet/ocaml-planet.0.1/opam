@@ -10,14 +10,12 @@ build: [
   [make]
 ]
 install: [make "install"]
-remove: [
-  ["ocamlfind" "remove" "ocaml_planet"]
-]
+remove: ["ocamlfind" "remove" "ocaml_planet"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlnet" {>= "4.0.2"}
   "lwt" {>= "2.4.7"}
   "cohttp" {>= "0.15.1"}
   "syndic" {>= "1.2"}
   "ocamlfind" {build}
 ]
-available: [ocaml-version >= "4.01.0"]

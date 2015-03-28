@@ -6,11 +6,11 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "bencode_rpc"]]
+remove: ["ocamlfind" "remove" "bencode_rpc"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind"
-  "bencode" { = "0.2" }
+  "bencode" {= "0.2"}
   "lwt"
   "base-unix"
 ]
-ocaml-version: [>= "4.00.0"]

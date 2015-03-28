@@ -7,8 +7,5 @@ build: [
   [make "opt"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "annexlib"]]
-depends: [
-  "ocamlfind"
-  "pcre"
-]
+remove: ["ocamlfind" "remove" "annexlib"]
+depends: ["ocaml" "ocamlfind" "pcre"]

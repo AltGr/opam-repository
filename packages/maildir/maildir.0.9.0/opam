@@ -1,9 +1,7 @@
 opam-version: "1"
-name: "maildir"
-version: "0.9.0"
 maintainer: "dominic.price@nottingham.ac.uk"
+authors: "Nicolas Ojeda Bar"
 homepage: "https://github.com/nojb/ocaml-maildir"
-authors: [ "Nicolas Ojeda Bar" ]
 license: "MIT"
 build: [
   ["oasis" "setup"]
@@ -15,7 +13,4 @@ remove: [
   [make "uninstall"]
   ["ocamlfind" "remove" "maildir"]
 ]
-depends: [
-  "oasis"
-  "ocamlfind"
-]
+depends: ["ocaml" "oasis" "ocamlfind"]

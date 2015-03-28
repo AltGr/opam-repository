@@ -7,9 +7,11 @@ build: [
   [make]
   [make "install"]
 ]
-ocaml-version: [>= "3.10.1" & < "4.02.0"]
-depends: ["camlp4"]
+depends: [
+  "ocaml" {>= "3.10.1" & < "4.02.0"}
+  "camlp4"
+]
 depexts: [
-  [ ["ubuntu"] ["zlib1g-dev"] ]
-  [ ["debian"] ["zlib1g-dev"] ]
+  [["debian"] ["zlib1g-dev"]]
+  [["ubuntu"] ["zlib1g-dev"]]
 ]

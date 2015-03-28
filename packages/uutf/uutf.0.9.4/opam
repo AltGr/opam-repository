@@ -17,11 +17,13 @@ build: [
     "cmdliner=%{cmdliner:installed}%"
   ]
 ]
-depends: "ocamlfind"
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+]
 depopts: [
   "cmdliner" {test}
 ]
 conflicts: [
   "cmdliner" {< "0.9.6"}
 ]
-available: [ocaml-version >= "4.00.0"]

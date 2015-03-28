@@ -5,8 +5,5 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "dolog"]]
-depends: [
-  "ocamlfind"
-  "base-unix"
-]
+remove: ["ocamlfind" "remove" "dolog"]
+depends: ["ocaml" "ocamlfind" "base-unix"]

@@ -5,6 +5,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "sonet"]]
-depends: ["ocamlfind"]
-ocaml-version: [>= "4.00.0"]
+remove: ["ocamlfind" "remove" "sonet"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+]

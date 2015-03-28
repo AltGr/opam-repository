@@ -5,9 +5,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "lastfm"]]
-depends: [
-  "ocamlfind"
-  "pcre"
-  "xmlplaylist"
-]
+remove: ["ocamlfind" "remove" "lastfm"]
+depends: ["ocaml" "ocamlfind" "pcre" "xmlplaylist"]

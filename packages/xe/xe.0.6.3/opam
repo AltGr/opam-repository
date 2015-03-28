@@ -1,16 +1,13 @@
 opam-version: "1"
 maintainer: "dave.scott@citrix.com"
-tags: [
-  "org:xapi-project"
-]
+tags: "org:xapi-project"
 build: [
   [make]
   [make "install" "BINDIR=%{bin}%"]
 ]
-remove: [
-  [make "uninstall" "BINDIR=%{bin}%"]
-]
+remove: [make "uninstall" "BINDIR=%{bin}%"]
 depends: [
+  "ocaml"
   "cstruct" {>= "0.6.0"}
   "lwt"
   "ocamlfind"

@@ -6,10 +6,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "ssl"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "ssl"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
+  [["centos"] ["openssl-devel"]]
   [["debian"] ["libssl-dev"]]
   [["ubuntu"] ["libssl-dev"]]
-  [["centos"] ["openssl-devel"]]
 ]

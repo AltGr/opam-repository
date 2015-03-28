@@ -5,8 +5,5 @@ build: [
   [make "build"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "pa_comprehension"]]
-depends: [
-  "ocamlfind"
-  "batteries"
-]
+remove: ["ocamlfind" "remove" "pa_comprehension"]
+depends: ["ocaml" "ocamlfind" "batteries"]

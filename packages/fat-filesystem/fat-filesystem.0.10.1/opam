@@ -5,10 +5,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [
-  [make "uninstall"]
-]
+remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "cstruct" {>= "1.0.1"}
   "ocamlfind"
   "lwt" {>= "2.4.3"}
@@ -18,4 +17,3 @@ depends: [
   "re"
   "cmdliner"
 ]
-ocaml-version: [>= "4.00.0"]

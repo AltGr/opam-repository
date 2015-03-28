@@ -5,9 +5,10 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "topology"]
+remove: ["ocamlfind" "remove" "topology"]
+depends: [
+  "ocaml"
+  "ocamlfind"
+  "ocamlgraph"
+  "packet" {>= "0.2.0"}
 ]
-depends: ["ocamlfind"
-          "ocamlgraph"
-          "packet" {>= "0.2.0"}]

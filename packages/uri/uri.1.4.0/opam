@@ -11,6 +11,7 @@ build: [
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "uri"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "re"
   "sexplib" {>= "109.53.00"}

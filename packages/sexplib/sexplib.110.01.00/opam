@@ -9,7 +9,9 @@ remove: [
   ["ocamlfind" "remove" "sexplib_num"]
   ["ocamlfind" "remove" "sexplib_unix"]
 ]
-depends: ["camlp4"
-          "ocamlfind"
-          "type_conv" {>= "109.53.00" & <= "109.60.01"}]
-ocaml-version: [>= "4.00.0"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "camlp4"
+  "ocamlfind"
+  "type_conv" {>= "109.53.00" & <= "109.60.01"}
+]

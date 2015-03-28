@@ -4,8 +4,5 @@ build: [
   [make "build"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "mparser"]]
-depends: [
-  "ocamlfind"
-  "pcre"
-]
+remove: ["ocamlfind" "remove" "mparser"]
+depends: ["ocaml" "ocamlfind" "pcre"]

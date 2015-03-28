@@ -8,7 +8,4 @@ remove: [
   ["rm" "-f" "%{prefix}%/bin/piqic-ocaml"]
   ["ocamlfind" "remove" "piqirun"]
 ]
-depends: [
-  "ocamlfind"
-  "piqilib"
-]
+depends: ["ocaml" "ocamlfind" "piqilib"]

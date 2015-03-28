@@ -6,8 +6,8 @@ build: [
   [make "clean" "full"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0" & < "4.02.0"}
   "ocamlfind"
   "lwt" {>= "2.4"}
   "js_of_ocaml" {>= "2.0"}
 ]
-ocaml-version: [ >= "4.01.0" & < "4.02.0" ]

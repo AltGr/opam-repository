@@ -12,6 +12,7 @@ remove: [
   [make "uninstall"]
 ]
 depends: [
+  "ocaml"
   "ocp-build" {= "1.99.6-beta"}
   "cmdliner"
 ]

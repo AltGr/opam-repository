@@ -1,9 +1,6 @@
 opam-version: "1"
 maintainer: "markus.weissmann@in.tum.de"
-authors: [
-  "Alexander Ostrovsky"
-  "Markus Weissmann"
-]
+authors: ["Alexander Ostrovsky" "Markus Weissmann"]
 homepage: "https://forge.ocamlcore.org/projects/bes/"
 license: "BSD3"
 build: [
@@ -11,9 +8,10 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "bes"]]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "bes"]
 depends: [
+  "ocaml"
   ("extlib" | "extlib-compat")
   "ocamlfind"
   "ospec" {>= "0.3.0"}

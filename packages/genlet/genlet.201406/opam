@@ -4,9 +4,33 @@ authors: "Oleg Kiselyov"
 homepage: "http://okmij.org/ftp/meta-programming/#let-insert"
 license: "Public Domain"
 build: [
-  ["ocamlfind" "-toolchain" "metaocaml" "c" "-package" "delimcc" "-a" "-o" "genlet.cma" "gengenlet.mli" "gengenlet.ml"]
-  ["ocamlfind" "-toolchain" "metaocaml" "opt" "-package" "delimcc" "-a" "-o" "genlet.cmxa" "gengenlet.mli" "gengenlet.ml"]
+  [
+    "ocamlfind"
+    "-toolchain"
+    "metaocaml"
+    "c"
+    "-package"
+    "delimcc"
+    "-a"
+    "-o"
+    "genlet.cma"
+    "gengenlet.mli"
+    "gengenlet.ml"
+  ]
+  [
+    "ocamlfind"
+    "-toolchain"
+    "metaocaml"
+    "opt"
+    "-package"
+    "delimcc"
+    "-a"
+    "-o"
+    "genlet.cmxa"
+    "gengenlet.mli"
+    "gengenlet.ml"
+  ]
 ]
-depends: [ "delimcc" "ocamlfind" ]
-available: [ compiler = "4.02.1+BER" ]
-patches: [ "remove-tests.patch" ]
+depends: ["ocaml" "delimcc" "ocamlfind"]
+patches: "remove-tests.patch"
+available: [compiler = "4.02.1+BER"]

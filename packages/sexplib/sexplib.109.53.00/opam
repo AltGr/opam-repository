@@ -8,6 +8,9 @@ remove: [
   ["ocamlfind" "remove" "sexplib"]
   ["ocamlfind" "remove" "sexplib_num"]
 ]
-depends: ["camlp4"
-          "ocamlfind"
-          "type_conv" {= "109.53.00"}]
+depends: [
+  "ocaml"
+  "camlp4"
+  "ocamlfind"
+  "type_conv" {= "109.53.00"}
+]

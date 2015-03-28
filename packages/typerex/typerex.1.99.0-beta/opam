@@ -1,11 +1,15 @@
 opam-version: "1"
 maintainer: "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
 homepage: "https://github.com/OCamlPro/typerex"
-ocaml-version: [ < "4.02.0" ]
 build: [
   ["./configure" "--bindir" bin]
   [make]
   [make "install"]
 ]
-remove: [["ocp-build" "-uninstall" "typerex"]]
-conflicts: ["ocp-build" {< "1.99"}]
+remove: ["ocp-build" "-uninstall" "typerex"]
+depends: [
+  "ocaml" {< "4.02.0"}
+]
+conflicts: [
+  "ocp-build" {< "1.99"}
+]

@@ -2,10 +2,11 @@ opam-version: "1"
 maintainer: "nbraud"
 homepage: "http://gmplib.org/"
 license: "GPL"
-build: [["sh" "-c" "cc -c $CFLAGS test.c"]]
+build: ["sh" "-c" "cc -c $CFLAGS test.c"]
+depends: "ocaml"
 depexts: [
-  [["debian"] ["libgmp-dev"]]
-  [["ubuntu"] ["libgmp-dev"]]
-  [["osx" "homebrew"] ["gmp"]]
   [["centos"] ["gmp" "gmp-devel"]]
+  [["debian"] ["libgmp-dev"]]
+  [["homebrew" "osx"] ["gmp"]]
+  [["ubuntu"] ["libgmp-dev"]]
 ]

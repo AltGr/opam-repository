@@ -13,6 +13,7 @@ remove: [
   [make "uninstall"] {"%{pcre:installed}%"}
 ]
 depends: [
+  "ocaml" {>= "4.01" & < "4.02"}
   "ocamlfind"
   "camlp4"
   "tophide" {>= "1.0.2"}
@@ -22,4 +23,3 @@ conflicts: [
   "pcre" {!= "7.0.4"}
 ]
 patches: ["mikmatch.patch" "fix_build.patch"]
-ocaml-version: [>= "4.01" & < "4.02"]

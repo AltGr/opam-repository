@@ -19,8 +19,8 @@ remove: [
   ["ocamlfind" "remove" "xen-utils"]
   ["ocamlfind" "remove" "xml-light2"]
 ]
-os: ["linux"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "xapi-stdext"
   "xmlm"
@@ -31,8 +31,9 @@ depends: [
   "xenstore_transport"
 ]
 depexts: [
+  [["centos"] ["xen-devel"]]
   [["debian"] ["libxen-dev"]]
   [["ubuntu"] ["libxen-dev"]]
-  [["centos"] ["xen-devel"]]
   [["xenserver"] ["xen-dom0-libs-devel" "xen-libs-devel"]]
 ]
+os: "linux"

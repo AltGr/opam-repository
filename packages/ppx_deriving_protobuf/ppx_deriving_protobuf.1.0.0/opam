@@ -1,7 +1,7 @@
 opam-version: "1"
 maintainer: "Peter Zotov <whitequark@whitequark.org>"
-build: [
-  "ocaml" "pkg/build.ml" "native=true"         # TODO fixme
-                         "native-dynlink=true" # TODO fixme
+build: ["ocaml" "pkg/build.ml" "native=true" "native-dynlink=true"]
+depends: [
+  "ocaml"
+  "ppx_deriving" {>= "0.2" & < "1.0"}
 ]
-depends: ["ppx_deriving" {>= "0.2" & < "1.0"}]

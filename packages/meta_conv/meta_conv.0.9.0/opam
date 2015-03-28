@@ -5,10 +5,10 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocaml" "setup.ml" "-uninstall"]]
+remove: ["ocaml" "setup.ml" "-uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0" & <= "4.00.1"}
   "ocamlfind"
   "omake"
   "type_conv"
 ]
-ocaml-version: [>= "4.00.0" & <= "4.00.1"]

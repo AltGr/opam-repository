@@ -1,5 +1,5 @@
 opam-version: "1"
-authors: ["Jesper Andersen"]
+authors: "Jesper Andersen"
 homepage: "http://www.diku.dk/~jespera/index.html"
 license: "GPL"
 build: [
@@ -7,5 +7,6 @@ build: [
   ["make" "opt"]
 ]
 depends: [
+  "ocaml"
   "menhir" {<= "20140422"}
 ]

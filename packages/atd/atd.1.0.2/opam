@@ -5,9 +5,5 @@ build: [
   [make]
   [make "install" "BINDIR=%{bin}%"]
 ]
-remove: [["ocamlfind" "remove" "atd"]]
-depends: [
-  "ocamlfind"
-  "menhir"
-  "easy-format"
-]
+remove: ["ocamlfind" "remove" "atd"]
+depends: ["ocaml" "ocamlfind" "menhir" "easy-format"]

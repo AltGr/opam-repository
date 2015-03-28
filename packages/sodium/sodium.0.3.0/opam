@@ -1,22 +1,22 @@
 opam-version: "1"
 maintainer: "sheets@alum.mit.edu"
-tags: ["org:mirage"]
+tags: "org:mirage"
 build: [
-  [make] { os != "freebsd" }
-  ["env" "IS_FREEBSD=true" make] { os = "freebsd" }
+  [make] {os != "freebsd"}
+  ["env" "IS_FREEBSD=true" make] {os = "freebsd"}
   [make "PREFIX=%{prefix}%" "install"]
 ]
-remove: [["ocamlfind" "remove" "sodium"]]
+remove: ["ocamlfind" "remove" "sodium"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "base-bigarray"
   "base-bytes"
   "ocamlfind"
   "ctypes" {>= "0.3.2" & < "0.4.0"}
 ]
 depexts: [
-  [ ["debian"] ["libsodium-dev"] ]
-  [ ["source" "linux"] ["https://gist.github.com/avsm/9037146/raw"] ]
-  [ ["freebsd"] ["security/libsodium"] ]
-  [ ["osx" "homebrew"] ["libsodium"] ]
+  [["debian"] ["libsodium-dev"]]
+  [["freebsd"] ["security/libsodium"]]
+  [["homebrew" "osx"] ["libsodium"]]
+  [["linux" "source"] ["https://gist.github.com/avsm/9037146/raw"]]
 ]
-available: [ocaml-version >= "4.01.0"]

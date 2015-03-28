@@ -1,14 +1,12 @@
 opam-version: "1"
 maintainer: "blue-prawn"
 authors: [
-  "Guy Eric Schalnat"
-  "Andreas Dilger"
-  "John Bowler"
-  "Glenn Randers-Pehrson"
+  "Guy Eric Schalnat" "Andreas Dilger" "John Bowler" "Glenn Randers-Pehrson"
 ]
 homepage: "http://www.libpng.org/pub/png/libpng.html"
 license: "Zlib"
-build: [["pkg-config" "libpng"]]
+build: ["pkg-config" "libpng"]
+depends: "ocaml"
 depexts: [
   [["debian"] ["libpng12-dev"]]
   [["mageia"] ["libpng-devel"]]

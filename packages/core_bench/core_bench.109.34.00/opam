@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "core_bench"]]
+remove: ["ocamlfind" "remove" "core_bench"]
 depends: [
+  "ocaml"
   "camlp4"
   "core" {= "109.34.00"}
   "sexplib" {= "109.20.00"}

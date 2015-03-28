@@ -6,7 +6,7 @@ build: [
 ]
 remove: [make "uninstall"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "stog" {= "0.7.0"}
   "rdf" {>= "0.3"}
 ]
-ocaml-version: [>= "4.00.0"]

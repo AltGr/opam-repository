@@ -4,16 +4,15 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [
-  [make "uninstall"]
-]
+remove: [make "uninstall"]
 depends: [
+  "ocaml"
   "obuild"
   "ocamlfind"
   "ctypes" {< "0.4.0"}
 ]
-os: [ "linux" ]
 depexts: [
- [ ["debian"] ["libnl-3" ] ]
- [ ["ubuntu"] ["libnl-3-200" ] ]
+  [["debian"] ["libnl-3"]]
+  [["ubuntu"] ["libnl-3-200"]]
 ]
+os: "linux"

@@ -21,10 +21,10 @@ install: [make "install"]
 build-test: [make "test"]
 remove: ["ocamlfind" "remove" "ipaddr"]
 depends: [
+  "ocaml" {>= "4.02.0"}
   "ocamlfind" {build}
   "base-bytes"
   "sexplib"
   "type_conv"
   "ounit" {test}
 ]
-available: [ocaml-version >= "4.02.0"]

@@ -1,27 +1,22 @@
 opam-version: "1.2"
-author : "Carmelo Piccione carmelo.piccione+prob_cache@gmail.com"
 maintainer: "carmelo.piccione+prob_cache@gmail.com"
+authors: "Carmelo Piccione carmelo.piccione+prob_cache@gmail.com"
 homepage: "https://github.com/struktured/ocaml-prob-cache"
-dev-repo: "git://github.com/struktured/ocaml-prob-cache.git#master"
 bug-reports: "https://github.com/struktured/ocaml-prob-cache/issues"
-
+dev-repo: "git://github.com/struktured/ocaml-prob-cache.git#master"
 build: [
   ["./configure" "--disable-containers-examples" "--disable-riak-examples"]
   [make "clean"]
   [make "-j2"]
 ]
-
-install: [
-  [make "install"]
-]
-
+install: [make "install"]
 remove: [
- ["ocamlfind" "remove" "prob_cache_riak"]
- ["ocamlfind" "remove" "prob_cache_containers"]
- ["ocamlfind" "remove" "prob_cache_common"]
+  ["ocamlfind" "remove" "prob_cache_riak"]
+  ["ocamlfind" "remove" "prob_cache_containers"]
+  ["ocamlfind" "remove" "prob_cache_common"]
 ]
-
 depends: [
+  "ocaml"
   "ocamlfind"
   "core" {>= "109.12.00"}
   "async"

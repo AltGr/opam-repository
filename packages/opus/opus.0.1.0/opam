@@ -5,11 +5,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "opus"]]
-depends: [
-  "ocamlfind"
-  "ogg"
-]
+remove: ["ocamlfind" "remove" "opus"]
+depends: ["ocaml" "ocamlfind" "ogg"]
 depexts: [
   [["debian"] ["libavutil-dev" "libopus-dev"]]
   [["ubuntu"] ["libavutil-dev" "libopus-dev"]]

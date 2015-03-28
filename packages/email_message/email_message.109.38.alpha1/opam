@@ -4,8 +4,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "email_message"]]
+remove: ["ocamlfind" "remove" "email_message"]
 depends: [
+  "ocaml"
   "camlp4"
   "async" {= "109.38.00"}
   "core" {>= "109.38.00" & <= "109.41.00"}

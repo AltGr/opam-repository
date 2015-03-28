@@ -24,7 +24,7 @@ build: [
 ]
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "archimedes"]
-depends: ["ocamlfind" "camlp4"]
+depends: ["ocaml" "ocamlfind" "camlp4"]
 depopts: ["cairo" "cairo2"]
 conflicts: [
   "cairo" {= "1.2.0"}

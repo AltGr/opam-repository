@@ -2,19 +2,19 @@ opam-version: "1.2"
 maintainer: "Nicolas Ojeda Bar <n.oje.bar@gmail.com>"
 authors: "Nicolas Ojeda Bar <n.oje.bar@gmail.com>"
 homepage: "https://www.github.com/nojb/ocaml-imap"
-dev-repo: "https://www.github.com/nojb/ocaml-imap.git"
 bug-reports: "https://www.github.com/nojb/ocaml-imap/issues"
 license: "MIT"
+dev-repo: "https://www.github.com/nojb/ocaml-imap.git"
 build: [
   ["./configure" "--prefix=%{prefix}%"]
   [make]
 ]
-build-doc: [make "doc"]
 install: [make "install"]
+build-doc: [make "doc"]
 remove: ["ocamlfind" "remove" "imap"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "uint"
   "base64" {>= "2.0.0"}
   "uutf"
 ]
-available: [ocaml-version >= "4.01.0"]

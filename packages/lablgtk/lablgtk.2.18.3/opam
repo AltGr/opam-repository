@@ -6,23 +6,22 @@ build: [
   [make "world"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "lablgtk2"]]
-depends: ["ocamlfind" "camlp4"]
-depopts: [
-  "conf-gtksourceview"
-  "conf-gnomecanvas"
-  "conf-glade"
-  "lablgl"
-]
+remove: ["ocamlfind" "remove" "lablgtk2"]
+depends: ["ocaml" "ocamlfind" "camlp4"]
+depopts: ["conf-gtksourceview" "conf-gnomecanvas" "conf-glade" "lablgl"]
 depexts: [
-  [["debian"] ["libgtk2.0-dev" "libexpat1-dev"]]
-  [["ubuntu"] ["libgtk2.0-dev" "libexpat1-dev"]]
+  [["debian"] ["libexpat1-dev" "libgtk2.0-dev"]]
+  [["ubuntu"] ["libexpat1-dev" "libgtk2.0-dev"]]
 ]
-patches: ["lablgldir.patch"]
+patches: "lablgldir.patch"
 post-messages: [
-  "This package requires gtk+ 2.0 development packages installed on your system" {failure}
-  "To solve pkg-config issues, you may need to do
+  "This package requires gtk+ 2.0 development packages installed on your system"
+    {failure}
+  "
+To solve pkg-config issues, you may need to do
 'export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig' (macports)
 or 'export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig' (homebrew)
-and retry" {failure & (os = "darwin")}
+and retry
+  "
+    {failure & os = "darwin"}
 ]

@@ -1,0 +1,2833 @@
+#
+# Copyright (C) 2012 Irlande Alexis
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# The chains mentioned here as a context reference are
+# Copyright Institut National de Recherche en Informatique et en Automatique.
+#
+diff -rcN ocaml-4.00.1.orig/parsing/lexer.mll ocaml-4.00.1/parsing/lexer.mll
+*** ocaml-4.00.1.orig/parsing/lexer.mll	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.1/parsing/lexer.mll	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 210,228 ****
+  
+  let report_error ppf = function
+    | Illegal_character c ->
+!       fprintf ppf "Illegal character (%s)" (Char.escaped c)
+    | Illegal_escape s ->
+!       fprintf ppf "Illegal backslash escape in string or character (%s)" s
+    | Unterminated_comment _ ->
+!       fprintf ppf "Comment not terminated"
+    | Unterminated_string ->
+!       fprintf ppf "String literal not terminated"
+    | Unterminated_string_in_comment _ ->
+!       fprintf ppf "This comment contains an unterminated string literal"
+    | Keyword_as_label kwd ->
+!       fprintf ppf "`%s' is a keyword, it cannot be used as label name" kwd
+    | Literal_overflow ty ->
+!       fprintf ppf "Integer literal exceeds the range of representable integers of type %s" ty
+  ;;
+  
+  }
+--- 210,228 ----
+  
+  let report_error ppf = function
+    | Illegal_character c ->
+!       fprintf ppf "Caractère illégal (%s)" (Char.escaped c)
+    | Illegal_escape s ->
+!       fprintf ppf "Séquence d'échappement illégale dans la chaîne ou le caractère (%s)" s
+    | Unterminated_comment _ ->
+!       fprintf ppf "Commentaire non terminé"
+    | Unterminated_string ->
+!       fprintf ppf "Chaîne non terminée"
+    | Unterminated_string_in_comment _ ->
+!       fprintf ppf "Ce commentaire contient une chaîne non terminée"
+    | Keyword_as_label kwd ->
+!       fprintf ppf "`%s' est un mot-clé, il ne peut pas être utilisé comme nom d'étiquette" kwd
+    | Literal_overflow ty ->
+!       fprintf ppf "La constante entière excède l'intervalle des entiers représentables de type %s" ty
+  ;;
+  
+  }
+diff -rcN ocaml-4.00.1.orig/parsing/location.ml ocaml-4.00.1/parsing/location.ml
+*** ocaml-4.00.1.orig/parsing/location.ml	2012-05-30 15:29:48.000000000 +0200
+--- ocaml-4.00.1/parsing/location.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 127,133 ****
+      end
+    done;
+    (* Print character location (useful for Emacs) *)
+!   Format.fprintf ppf "Characters %i-%i:@."
+                   loc.loc_start.pos_cnum loc.loc_end.pos_cnum;
+    (* Print the input, underlining the location *)
+    Format.pp_print_string ppf "  ";
+--- 127,133 ----
+      end
+    done;
+    (* Print character location (useful for Emacs) *)
+!   Format.fprintf ppf "Caractères %i-%i :@."
+                   loc.loc_start.pos_cnum loc.loc_end.pos_cnum;
+    (* Print the input, underlining the location *)
+    Format.pp_print_string ppf "  ";
+***************
+*** 224,230 ****
+    num_loc_lines := 0
+  
+  let (msg_file, msg_line, msg_chars, msg_to, msg_colon) =
+!   ("File \"", "\", line ", ", characters ", "-", ":")
+  
+  (* return file, line, char from the given position *)
+  let get_pos_info pos =
+--- 224,230 ----
+    num_loc_lines := 0
+  
+  let (msg_file, msg_line, msg_chars, msg_to, msg_colon) =
+!   ("Fichier \"", "\", ligne ", ", caractères ", "-", ":")
+  
+  (* return file, line, char from the given position *)
+  let get_pos_info pos =
+***************
+*** 236,242 ****
+    let endchar = loc.loc_end.pos_cnum - loc.loc_start.pos_cnum + startchar in
+    if file = "//toplevel//" then begin
+      if highlight_locations ppf loc none then () else
+!       fprintf ppf "Characters %i-%i"
+                loc.loc_start.pos_cnum loc.loc_end.pos_cnum
+    end else begin
+      fprintf ppf "%s%a%s%i" msg_file print_filename file msg_line line;
+--- 236,242 ----
+    let endchar = loc.loc_end.pos_cnum - loc.loc_start.pos_cnum + startchar in
+    if file = "//toplevel//" then begin
+      if highlight_locations ppf loc none then () else
+!       fprintf ppf "Caractères %i-%i"
+                loc.loc_start.pos_cnum loc.loc_end.pos_cnum
+    end else begin
+      fprintf ppf "%s%a%s%i" msg_file print_filename file msg_line line;
+***************
+*** 253,259 ****
+  
+  let print_error ppf loc =
+    print ppf loc;
+!   fprintf ppf "Error: ";
+  ;;
+  
+  let print_error_cur_file ppf = print_error ppf (in_file !input_name);;
+--- 253,259 ----
+  
+  let print_error ppf loc =
+    print ppf loc;
+!   fprintf ppf "Erreur : ";
+  ;;
+  
+  let print_error_cur_file ppf = print_error ppf (in_file !input_name);;
+***************
+*** 265,271 ****
+        num_loc_lines := !num_loc_lines + n
+      in
+      print ppf loc;
+!     fprintf ppf "Warning %a@." printw w;
+      pp_print_flush ppf ();
+      incr num_loc_lines;
+    end
+--- 265,271 ----
+        num_loc_lines := !num_loc_lines + n
+      in
+      print ppf loc;
+!     fprintf ppf "Avertissement %a@." printw w;
+      pp_print_flush ppf ();
+      incr num_loc_lines;
+    end
+diff -rcN ocaml-4.00.1.orig/parsing/syntaxerr.ml ocaml-4.00.1/parsing/syntaxerr.ml
+*** ocaml-4.00.1.orig/parsing/syntaxerr.ml	2012-03-23 03:16:44.000000000 +0100
+--- ocaml-4.00.1/parsing/syntaxerr.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 30,52 ****
+    | Unclosed(opening_loc, opening, closing_loc, closing) ->
+        if !Location.input_name = "//toplevel//"
+           && Location.highlight_locations ppf opening_loc closing_loc
+!       then fprintf ppf "Syntax error: '%s' expected, \
+!                    the highlighted '%s' might be unmatched" closing opening
+        else begin
+!         fprintf ppf "%aSyntax error: '%s' expected@."
+            Location.print_error closing_loc closing;
+!         fprintf ppf "%aThis '%s' might be unmatched"
+            Location.print_error opening_loc opening
+        end
+    | Applicative_path loc ->
+        fprintf ppf
+!         "%aSyntax error: applicative paths of the form F(X).t \
+!          are not supported when the option -no-app-func is set."
+          Location.print_error loc
+    | Variable_in_scope (loc, var) ->
+        fprintf ppf
+!         "%a@[In this scoped type, variable '%s@ \
+!          is reserved for the local type %s.@]"
+          Location.print_error loc var var
+    | Other loc ->
+!       fprintf ppf "%aSyntax error" Location.print_error loc
+--- 30,52 ----
+    | Unclosed(opening_loc, opening, closing_loc, closing) ->
+        if !Location.input_name = "//toplevel//"
+           && Location.highlight_locations ppf opening_loc closing_loc
+!       then fprintf ppf "Erreur de syntaxe : '%s' attendu, \
+!                    le '%s' souligné pourrait ne pas avoir de correspondance" closing opening
+        else begin
+!         fprintf ppf "%aErreur de syntaxe : '%s' attendu@."
+            Location.print_error closing_loc closing;
+!         fprintf ppf "%aCe '%s' pourrait ne pas avoir de correspondance"
+            Location.print_error opening_loc opening
+        end
+    | Applicative_path loc ->
+        fprintf ppf
+!         "%aErreur de syntaxe : les chemins applicatifs de la forme F(X).t \
+!          ne sont pas supportés quand l'option -no-app-func est activée."
+          Location.print_error loc
+    | Variable_in_scope (loc, var) ->
+        fprintf ppf
+!         "%a@[Dans ce type avec portée, la variable '%s@ \
+!          est réservée pour le type local %s.@]"
+          Location.print_error loc var var
+    | Other loc ->
+!       fprintf ppf "%aErreur de syntaxe" Location.print_error loc
+diff -rcN ocaml-4.00.1.orig/toplevel/opttopdirs.ml ocaml-4.00.1/toplevel/opttopdirs.ml
+*** ocaml-4.00.1.orig/toplevel/opttopdirs.ml	2012-01-20 15:23:34.000000000 +0100
+--- ocaml-4.00.1/toplevel/opttopdirs.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 56,62 ****
+      try Some (find_in_path !Config.load_path name0)
+      with Not_found -> None in
+    match name with
+!     | None -> fprintf ppf "File not found: %s@." name0; false
+      | Some name ->
+    let fn,tmp =
+      if Filename.check_suffix name ".cmx" || Filename.check_suffix name ".cmxa"
+--- 56,62 ----
+      try Some (find_in_path !Config.load_path name0)
+      with Not_found -> None in
+    match name with
+!     | None -> fprintf ppf "Fichier non trouvé : %s@." name0; false
+      | Some name ->
+    let fn,tmp =
+      if Filename.check_suffix name ".cmx" || Filename.check_suffix name ".cmxa"
+***************
+*** 74,80 ****
+      try Dynlink.loadfile fn; true
+      with
+        | Dynlink.Error err ->
+!           fprintf ppf "Error while loading %s: %s.@."
+              name (Dynlink.error_message err);
+            false
+        | exn ->
+--- 74,80 ----
+      try Dynlink.loadfile fn; true
+      with
+        | Dynlink.Error err ->
+!           fprintf ppf "Erreur lors du chargement de %s: %s.@."
+              name (Dynlink.error_message err);
+            false
+        | exn ->
+***************
+*** 105,111 ****
+      try
+        Env.lookup_type (Ldot(Lident "Topdirs", typename)) !toplevel_env
+      with Not_found ->
+!       fprintf ppf "Cannot find type Topdirs.%s.@." typename;
+        raise Exit in
+    Ctype.init_def(Ident.current_time());
+    Ctype.begin_def();
+--- 105,111 ----
+      try
+        Env.lookup_type (Ldot(Lident "Topdirs", typename)) !toplevel_env
+      with Not_found ->
+!       fprintf ppf "Impossible de trouver le type Topdirs.%s.@." typename;
+        raise Exit in
+    Ctype.init_def(Ident.current_time());
+    Ctype.begin_def();
+***************
+*** 128,137 ****
+      (ty_arg, path, is_old_style)
+    with
+    | Not_found ->
+!       fprintf ppf "Unbound value %a.@." Printtyp.longident lid;
+        raise Exit
+    | Ctype.Unify _ ->
+!       fprintf ppf "%a has a wrong type for a printing function.@."
+        Printtyp.longident lid;
+        raise Exit
+  
+--- 128,137 ----
+      (ty_arg, path, is_old_style)
+    with
+    | Not_found ->
+!       fprintf ppf "Valeur non définie %a.@." Printtyp.longident lid;
+        raise Exit
+    | Ctype.Unify _ ->
+!       fprintf ppf "%a possède un mauvais type pour une fonction d'affichage.@."
+        Printtyp.longident lid;
+        raise Exit
+  
+***************
+*** 153,159 ****
+      begin try
+        remove_printer path
+      with Not_found ->
+!       fprintf ppf "No printer named %a.@." Printtyp.longident lid
+      end
+    with Exit -> ()
+  
+--- 153,159 ----
+      begin try
+        remove_printer path
+      with Not_found ->
+!       fprintf ppf "Aucun afficheur nommé %a.@." Printtyp.longident lid
+      end
+    with Exit -> ()
+  
+diff -rcN ocaml-4.00.1.orig/toplevel/opttoploop.ml ocaml-4.00.1/toplevel/opttoploop.ml
+*** ocaml-4.00.1.orig/toplevel/opttoploop.ml	2012-01-27 13:48:15.000000000 +0100
+--- ocaml-4.00.1/toplevel/opttoploop.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 275,284 ****
+          | (Directive_ident f, Pdir_ident lid) -> f lid; true
+          | (Directive_bool f, Pdir_bool b) -> f b; true
+          | (_, _) ->
+!             fprintf ppf "Wrong type of argument for directive `%s'.@." dir_name;
+              false
+        with Not_found ->
+!         fprintf ppf "Unknown directive `%s'.@." dir_name;
+          false
+  
+  (* Temporary assignment to a reference *)
+--- 275,284 ----
+          | (Directive_ident f, Pdir_ident lid) -> f lid; true
+          | (Directive_bool f, Pdir_bool b) -> f b; true
+          | (_, _) ->
+!             fprintf ppf "Mauvais type d'argument pour la directive `%s'.@." dir_name;
+              false
+        with Not_found ->
+!         fprintf ppf "Directive `%s' inconnue.@." dir_name;
+          false
+  
+  (* Temporary assignment to a reference *)
+***************
+*** 324,334 ****
+            true
+          with
+          | Exit -> false
+!         | Sys.Break -> fprintf ppf "Interrupted.@."; false
+          | x -> Opterrors.report_error ppf x; false) in
+      if must_close then close_in ic;
+      success
+!   with Not_found -> fprintf ppf "Cannot find file %s.@." name; false
+  
+  let use_silently ppf name =
+    protect use_print_results false (fun () -> use_file ppf name)
+--- 324,334 ----
+            true
+          with
+          | Exit -> false
+!         | Sys.Break -> fprintf ppf " Interrompu.@."; false
+          | x -> Opterrors.report_error ppf x; false) in
+      if must_close then close_in ic;
+      success
+!   with Not_found -> fprintf ppf "Impossible de trouver le fichier %s.@." name; false
+  
+  let use_silently ppf name =
+    protect use_print_results false (fun () -> use_file ppf name)
+***************
+*** 391,397 ****
+  let load_ocamlinit ppf =
+    match !Clflags.init_file with
+    | Some f -> if Sys.file_exists f then ignore (use_silently ppf f)
+!               else fprintf ppf "Init file not found: \"%s\".@." f
+    | None ->
+       if Sys.file_exists ".ocamlinit" then ignore (use_silently ppf ".ocamlinit")
+       else try
+--- 391,397 ----
+  let load_ocamlinit ppf =
+    match !Clflags.init_file with
+    | Some f -> if Sys.file_exists f then ignore (use_silently ppf f)
+!               else fprintf ppf "Fichier d'initialisation non trouvé : \"%s\".@." f
+    | None ->
+       if Sys.file_exists ".ocamlinit" then ignore (use_silently ppf ".ocamlinit")
+       else try
+***************
+*** 416,422 ****
+  exception PPerror
+  
+  let loop ppf =
+!   fprintf ppf "        OCaml version %s - native toplevel@.@." Config.version;
+    initialize_toplevel_env ();
+    let lb = Lexing.from_function refill_lexbuf in
+    Location.init lb "//toplevel//";
+--- 416,422 ----
+  exception PPerror
+  
+  let loop ppf =
+!   fprintf ppf "        OCaml version %s (français) - interpréteur natif@.@." Config.version;
+    initialize_toplevel_env ();
+    let lb = Lexing.from_function refill_lexbuf in
+    Location.init lb "//toplevel//";
+***************
+*** 435,441 ****
+        ignore(execute_phrase true ppf phr)
+      with
+      | End_of_file -> exit 0
+!     | Sys.Break -> fprintf ppf "Interrupted.@."; Btype.backtrack snap
+      | PPerror -> ()
+      | x -> Opterrors.report_error ppf x; Btype.backtrack snap
+    done
+--- 435,441 ----
+        ignore(execute_phrase true ppf phr)
+      with
+      | End_of_file -> exit 0
+!     | Sys.Break -> fprintf ppf " Interrompu.@."; Btype.backtrack snap
+      | PPerror -> ()
+      | x -> Opterrors.report_error ppf x; Btype.backtrack snap
+    done
+diff -rcN ocaml-4.00.1.orig/toplevel/topdirs.ml ocaml-4.00.1/toplevel/topdirs.ml
+*** ocaml-4.00.1.orig/toplevel/topdirs.ml	2012-07-07 13:41:17.000000000 +0200
+--- ocaml-4.00.1/toplevel/topdirs.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 67,74 ****
+        (fun (name, crc) -> Consistbl.check Env.crc_units name crc filename)
+        cu.cu_imports
+    with Consistbl.Inconsistency(name, user, auth) ->
+!     fprintf ppf "@[<hv 0>The files %s@ and %s@ \
+!                  disagree over interface %s@]@."
+              user auth name;
+      raise Load_failed
+  
+--- 67,74 ----
+        (fun (name, crc) -> Consistbl.check Env.crc_units name crc filename)
+        cu.cu_imports
+    with Consistbl.Inconsistency(name, user, auth) ->
+!     fprintf ppf "@[<hv 0>Les fichiers %s@ et %s@ \
+!                  sont en désaccord sur l'interface %s@]@."
+              user auth name;
+      raise Load_failed
+  
+***************
+*** 142,155 ****
+              try Dll.open_dlls Dll.For_execution [name]
+              with Failure reason ->
+                fprintf ppf
+!                 "Cannot load required shared library %s.@.Reason: %s.@."
+                  name reason;
+                raise Load_failed)
+            lib.lib_dllibs;
+          List.iter (load_compunit ic filename ppf) lib.lib_units;
+          true
+        end else begin
+!         fprintf ppf "File %s is not a bytecode object file.@." name;
+          false
+        end
+    with Load_failed -> false
+--- 142,155 ----
+              try Dll.open_dlls Dll.For_execution [name]
+              with Failure reason ->
+                fprintf ppf
+!                 "Impossible de charger la bibliothèque partagée %s.@.Raison : %s.@."
+                  name reason;
+                raise Load_failed)
+            lib.lib_dllibs;
+          List.iter (load_compunit ic filename ppf) lib.lib_units;
+          true
+        end else begin
+!         fprintf ppf "Le fichier %s n'est pas un fichier de code-octet.@." name;
+          false
+        end
+    with Load_failed -> false
+***************
+*** 180,186 ****
+      try
+        Env.lookup_type (Ldot(Lident "Topdirs", typename)) !toplevel_env
+      with Not_found ->
+!       fprintf ppf "Cannot find type Topdirs.%s.@." typename;
+        raise Exit in
+    Ctype.init_def(Ident.current_time());
+    Ctype.begin_def();
+--- 180,186 ----
+      try
+        Env.lookup_type (Ldot(Lident "Topdirs", typename)) !toplevel_env
+      with Not_found ->
+!       fprintf ppf "Impossible de trouver le type Topdirs.%s.@." typename;
+        raise Exit in
+    Ctype.init_def(Ident.current_time());
+    Ctype.begin_def();
+***************
+*** 203,212 ****
+      (ty_arg, path, is_old_style)
+    with
+    | Not_found ->
+!       fprintf ppf "Unbound value %a.@." Printtyp.longident lid;
+        raise Exit
+    | Ctype.Unify _ ->
+!       fprintf ppf "%a has a wrong type for a printing function.@."
+        Printtyp.longident lid;
+        raise Exit
+  
+--- 203,212 ----
+      (ty_arg, path, is_old_style)
+    with
+    | Not_found ->
+!       fprintf ppf "Valeur non définie %a.@." Printtyp.longident lid;
+        raise Exit
+    | Ctype.Unify _ ->
+!       fprintf ppf "%a possède un mauvais type pour une fonction d'affichage.@."
+        Printtyp.longident lid;
+        raise Exit
+  
+***************
+*** 228,234 ****
+      begin try
+        remove_printer path
+      with Not_found ->
+!       fprintf ppf "No printer named %a.@." Printtyp.longident lid
+      end
+    with Exit -> ()
+  
+--- 228,234 ----
+      begin try
+        remove_printer path
+      with Not_found ->
+!       fprintf ppf "Aucun afficheur nommé %a.@." Printtyp.longident lid
+      end
+    with Exit -> ()
+  
+***************
+*** 251,257 ****
+      (* Check if this is a primitive *)
+      match desc.val_kind with
+      | Val_prim p ->
+!         fprintf ppf "%a is an external function and cannot be traced.@."
+          Printtyp.longident lid
+      | _ ->
+          let clos = eval_path path in
+--- 251,257 ----
+      (* Check if this is a primitive *)
+      match desc.val_kind with
+      | Val_prim p ->
+!         fprintf ppf "%a est une fonction externe et ne peut être tracée.@."
+          Printtyp.longident lid
+      | _ ->
+          let clos = eval_path path in
+***************
+*** 261,267 ****
+          then begin
+          match is_traced clos with
+          | Some opath ->
+!             fprintf ppf "%a is already traced (under the name %a).@."
+              Printtyp.path path
+              Printtyp.path opath
+          | None ->
+--- 261,267 ----
+          then begin
+          match is_traced clos with
+          | Some opath ->
+!             fprintf ppf "%a est déjà tracée (sous le nom %a).@."
+              Printtyp.path path
+              Printtyp.path opath
+          | None ->
+***************
+*** 276,308 ****
+              (* Redirect the code field of the closure to point
+                 to the instrumentation function *)
+              set_code_pointer clos tracing_function_ptr;
+!             fprintf ppf "%a is now traced.@." Printtyp.longident lid
+!         end else fprintf ppf "%a is not a function.@." Printtyp.longident lid
+    with
+!   | Not_found -> fprintf ppf "Unbound value %a.@." Printtyp.longident lid
+  
+  let dir_untrace ppf lid =
+    try
+      let (path, desc) = Env.lookup_value lid !toplevel_env in
+      let rec remove = function
+      | [] ->
+!         fprintf ppf "%a was not traced.@." Printtyp.longident lid;
+          []
+      | f :: rem ->
+          if Path.same f.path path then begin
+            set_code_pointer f.closure f.actual_code;
+!           fprintf ppf "%a is no longer traced.@." Printtyp.longident lid;
+            rem
+          end else f :: remove rem in
+      traced_functions := remove !traced_functions
+    with
+!   | Not_found -> fprintf ppf "Unbound value %a.@." Printtyp.longident lid
+  
+  let dir_untrace_all ppf () =
+    List.iter
+      (fun f ->
+        set_code_pointer f.closure f.actual_code;
+!       fprintf ppf "%a is no longer traced.@." Printtyp.path f.path)
+      !traced_functions;
+    traced_functions := []
+  
+--- 276,308 ----
+              (* Redirect the code field of the closure to point
+                 to the instrumentation function *)
+              set_code_pointer clos tracing_function_ptr;
+!             fprintf ppf "%a est maintenant tracée.@." Printtyp.longident lid
+!         end else fprintf ppf "%a n'est pas une fonction.@." Printtyp.longident lid
+    with
+!   | Not_found -> fprintf ppf "Valeur non définie %a.@." Printtyp.longident lid
+  
+  let dir_untrace ppf lid =
+    try
+      let (path, desc) = Env.lookup_value lid !toplevel_env in
+      let rec remove = function
+      | [] ->
+!         fprintf ppf "%a n'était pas tracée.@." Printtyp.longident lid;
+          []
+      | f :: rem ->
+          if Path.same f.path path then begin
+            set_code_pointer f.closure f.actual_code;
+!           fprintf ppf "%a n'est plus tracée.@." Printtyp.longident lid;
+            rem
+          end else f :: remove rem in
+      traced_functions := remove !traced_functions
+    with
+!   | Not_found -> fprintf ppf "Valeur non définie %a.@." Printtyp.longident lid
+  
+  let dir_untrace_all ppf () =
+    List.iter
+      (fun f ->
+        set_code_pointer f.closure f.actual_code;
+!       fprintf ppf "%a n'est plus tracée.@." Printtyp.path f.path)
+      !traced_functions;
+    traced_functions := []
+  
+diff -rcN ocaml-4.00.1.orig/toplevel/toploop.ml ocaml-4.00.1/toplevel/toploop.ml
+*** ocaml-4.00.1.orig/toplevel/toploop.ml	2012-07-10 16:54:19.000000000 +0200
+--- ocaml-4.00.1/toplevel/toploop.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 264,273 ****
+          | (Directive_ident f, Pdir_ident lid) -> f lid; true
+          | (Directive_bool f, Pdir_bool b) -> f b; true
+          | (_, _) ->
+!             fprintf ppf "Wrong type of argument for directive `%s'.@." dir_name;
+              false
+        with Not_found ->
+!         fprintf ppf "Unknown directive `%s'.@." dir_name;
+          false
+  
+  (* Temporary assignment to a reference *)
+--- 264,273 ----
+          | (Directive_ident f, Pdir_ident lid) -> f lid; true
+          | (Directive_bool f, Pdir_bool b) -> f b; true
+          | (_, _) ->
+!             fprintf ppf "Mauvais type d'argument pour la directive `%s'.@." dir_name;
+              false
+        with Not_found ->
+!         fprintf ppf "Directive `%s' inconnue.@." dir_name;
+          false
+  
+  (* Temporary assignment to a reference *)
+***************
+*** 313,323 ****
+            true
+          with
+          | Exit -> false
+!         | Sys.Break -> fprintf ppf "Interrupted.@."; false
+          | x -> Errors.report_error ppf x; false) in
+      if must_close then close_in ic;
+      success
+!   with Not_found -> fprintf ppf "Cannot find file %s.@." name; false
+  
+  let use_silently ppf name =
+    protect use_print_results false (fun () -> use_file ppf name)
+--- 313,323 ----
+            true
+          with
+          | Exit -> false
+!         | Sys.Break -> fprintf ppf " Interrompu.@."; false
+          | x -> Errors.report_error ppf x; false) in
+      if must_close then close_in ic;
+      success
+!   with Not_found -> fprintf ppf "Impossible de trouver le fichier %s.@." name; false
+  
+  let use_silently ppf name =
+    protect use_print_results false (fun () -> use_file ppf name)
+***************
+*** 382,388 ****
+  let load_ocamlinit ppf =
+    match !Clflags.init_file with
+    | Some f -> if Sys.file_exists f then ignore (use_silently ppf f)
+!               else fprintf ppf "Init file not found: \"%s\".@." f
+    | None ->
+       if Sys.file_exists ".ocamlinit" then ignore (use_silently ppf ".ocamlinit")
+       else try
+--- 382,388 ----
+  let load_ocamlinit ppf =
+    match !Clflags.init_file with
+    | Some f -> if Sys.file_exists f then ignore (use_silently ppf f)
+!               else fprintf ppf "Fichier d'initialisation non trouvé : \"%s\".@." f
+    | None ->
+       if Sys.file_exists ".ocamlinit" then ignore (use_silently ppf ".ocamlinit")
+       else try
+***************
+*** 407,413 ****
+  exception PPerror
+  
+  let loop ppf =
+!   fprintf ppf "        OCaml version %s@.@." Config.version;
+    initialize_toplevel_env ();
+    let lb = Lexing.from_function refill_lexbuf in
+    Location.init lb "//toplevel//";
+--- 407,413 ----
+  exception PPerror
+  
+  let loop ppf =
+!   fprintf ppf "        OCaml version %s (français)@.@." Config.version;
+    initialize_toplevel_env ();
+    let lb = Lexing.from_function refill_lexbuf in
+    Location.init lb "//toplevel//";
+***************
+*** 427,433 ****
+        ignore(execute_phrase true ppf phr)
+      with
+      | End_of_file -> exit 0
+!     | Sys.Break -> fprintf ppf "Interrupted.@."; Btype.backtrack snap
+      | PPerror -> ()
+      | x -> Errors.report_error ppf x; Btype.backtrack snap
+    done
+--- 427,433 ----
+        ignore(execute_phrase true ppf phr)
+      with
+      | End_of_file -> exit 0
+!     | Sys.Break -> fprintf ppf " Interrompu.@."; Btype.backtrack snap
+      | PPerror -> ()
+      | x -> Errors.report_error ppf x; Btype.backtrack snap
+    done
+diff -rcN ocaml-4.00.1.orig/toplevel/topmain.ml ocaml-4.00.1/toplevel/topmain.ml
+*** ocaml-4.00.1.orig/toplevel/topmain.ml	2012-01-27 13:48:15.000000000 +0100
+--- ocaml-4.00.1/toplevel/topmain.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 14,20 ****
+  
+  open Clflags
+  
+! let usage = "Usage: ocaml <options> <object-files> [script-file [arguments]]\n\
+               options are:"
+  
+  let preload_objects = ref []
+--- 14,20 ----
+  
+  open Clflags
+  
+! let usage = "Usage: ocaml <options> <fichiers-objets> [fichier-script [arguments]]\n\
+               options are:"
+  
+  let preload_objects = ref []
+***************
+*** 29,35 ****
+    with x ->
+      try Errors.report_error ppf x; false
+      with x ->
+!       Format.fprintf ppf "Uncaught exception: %s\n" (Printexc.to_string x);
+        false
+  
+  (* If [name] is "", then the "file" is stdin treated as a script file. *)
+--- 29,35 ----
+    with x ->
+      try Errors.report_error ppf x; false
+      with x ->
+!       Format.fprintf ppf "Exception non rattrapée : %s\n" (Printexc.to_string x);
+        false
+  
+  (* If [name] is "", then the "file" is stdin treated as a script file. *)
+***************
+*** 48,54 ****
+      end
+  
+  let print_version () =
+!   Printf.printf "The OCaml toplevel, version %s\n" Sys.ocaml_version;
+    exit 0;
+  ;;
+  
+--- 48,54 ----
+      end
+  
+  let print_version () =
+!   Printf.printf "L'interpréteur OCaml, version %s (français)\n" Sys.ocaml_version;
+    exit 0;
+  ;;
+  
+diff -rcN ocaml-4.00.1.orig/toplevel/trace.ml ocaml-4.00.1/toplevel/trace.ml
+*** ocaml-4.00.1.orig/toplevel/trace.ml	2011-07-27 16:17:02.000000000 +0200
+--- ocaml-4.00.1/toplevel/trace.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 88,94 ****
+                trace_res res
+              with exn ->
+                may_trace := false;
+!               fprintf ppf "@[<2>%a raises@ %a@]@."
+                  Printtyp.longident starred_name
+                  (print_value !toplevel_env (Obj.repr exn)) Predef.type_exn;
+                may_trace := true;
+--- 88,94 ----
+                trace_res res
+              with exn ->
+                may_trace := false;
+!               fprintf ppf "@[<2>%a lève@ %a@]@."
+                  Printtyp.longident starred_name
+                  (print_value !toplevel_env (Obj.repr exn)) Predef.type_exn;
+                may_trace := true;
+***************
+*** 123,129 ****
+              trace_res res
+            with exn ->
+              may_trace := false;
+!             fprintf ppf "@[<2>%a raises@ %a@]@."
+                Printtyp.longident name
+                (print_value !toplevel_env (Obj.repr exn)) Predef.type_exn;
+              may_trace := true;
+--- 123,129 ----
+              trace_res res
+            with exn ->
+              may_trace := false;
+!             fprintf ppf "@[<2>%a lève@ %a@]@."
+                Printtyp.longident name
+                (print_value !toplevel_env (Obj.repr exn)) Predef.type_exn;
+              may_trace := true;
+diff -rcN ocaml-4.00.1.orig/TRADUCTION ocaml-4.00.1/TRADUCTION
+*** ocaml-4.00.1.orig/TRADUCTION	1970-01-01 01:00:00.000000000 +0100
+--- ocaml-4.00.1/TRADUCTION	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 0 ****
+--- 1,30 ----
++ Traduit en français par / translated to french by
++ 
++ Alexis Irlande
++ 
++ 
++ fichiers modifiés / modified files :
++ 
++ parsing/lexer.mll
++ parsing/location.ml
++ parsing/syntaxerr.ml
++ toplevel/opttopdirs.ml
++ toplevel/opttoploop.ml
++ toplevel/topdirs.ml
++ toplevel/toploop.ml
++ toplevel/topmain.ml
++ toplevel/trace.ml
++ typing/includeclass.ml
++ typing/includemod.ml
++ typing/oprint.ml
++ typing/printtyp.ml
++ typing/typeclass.ml
++ typing/typecore.ml
++ typing/typedecl.ml
++ typing/typemod.ml
++ typing/typetexp.ml
++ utils/warnings.ml
++ 
++ Commentaires et suggestions / comments and advice :
++ 
++ nexinexi@msn.com
+diff -rcN ocaml-4.00.1.orig/typing/includeclass.ml ocaml-4.00.1/typing/includeclass.ml
+*** ocaml-4.00.1.orig/typing/includeclass.ml	2011-07-27 16:17:02.000000000 +0200
+--- ocaml-4.00.1/typing/includeclass.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 45,106 ****
+  let include_err ppf =
+    function
+    | CM_Virtual_class ->
+!       fprintf ppf "A class cannot be changed from virtual to concrete"
+    | CM_Parameter_arity_mismatch (ls, lp) ->
+        fprintf ppf
+!         "The classes do not have the same number of type parameters"
+    | CM_Type_parameter_mismatch trace ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "A type parameter has type"))
+          (function ppf ->
+!           fprintf ppf "but is expected to have type")
+    | CM_Class_type_mismatch (cty1, cty2) ->
+        fprintf ppf
+!        "@[The class type@;<1 2>%a@ is not matched by the class type@;<1 2>%a@]"
+         Printtyp.class_type cty1 Printtyp.class_type cty2
+    | CM_Parameter_mismatch trace ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "A parameter has type"))
+          (function ppf ->
+!           fprintf ppf "but is expected to have type")
+    | CM_Val_type_mismatch (lab, trace) ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "The instance variable %s@ has type" lab))
+          (function ppf ->
+!           fprintf ppf "but is expected to have type")
+    | CM_Meth_type_mismatch (lab, trace) ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "The method %s@ has type" lab))
+          (function ppf ->
+!           fprintf ppf "but is expected to have type")
+    | CM_Non_mutable_value lab ->
+        fprintf ppf
+!        "@[The non-mutable instance variable %s cannot become mutable@]" lab
+    | CM_Non_concrete_value lab ->
+        fprintf ppf
+!        "@[The virtual instance variable %s cannot become concrete@]" lab
+    | CM_Missing_value lab ->
+!       fprintf ppf "@[The first class type has no instance variable %s@]" lab
+    | CM_Missing_method lab ->
+!       fprintf ppf "@[The first class type has no method %s@]" lab
+    | CM_Hide_public lab ->
+!      fprintf ppf "@[The public method %s cannot be hidden@]" lab
+    | CM_Hide_virtual (k, lab) ->
+!       fprintf ppf "@[The virtual %s %s cannot be hidden@]" k lab
+    | CM_Public_method lab ->
+!       fprintf ppf "@[The public method %s cannot become private" lab
+    | CM_Virtual_method lab ->
+!       fprintf ppf "@[The virtual method %s cannot become concrete" lab
+    | CM_Private_method lab ->
+!       fprintf ppf "The private method %s cannot become public" lab
+  
+  let report_error ppf = function
+    |  [] -> ()
+--- 45,106 ----
+  let include_err ppf =
+    function
+    | CM_Virtual_class ->
+!       fprintf ppf "Une classe ne peut être convertie de virtuelle à concrète"
+    | CM_Parameter_arity_mismatch (ls, lp) ->
+        fprintf ppf
+!         "Les classes n'ont pas le même nombre de paramètres de type"
+    | CM_Type_parameter_mismatch trace ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "Un paramètre de type a le type"))
+          (function ppf ->
+!           fprintf ppf "mais est supposé avoir le type")
+    | CM_Class_type_mismatch (cty1, cty2) ->
+        fprintf ppf
+!        "@[Le type de classe@;<1 2>%a@ n'est pas filtré par le type de classe@;<1 2>%a@]"
+         Printtyp.class_type cty1 Printtyp.class_type cty2
+    | CM_Parameter_mismatch trace ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "Un paramètre a le type"))
+          (function ppf ->
+!           fprintf ppf "mais est supposé avoir le type")
+    | CM_Val_type_mismatch (lab, trace) ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "La variable d'instance %s@ a le type" lab))
+          (function ppf ->
+!           fprintf ppf "mais est supposée avoir le type")
+    | CM_Meth_type_mismatch (lab, trace) ->
+        fprintf ppf "@[%a@]"
+        (Printtyp.unification_error false trace
+          (function ppf ->
+!           fprintf ppf "La méthode %s@ a le type" lab))
+          (function ppf ->
+!           fprintf ppf "mais est supposée avoir le type")
+    | CM_Non_mutable_value lab ->
+        fprintf ppf
+!        "@[La variable d'instance non mutable %s ne peut pas devenir mutable@]" lab
+    | CM_Non_concrete_value lab ->
+        fprintf ppf
+!        "@[La variable d'instance virtuelle %s ne peut pas devenir concrète@]" lab
+    | CM_Missing_value lab ->
+!       fprintf ppf "@[Le premier type de classe n'a pas de variable d'instance %s@]" lab
+    | CM_Missing_method lab ->
+!       fprintf ppf "@[Le premier type de classe n'a pas de méthode %s@]" lab
+    | CM_Hide_public lab ->
+!      fprintf ppf "@[La méthode publique %s ne peut pas être masquée@]" lab
+    | CM_Hide_virtual (k, lab) ->
+!       fprintf ppf "@[La %s virtuelle %s ne peut pas être masquée@]" k lab
+    | CM_Public_method lab ->
+!       fprintf ppf "@[La méthode publique %s ne peut pas devenir privée" lab
+    | CM_Virtual_method lab ->
+!       fprintf ppf "@[La méthode virtuelle %s ne peut pas devenir concrète" lab
+    | CM_Private_method lab ->
+!       fprintf ppf "La méthode privée %s ne peut pas devenir publique" lab
+  
+  let report_error ppf = function
+    |  [] -> ()
+diff -rcN ocaml-4.00.1.orig/typing/includemod.ml ocaml-4.00.1/typing/includemod.ml
+*** ocaml-4.00.1.orig/typing/includemod.ml	2012-05-31 09:41:37.000000000 +0200
+--- ocaml-4.00.1/typing/includemod.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 351,411 ****
+  
+  let include_err ppf = function
+    | Missing_field id ->
+!       fprintf ppf "The field `%a' is required but not provided" ident id
+    | Value_descriptions(id, d1, d2) ->
+        fprintf ppf
+!         "@[<hv 2>Values do not match:@ %a@;<1 -2>is not included in@ %a@]"
+          (value_description id) d1 (value_description id) d2;
+        show_locs ppf (d1.val_loc, d2.val_loc);
+    | Type_declarations(id, d1, d2, errs) ->
+        fprintf ppf "@[<v>@[<hv>%s:@;<1 2>%a@ %s@;<1 2>%a@]%a%a@]"
+!         "Type declarations do not match"
+          (type_declaration id) d1
+!         "is not included in"
+          (type_declaration id) d2
+          show_locs (d1.type_loc, d2.type_loc)
+          (Includecore.report_type_mismatch
+!            "the first" "the second" "declaration") errs
+    | Exception_declarations(id, d1, d2) ->
+        fprintf ppf
+!        "@[<hv 2>Exception declarations do not match:@ \
+!         %a@;<1 -2>is not included in@ %a@]"
+          (exception_declaration id) d1
+          (exception_declaration id) d2;
+        show_locs ppf (d1.exn_loc, d2.exn_loc)
+    | Module_types(mty1, mty2)->
+        fprintf ppf
+!        "@[<hv 2>Modules do not match:@ \
+!         %a@;<1 -2>is not included in@ %a@]"
+        modtype mty1
+        modtype mty2
+    | Modtype_infos(id, d1, d2) ->
+        fprintf ppf
+!        "@[<hv 2>Module type declarations do not match:@ \
+!         %a@;<1 -2>does not match@ %a@]"
+        (modtype_declaration id) d1
+        (modtype_declaration id) d2
+    | Modtype_permutation ->
+!       fprintf ppf "Illegal permutation of structure fields"
+    | Interface_mismatch(impl_name, intf_name) ->
+!       fprintf ppf "@[The implementation %s@ does not match the interface %s:"
+         impl_name intf_name
+    | Class_type_declarations(id, d1, d2, reason) ->
+        fprintf ppf
+!        "@[<hv 2>Class type declarations do not match:@ \
+!         %a@;<1 -2>does not match@ %a@]@ %a"
+        (Printtyp.cltype_declaration id) d1
+        (Printtyp.cltype_declaration id) d2
+        Includeclass.report_error reason
+    | Class_declarations(id, d1, d2, reason) ->
+        fprintf ppf
+!        "@[<hv 2>Class declarations do not match:@ \
+!         %a@;<1 -2>does not match@ %a@]@ %a"
+        (Printtyp.class_declaration id) d1
+        (Printtyp.class_declaration id) d2
+        Includeclass.report_error reason
+    | Unbound_modtype_path path ->
+!       fprintf ppf "Unbound module type %a" Printtyp.path path
+  
+  let rec context ppf = function
+      Module id :: rem ->
+--- 351,411 ----
+  
+  let include_err ppf = function
+    | Missing_field id ->
+!       fprintf ppf "Le champ `%a' est nécessaire mais non fourni" ident id
+    | Value_descriptions(id, d1, d2) ->
+        fprintf ppf
+!         "@[<hv 2>Les valeurs ne correspondent pas :@ %a@;<1 -2>n'est pas inclus dans@ %a@]"
+          (value_description id) d1 (value_description id) d2;
+        show_locs ppf (d1.val_loc, d2.val_loc);
+    | Type_declarations(id, d1, d2, errs) ->
+        fprintf ppf "@[<v>@[<hv>%s:@;<1 2>%a@ %s@;<1 2>%a@]%a%a@]"
+!         "Les déclarations de types ne correspondent pas"
+          (type_declaration id) d1
+!         "n'est pas inclus dans"
+          (type_declaration id) d2
+          show_locs (d1.type_loc, d2.type_loc)
+          (Includecore.report_type_mismatch
+!            "la première" "la seconde" "déclaration") errs
+    | Exception_declarations(id, d1, d2) ->
+        fprintf ppf
+!        "@[<hv 2>Les déclarations d'exceptions ne correspondent pas :@ \
+!         %a@;<1 -2>n'est pas inclus dans@ %a@]"
+          (exception_declaration id) d1
+          (exception_declaration id) d2;
+        show_locs ppf (d1.exn_loc, d2.exn_loc)
+    | Module_types(mty1, mty2)->
+        fprintf ppf
+!        "@[<hv 2>Les modules ne correspondent pas :@ \
+!         %a@;<1 -2>n'est pas inclus dans@ %a@]"
+        modtype mty1
+        modtype mty2
+    | Modtype_infos(id, d1, d2) ->
+        fprintf ppf
+!        "@[<hv 2>Les déclarations de types de modules ne correspondent pas :@ \
+!         %a@;<1 -2>ne correspond pas à@ %a@]"
+        (modtype_declaration id) d1
+        (modtype_declaration id) d2
+    | Modtype_permutation ->
+!       fprintf ppf "Permutation illégale des champs de structure"
+    | Interface_mismatch(impl_name, intf_name) ->
+!       fprintf ppf "@[L'implémentation %s@ ne correspond pas à l'interface %s :"
+         impl_name intf_name
+    | Class_type_declarations(id, d1, d2, reason) ->
+        fprintf ppf
+!        "@[<hv 2>Les déclarations de types de classes ne correspondent pas :@ \
+!         %a@;<1 -2>ne correspond pas à@ %a@]@ %a"
+        (Printtyp.cltype_declaration id) d1
+        (Printtyp.cltype_declaration id) d2
+        Includeclass.report_error reason
+    | Class_declarations(id, d1, d2, reason) ->
+        fprintf ppf
+!        "@[<hv 2>Les déclarations de classes ne correspondent pas :@ \
+!         %a@;<1 -2>ne correspond pas à@ %a@]@ %a"
+        (Printtyp.class_declaration id) d1
+        (Printtyp.class_declaration id) d2
+        Includeclass.report_error reason
+    | Unbound_modtype_path path ->
+!       fprintf ppf "Type de module %a non défini" Printtyp.path path
+  
+  let rec context ppf = function
+      Module id :: rem ->
+diff -rcN ocaml-4.00.1.orig/typing/oprint.ml ocaml-4.00.1/typing/oprint.ml
+*** ocaml-4.00.1.orig/typing/oprint.ml	2011-12-28 03:22:38.000000000 +0100
+--- ocaml-4.00.1/typing/oprint.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 100,106 ****
+      | Oval_char c -> fprintf ppf "%C" c
+      | Oval_string s ->
+          begin try fprintf ppf "%S" s with
+!           Invalid_argument "String.create" -> fprintf ppf "<huge string>"
+          end
+      | Oval_list tl ->
+          fprintf ppf "@[<1>[%a]@]" (print_tree_list print_tree_1 ";") tl
+--- 100,106 ----
+      | Oval_char c -> fprintf ppf "%C" c
+      | Oval_string s ->
+          begin try fprintf ppf "%S" s with
+!           Invalid_argument "String.create" -> fprintf ppf "<chaîne trop grande>"
+          end
+      | Oval_list tl ->
+          fprintf ppf "@[<1>[%a]@]" (print_tree_list print_tree_1 ";") tl
+***************
+*** 461,471 ****
+  
+  let print_out_exception ppf exn outv =
+    match exn with
+!     Sys.Break -> fprintf ppf "Interrupted.@."
+!   | Out_of_memory -> fprintf ppf "Out of memory during evaluation.@."
+    | Stack_overflow ->
+!       fprintf ppf "Stack overflow during evaluation (looping recursion?).@."
+!   | _ -> fprintf ppf "@[Exception:@ %a.@]@." !out_value outv
+  
+  let rec print_items ppf =
+    function
+--- 461,471 ----
+  
+  let print_out_exception ppf exn outv =
+    match exn with
+!     Sys.Break -> fprintf ppf " Interrompu.@."
+!   | Out_of_memory -> fprintf ppf "Mémoire insuffisante durant l'évaluation.@."
+    | Stack_overflow ->
+!       fprintf ppf "Débordement de pile durant l'évaluation (récursivité infinie ?).@."
+!   | _ -> fprintf ppf "@[Exception :@ %a.@]@." !out_value outv
+  
+  let rec print_items ppf =
+    function
+diff -rcN ocaml-4.00.1.orig/typing/parmatch.ml ocaml-4.00.1/typing/parmatch.ml
+*** ocaml-4.00.1.orig/typing/parmatch.ml	2012-09-27 15:30:07.000000000 +0200
+--- ocaml-4.00.1/typing/parmatch.ml	2012-11-14 21:13:13.670063124 +0100
+***************
+*** 1893,1899 ****
+                         Forget about loc, because printing two locations
+                         is a pain in the top-level *)
+                      Buffer.add_string buf
+!                       "\n(However, some guarded clause may match this value.)"
+                  end ;
+                  Buffer.contents buf
+                with _ ->
+--- 1893,1899 ----
+                         Forget about loc, because printing two locations
+                         is a pain in the top-level *)
+                      Buffer.add_string buf
+!                       "\n(Cependant, une clause avec garde pourrait filtrer cette valeur.)"
+                  end ;
+                  Buffer.contents buf
+                with _ ->
+diff -rcN ocaml-4.00.1.orig/typing/printtyp.ml ocaml-4.00.1/typing/printtyp.ml
+*** ocaml-4.00.1.orig/typing/printtyp.ml	2012-07-30 20:59:07.000000000 +0200
+--- ocaml-4.00.1/typing/printtyp.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 995,1051 ****
+  let explanation unif t3 t4 ppf =
+    match t3.desc, t4.desc with
+    | Ttuple [], Tvar _ | Tvar _, Ttuple [] ->
+!       fprintf ppf "@,Self type cannot escape its class"
+    | Tconstr (p, tl, _), Tvar _
+      when unif && t4.level < Path.binding_time p ->
+        fprintf ppf
+!         "@,@[The type constructor@;<1 2>%a@ would escape its scope@]"
+          path p
+    | Tvar _, Tconstr (p, tl, _)
+      when unif && t3.level < Path.binding_time p ->
+        fprintf ppf
+!         "@,@[The type constructor@;<1 2>%a@ would escape its scope@]"
+          path p
+    | Tvar _, Tunivar _ | Tunivar _, Tvar _ ->
+!       fprintf ppf "@,The universal variable %a would escape its scope"
+          type_expr (if is_Tunivar t3 then t3 else t4)
+    | Tvar _, _ | _, Tvar _ ->
+        let t, t' = if is_Tvar t3 then (t3, t4) else (t4, t3) in
+        if occur_in Env.empty t t' then
+!         fprintf ppf "@,@[<hov>The type variable %a occurs inside@ %a@]"
+            type_expr t type_expr t'
+        else
+!         fprintf ppf "@,@[<hov>This instance of %a is ambiguous:@ %s@]"
+            type_expr t'
+!           "it would escape the scope of its equation"
+    | Tfield (lab, _, _, _), _
+    | _, Tfield (lab, _, _, _) when lab = dummy_method ->
+        fprintf ppf
+!         "@,Self type cannot be unified with a closed object type"
+    | Tfield (l,_,_,{desc=Tnil}), Tfield (l',_,_,{desc=Tnil}) when l = l' ->
+!       fprintf ppf "@,Types for method %s are incompatible" l
+    | (Tnil|Tconstr _), Tfield (l, _, _, _) ->
+        fprintf ppf
+!         "@,@[The first object type has no method %s@]" l
+    | Tfield (l, _, _, _), (Tnil|Tconstr _) ->
+        fprintf ppf
+!         "@,@[The second object type has no method %s@]" l
+    | Tvariant row1, Tvariant row2 ->
+        let row1 = row_repr row1 and row2 = row_repr row2 in
+        begin match
+          row1.row_fields, row1.row_closed, row2.row_fields, row2.row_closed with
+        | [], true, [], true ->
+!           fprintf ppf "@,These two variant types have no intersection"
+        | [], true, fields, _ ->
+            fprintf ppf
+!             "@,@[The first variant type does not allow tag(s)@ @[<hov>%a@]@]"
+              print_tags fields
+        | fields, _, [], true ->
+            fprintf ppf
+!             "@,@[The second variant type does not allow tag(s)@ @[<hov>%a@]@]"
+              print_tags fields
+        | [l1,_], true, [l2,_], true when l1 = l2 ->
+!           fprintf ppf "@,Types for tag `%s are incompatible" l1
+        | _ -> ()
+        end
+    | _ -> ()
+--- 995,1051 ----
+  let explanation unif t3 t4 ppf =
+    match t3.desc, t4.desc with
+    | Ttuple [], Tvar _ | Tvar _, Ttuple [] ->
+!       fprintf ppf "@,Le type de self ne peut sortir de sa classe"
+    | Tconstr (p, tl, _), Tvar _
+      when unif && t4.level < Path.binding_time p ->
+        fprintf ppf
+!         "@,@[Le constructeur de type@;<1 2>%a@ sortirait de son domaine de visibilité@]"
+          path p
+    | Tvar _, Tconstr (p, tl, _)
+      when unif && t3.level < Path.binding_time p ->
+        fprintf ppf
+!         "@,@[Le constructeur de type@;<1 2>%a@ sortirait de son domaine de visibilité@]"
+          path p
+    | Tvar _, Tunivar _ | Tunivar _, Tvar _ ->
+!       fprintf ppf "@,La variable universelle %a sortirait de son domaine de visibilité"
+          type_expr (if is_Tunivar t3 then t3 else t4)
+    | Tvar _, _ | _, Tvar _ ->
+        let t, t' = if is_Tvar t3 then (t3, t4) else (t4, t3) in
+        if occur_in Env.empty t t' then
+!         fprintf ppf "@,@[<hov>La variable de type %a apparaît à l'intérieur de@ %a@]"
+            type_expr t type_expr t'
+        else
+!         fprintf ppf "@,@[<hov>Cette instance de %a est ambigüe :@ %s@]"
+            type_expr t'
+!           "elle sortirait de la portée de son équation"
+    | Tfield (lab, _, _, _), _
+    | _, Tfield (lab, _, _, _) when lab = dummy_method ->
+        fprintf ppf
+!         "@,Le type de self ne peut être unifié avec un type d'objet clos"
+    | Tfield (l,_,_,{desc=Tnil}), Tfield (l',_,_,{desc=Tnil}) when l = l' ->
+!       fprintf ppf "@,Les types pour la méthode %s sont incompatibles" l
+    | (Tnil|Tconstr _), Tfield (l, _, _, _) ->
+        fprintf ppf
+!         "@,@[Le premier type d'objet n'a pas de méthode %s@]" l
+    | Tfield (l, _, _, _), (Tnil|Tconstr _) ->
+        fprintf ppf
+!         "@,@[T[Le second type d'objet n'a pas de méthode %s@]" l
+    | Tvariant row1, Tvariant row2 ->
+        let row1 = row_repr row1 and row2 = row_repr row2 in
+        begin match
+          row1.row_fields, row1.row_closed, row2.row_fields, row2.row_closed with
+        | [], true, [], true ->
+!           fprintf ppf "@,Ces deux types sommes n'ont pas d'intersection"
+        | [], true, fields, _ ->
+            fprintf ppf
+!             "@,@[Le premier type somme n'autorise pas les tags@ @[<hov>%a@]@]"
+              print_tags fields
+        | fields, _, [], true ->
+            fprintf ppf
+!             "@,@[Le second type somme n'autorise pas les tags@ @[<hov>%a@]@]"
+              print_tags fields
+        | [l1,_], true, [l2,_], true when l1 = l2 ->
+!           fprintf ppf "@,Les types pour le tag `%s sont incompatibles" l1
+        | _ -> ()
+        end
+    | _ -> ()
+***************
+*** 1100,1106 ****
+           @]"
+          txt1 (type_expansion t1) t1'
+          txt2 (type_expansion t2) t2'
+!         (trace false "is not compatible with type") tr
+          (explanation unif mis);
+        print_labels := true
+      with exn ->
+--- 1100,1106 ----
+           @]"
+          txt1 (type_expansion t1) t1'
+          txt2 (type_expansion t2) t2'
+!         (trace false "n'est pas compatible avec le type") tr
+          (explanation unif mis);
+        print_labels := true
+      with exn ->
+***************
+*** 1130,1134 ****
+    trace true txt1 ppf tr1;
+    if tr2 = [] then () else
+    let mis = mismatch true tr2 in
+!   trace false "is not compatible with type" ppf tr2;
+    explanation true mis ppf
+--- 1130,1134 ----
+    trace true txt1 ppf tr1;
+    if tr2 = [] then () else
+    let mis = mismatch true tr2 in
+!   trace false "n'est pas compatible avec le type" ppf tr2;
+    explanation true mis ppf
+diff -rcN ocaml-4.00.1.orig/typing/typeclass.ml ocaml-4.00.1/typing/typeclass.ml
+*** ocaml-4.00.1.orig/typing/typeclass.ml	2012-07-30 20:59:07.000000000 +0200
+--- ocaml-4.00.1/typing/typeclass.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 1573,1724 ****
+  
+  let report_error ppf = function
+    | Repeated_parameter ->
+!       fprintf ppf "A type parameter occurs several times"
+    | Unconsistent_constraint trace ->
+!       fprintf ppf "The class constraints are not consistent.@.";
+        Printtyp.report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "Type")
+!         (fun ppf -> fprintf ppf "is not compatible with type")
+    | Field_type_mismatch (k, m, trace) ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "The %s %s@ has type" k m)
+          (function ppf ->
+!            fprintf ppf "but is expected to have type")
+    | Structure_expected clty ->
+        fprintf ppf
+!         "@[This class expression is not a class structure; it has type@ %a@]"
+          Printtyp.class_type clty
+    | Cannot_apply clty ->
+        fprintf ppf
+!         "This class expression is not a class function, it cannot be applied"
+    | Apply_wrong_label l ->
+        let mark_label = function
+!         | "" -> "out label"
+!         |  l -> sprintf " label ~%s" l in
+!       fprintf ppf "This argument cannot be applied with%s" (mark_label l)
+    | Pattern_type_clash ty ->
+        (* XXX Trace *)
+        (* XXX Revoir message d'erreur *)
+        Printtyp.reset_and_mark_loops ty;
+        fprintf ppf "@[%s@ %a@]"
+!         "This pattern cannot match self: it only matches values of type"
+          Printtyp.type_expr ty
+    | Unbound_class_2 cl ->
+!       fprintf ppf "@[The class@ %a@ is not yet completely defined@]"
+        Printtyp.longident cl
+    | Unbound_class_type_2 cl ->
+!       fprintf ppf "@[The class type@ %a@ is not yet completely defined@]"
+        Printtyp.longident cl
+    | Abbrev_type_clash (abbrev, actual, expected) ->
+        (* XXX Afficher une trace ? *)
+        Printtyp.reset_and_mark_loops_list [abbrev; actual; expected];
+!       fprintf ppf "@[The abbreviation@ %a@ expands to type@ %a@ \
+!        but is used with type@ %a@]"
+         Printtyp.type_expr abbrev
+         Printtyp.type_expr actual
+         Printtyp.type_expr expected
+    | Constructor_type_mismatch (c, trace) ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "The expression \"new %s\" has type" c)
+          (function ppf ->
+!            fprintf ppf "but is used with type")
+    | Virtual_class (cl, mets, vals) ->
+        let print_mets ppf mets =
+          List.iter (function met -> fprintf ppf "@ %s" met) mets in
+!       let cl_mark = if cl then "" else " type" in
+        let missings =
+          match mets, vals with
+            [], _ -> "variables"
+!         | _, [] -> "methods"
+!         | _ -> "methods and variables"
+        in
+        fprintf ppf
+!         "@[This class%s should be virtual.@ \
+!            @[<2>The following %s are undefined :%a@]@]"
+!           cl_mark missings print_mets (mets @ vals)
+    | Parameter_arity_mismatch(lid, expected, provided) ->
+        fprintf ppf
+!         "@[The class constructor %a@ expects %i type argument(s),@ \
+!            but is here applied to %i type argument(s)@]"
+          Printtyp.longident lid expected provided
+    | Parameter_mismatch trace ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "The type parameter")
+          (function ppf ->
+!            fprintf ppf "does not meet its constraint: it should be")
+    | Bad_parameters (id, params, cstrs) ->
+        Printtyp.reset_and_mark_loops_list [params; cstrs];
+        fprintf ppf
+!         "@[The abbreviation %a@ is used with parameters@ %a@ \
+!            wich are incompatible with constraints@ %a@]"
+          Printtyp.ident id Printtyp.type_expr params Printtyp.type_expr cstrs
+    | Class_match_failure error ->
+        Includeclass.report_error ppf error
+    | Unbound_val lab ->
+!       fprintf ppf "Unbound instance variable %s" lab
+    | Unbound_type_var (printer, reason) ->
+        let print_common ppf kind ty0 real lab ty =
+          let ty1 =
+            if real then ty0 else Btype.newgenty(Tobject(ty0, ref None)) in
+          Printtyp.mark_loops ty1;
+          fprintf ppf
+!           "The %s %s@ has type@;<1 2>%a@ where@ %a@ is unbound"
+              kind lab Printtyp.type_expr ty Printtyp.type_expr ty0
+        in
+        let print_reason ppf = function
+        | Ctype.CC_Method (ty0, real, lab, ty) ->
+!           print_common ppf "method" ty0 real lab ty
+        | Ctype.CC_Value (ty0, real, lab, ty) ->
+!           print_common ppf "instance variable" ty0 real lab ty
+        in
+        Printtyp.reset ();
+        fprintf ppf
+!         "@[<v>@[Some type variables are unbound in this type:@;<1 2>%t@]@ \
+                @[%a@]@]"
+         printer print_reason reason
+    | Make_nongen_seltype ty ->
+        fprintf ppf
+!         "@[<v>@[Self type should not occur in the non-generic type@;<1 2>\
+                  %a@]@,\
+!            It would escape the scope of its class@]"
+          Printtyp.type_scheme ty
+    | Non_generalizable_class (id, clty) ->
+        fprintf ppf
+!         "@[The type of this class,@ %a,@ \
+!            contains type variables that cannot be generalized@]"
+          (Printtyp.class_declaration id) clty
+    | Cannot_coerce_self ty ->
+        fprintf ppf
+!         "@[The type of self cannot be coerced to@ \
+!            the type of the current class:@ %a.@.\
+!            Some occurrences are contravariant@]"
+          Printtyp.type_scheme ty
+    | Non_collapsable_conjunction (id, clty, trace) ->
+        fprintf ppf
+!         "@[The type of this class,@ %a,@ \
+!            contains non-collapsible conjunctive types in constraints@]"
+          (Printtyp.class_declaration id) clty;
+        Printtyp.report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "Type")
+!         (fun ppf -> fprintf ppf "is not compatible with type")
+    | Final_self_clash trace ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "This object is expected to have type")
+          (function ppf ->
+!            fprintf ppf "but actually has type")
+    | Mutability_mismatch (lab, mut) ->
+        let mut1, mut2 =
+          if mut = Immutable then "mutable", "immutable"
+          else "immutable", "mutable" in
+        fprintf ppf
+!         "@[The instance variable is %s;@ it cannot be redefined as %s@]"
+          mut1 mut2
+    | No_overriding (_, "") ->
+!       fprintf ppf "@[This inheritance does not override any method@ %s@]"
+!         "instance variable"
+    | No_overriding (kind, name) ->
+!       fprintf ppf "@[The %s `%s'@ has no previous definition@]" kind name
+--- 1573,1725 ----
+  
+  let report_error ppf = function
+    | Repeated_parameter ->
+!       fprintf ppf "Un paramètre de type apparaît plusieurs fois"
+    | Unconsistent_constraint trace ->
+!       fprintf ppf "Les contraintes de classe ne sont pas consistantes.@.";
+        Printtyp.report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "Le type")
+!         (fun ppf -> fprintf ppf "n'est pas compatible avec le type")
+    | Field_type_mismatch (k, m, trace) ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "Le %s %s@ a le type" k m)
+          (function ppf ->
+!            fprintf ppf "mais est supposé avoir le type")
+    | Structure_expected clty ->
+        fprintf ppf
+!         "@[Cette expression de classe n'est pas une structure de classe ; elle a le type@ %a@]"
+          Printtyp.class_type clty
+    | Cannot_apply clty ->
+        fprintf ppf
+!         "Cette expression de classe n'est pas une fonction de classe, elle ne peut pas être appliquée"
+    | Apply_wrong_label l ->
+        let mark_label = function
+!         | "" -> "sans étiquette"
+!         |  l -> sprintf "avec l'étiquette ~%s" l in
+!       fprintf ppf "Cet argument ne peut être appliqué %s" (mark_label l)
+    | Pattern_type_clash ty ->
+        (* XXX Trace *)
+        (* XXX Revoir message d'erreur *)
+        Printtyp.reset_and_mark_loops ty;
+        fprintf ppf "@[%s@ %a@]"
+!         "Ce motif ne peut pas filtrer self : il filtre seulement les valeurs de type"
+          Printtyp.type_expr ty
+    | Unbound_class_2 cl ->
+!       fprintf ppf "@[La classe@ %a@ n'est pas encore complètement définie@]"
+        Printtyp.longident cl
+    | Unbound_class_type_2 cl ->
+!       fprintf ppf "@[Le type de classe@ %a@ n'est pas encore complètement défini@]"
+        Printtyp.longident cl
+    | Abbrev_type_clash (abbrev, actual, expected) ->
+        (* XXX Afficher une trace ? *)
+        Printtyp.reset_and_mark_loops_list [abbrev; actual; expected];
+!       fprintf ppf "@[L'abréviation@ %a@ se développe en le type@ %a@ \
+!        mais est ici utilisée avec le type@ %a@]"
+         Printtyp.type_expr abbrev
+         Printtyp.type_expr actual
+         Printtyp.type_expr expected
+    | Constructor_type_mismatch (c, trace) ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "L'expression \"new %s\" a le type" c)
+          (function ppf ->
+!            fprintf ppf "mais est utilisée avec le type")
+    | Virtual_class (cl, mets, vals) ->
+        let print_mets ppf mets =
+          List.iter (function met -> fprintf ppf "@ %s" met) mets in
+!       let cl_mark = if cl then "tte" else " type de" in
+!       let cl_mark2 = if cl then "le" else "" in
+        let missings =
+          match mets, vals with
+            [], _ -> "variables"
+!         | _, [] -> "méthodes"
+!         | _ -> "méthodes et variables"
+        in
+        fprintf ppf
+!         "@[Ce%s classe devrait être virtuel%s.@ \
+!            @[<2>Les %s suivantes ne sont pas définies :%a@]@]"
+!           cl_mark cl_mark2 missings print_mets (mets @ vals)
+    | Parameter_arity_mismatch(lid, expected, provided) ->
+        fprintf ppf
+!         "@[Le constructeur de classe %a@ attend %i argument(s) de type,@ \
+!            mais il est appliqué ici à %i argument(s) de type@]"
+          Printtyp.longident lid expected provided
+    | Parameter_mismatch trace ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "Le paramètre de type")
+          (function ppf ->
+!            fprintf ppf "ne satisfait pas ses contraintes : il devrait être")
+    | Bad_parameters (id, params, cstrs) ->
+        Printtyp.reset_and_mark_loops_list [params; cstrs];
+        fprintf ppf
+!         "@[L'abréviation %a@ est utilisée avec les paramètres@ %a@ \
+!            qui sont incompatibles avec les contraintes@ %a@]"
+          Printtyp.ident id Printtyp.type_expr params Printtyp.type_expr cstrs
+    | Class_match_failure error ->
+        Includeclass.report_error ppf error
+    | Unbound_val lab ->
+!       fprintf ppf "Variable d'instance %s non définie" lab
+    | Unbound_type_var (printer, reason) ->
+        let print_common ppf kind ty0 real lab ty =
+          let ty1 =
+            if real then ty0 else Btype.newgenty(Tobject(ty0, ref None)) in
+          Printtyp.mark_loops ty1;
+          fprintf ppf
+!           "Le %s %s@ a le type@;<1 2>%a@ où@ %a@ est non défini"
+              kind lab Printtyp.type_expr ty Printtyp.type_expr ty0
+        in
+        let print_reason ppf = function
+        | Ctype.CC_Method (ty0, real, lab, ty) ->
+!           print_common ppf "méthode" ty0 real lab ty
+        | Ctype.CC_Value (ty0, real, lab, ty) ->
+!           print_common ppf "variable d'instance" ty0 real lab ty
+        in
+        Printtyp.reset ();
+        fprintf ppf
+!         "@[<v>@[Certaines variables de type sont non définies dans ce type :@;<1 2>%t@]@ \
+                @[%a@]@]"
+         printer print_reason reason
+    | Make_nongen_seltype ty ->
+        fprintf ppf
+!         "@[<v>@[Le type de self ne devrait pas apparaître dans le type non générique@;<1 2>\
+                  %a@]@,\
+!            Il sortirait du domaine de visibilité de sa classe@]"
+          Printtyp.type_scheme ty
+    | Non_generalizable_class (id, clty) ->
+        fprintf ppf
+!         "@[Le type de cette classe,@ %a,@ \
+!            contient des variables de type qui ne peuvent être généralisées@]"
+          (Printtyp.class_declaration id) clty
+    | Cannot_coerce_self ty ->
+        fprintf ppf
+!         "@[Le type de self ne peut pas être contraint au@ \
+!            type de la classe courante :@ %a.@.\
+!            Certaines occurences sont contravariantes@]"
+          Printtyp.type_scheme ty
+    | Non_collapsable_conjunction (id, clty, trace) ->
+        fprintf ppf
+!         "@[Le type de cette classe,@ %a,@ \
+!            contient des types conjonctifs non collapsables dans les contraintes@]"
+          (Printtyp.class_declaration id) clty;
+        Printtyp.report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "Le type")
+!         (fun ppf -> fprintf ppf "n'est pas compatible avec le type")
+    | Final_self_clash trace ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "Cet objet est supposé avoir le type")
+          (function ppf ->
+!            fprintf ppf "mais possède en réalité le type")
+    | Mutability_mismatch (lab, mut) ->
+        let mut1, mut2 =
+          if mut = Immutable then "mutable", "immutable"
+          else "immutable", "mutable" in
+        fprintf ppf
+!         "@[La variable d'instance est %s;@ elle ne peut être redéfinie comme %s@]"
+          mut1 mut2
+    | No_overriding (_, "") ->
+!       fprintf ppf "@[Cet héritage ne surcharge aucune méthode@ %s@]"
+!         "variable d'instance"
+    | No_overriding (kind, name) ->
+!       fprintf ppf "@[Le %s `%s'@ n'a pas de définition antérieure@]" kind name
+diff -rcN ocaml-4.00.1.orig/typing/typecore.ml ocaml-4.00.1/typing/typecore.ml
+*** ocaml-4.00.1.orig/typing/typecore.ml	2012-07-30 20:59:07.000000000 +0200
+--- ocaml-4.00.1/typing/typecore.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 3043,3213 ****
+  
+  let report_error ppf = function
+    | Polymorphic_label lid ->
+!       fprintf ppf "@[The record field label %a is polymorphic.@ %s@]"
+!         longident lid "You cannot instantiate it in a pattern."
+    | Constructor_arity_mismatch(lid, expected, provided) ->
+        fprintf ppf
+!        "@[The constructor %a@ expects %i argument(s),@ \
+!         but is applied here to %i argument(s)@]"
+         longident lid expected provided
+    | Label_mismatch(lid, trace) ->
+        report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "The record field label %a@ belongs to the type"
+                     longident lid)
+          (function ppf ->
+!            fprintf ppf "but is mixed here with labels of type")
+    | Pattern_type_clash trace ->
+        report_unification_error ppf trace
+          (function ppf ->
+!           fprintf ppf "This pattern matches values of type")
+          (function ppf ->
+!           fprintf ppf "but a pattern was expected which matches values of type")
+    | Multiply_bound_variable name ->
+!       fprintf ppf "Variable %s is bound several times in this matching" name
+    | Orpat_vars id ->
+!       fprintf ppf "Variable %s must occur on both sides of this | pattern"
+          (Ident.name id)
+    | Expr_type_clash trace ->
+        report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "This expression has type")
+          (function ppf ->
+!            fprintf ppf "but an expression was expected of type")
+    | Apply_non_function typ ->
+        begin match (repr typ).desc with
+          Tarrow _ ->
+!           fprintf ppf "This function is applied to too many arguments;@ ";
+!           fprintf ppf "maybe you forgot a `;'"
+        | _ ->
+            fprintf ppf
+!             "This expression is not a function; it cannot be applied"
+        end
+    | Apply_wrong_label (l, ty) ->
+        let print_label ppf = function
+!         | "" -> fprintf ppf "without label"
+          | l ->
+!             fprintf ppf "with label %s%s" (if is_optional l then "" else "~") l
+        in
+        reset_and_mark_loops ty;
+        fprintf ppf
+!         "@[<v>@[<2>The function applied to this argument has type@ %a@]@.\
+!           This argument cannot be applied %a@]"
+          type_expr ty print_label l
+    | Label_multiply_defined lid ->
+!       fprintf ppf "The record field label %a is defined several times"
+                longident lid
+    | Label_missing labels ->
+        let print_labels ppf =
+          List.iter (fun lbl -> fprintf ppf "@ %s" (Ident.name lbl)) in
+!       fprintf ppf "@[<hov>Some record field labels are undefined:%a@]"
+          print_labels labels
+    | Label_not_mutable lid ->
+!       fprintf ppf "The record field label %a is not mutable" longident lid
+    | Incomplete_format s ->
+!       fprintf ppf "Premature end of format string ``%S''" s
+    | Bad_conversion (fmt, i, c) ->
+        fprintf ppf
+!         "Bad conversion %%%c, at char number %d \
+!          in format string ``%s''" c i fmt
+    | Undefined_method (ty, me) ->
+        reset_and_mark_loops ty;
+        fprintf ppf
+!         "@[<v>@[This expression has type@;<1 2>%a@]@,\
+!          It has no method %s@]" type_expr ty me
+    | Undefined_inherited_method me ->
+!       fprintf ppf "This expression has no method %s" me
+    | Virtual_class cl ->
+!       fprintf ppf "Cannot instantiate the virtual class %a"
+          longident cl
+    | Unbound_instance_variable v ->
+!       fprintf ppf "Unbound instance variable %s" v
+    | Instance_variable_not_mutable (b, v) ->
+        if b then
+!         fprintf ppf "The instance variable %s is not mutable" v
+        else
+!         fprintf ppf "The value %s is not an instance variable" v
+    | Not_subtype(tr1, tr2) ->
+!       report_subtyping_error ppf tr1 "is not a subtype of" tr2
+    | Outside_class ->
+!       fprintf ppf "This object duplication occurs outside a method definition"
+    | Value_multiply_overridden v ->
+!       fprintf ppf "The instance variable %s is overridden several times" v
+    | Coercion_failure (ty, ty', trace, b) ->
+        report_unification_error ppf trace
+          (function ppf ->
+             let ty, ty' = prepare_expansion (ty, ty') in
+             fprintf ppf
+!              "This expression cannot be coerced to type@;<1 2>%a;@ it has type"
+             (type_expansion ty) ty')
+          (function ppf ->
+!            fprintf ppf "but is here used with type");
+        if b then
+          fprintf ppf ".@.@[<hov>%s@ %s@]"
+!           "This simple coercion was not fully general."
+!           "Consider using a double coercion."
+    | Too_many_arguments (in_function, ty) ->
+        reset_and_mark_loops ty;
+        if in_function then begin
+!         fprintf ppf "This function expects too many arguments,@ ";
+!         fprintf ppf "it should have type@ %a"
+            type_expr ty
+        end else begin
+!         fprintf ppf "This expression should not be a function,@ ";
+!         fprintf ppf "the expected type is@ %a"
+            type_expr ty
+        end
+    | Abstract_wrong_label (l, ty) ->
+        let label_mark = function
+!         | "" -> "but its first argument is not labelled"
+!         |  l -> sprintf "but its first argument is labelled ~%s" l in
+        reset_and_mark_loops ty;
+!       fprintf ppf "@[<v>@[<2>This function should have type@ %a@]@,%s@]"
+        type_expr ty (label_mark l)
+    | Scoping_let_module(id, ty) ->
+        reset_and_mark_loops ty;
+        fprintf ppf
+!        "This `let module' expression has type@ %a@ " type_expr ty;
+        fprintf ppf
+!        "In this type, the locally bound module name %s escapes its scope" id
+    | Masked_instance_variable lid ->
+        fprintf ppf
+!         "The instance variable %a@ \
+!          cannot be accessed from the definition of another instance variable"
+          longident lid
+    | Private_type ty ->
+!       fprintf ppf "Cannot create values of the private type %a" type_expr ty
+    | Private_label (lid, ty) ->
+!       fprintf ppf "Cannot assign field %a of the private type %a"
+          longident lid type_expr ty
+    | Not_a_variant_type lid ->
+!       fprintf ppf "The type %a@ is not a variant type" longident lid
+    | Incoherent_label_order ->
+!       fprintf ppf "This function is applied to arguments@ ";
+!       fprintf ppf "in an order different from other calls.@ ";
+!       fprintf ppf "This is only allowed when the real type is known."
+    | Less_general (kind, trace) ->
+        report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "This %s has type" kind)
+!         (fun ppf -> fprintf ppf "which is less general than")
+    | Modules_not_allowed ->
+!       fprintf ppf "Modules are not allowed in this pattern."
+    | Cannot_infer_signature ->
+        fprintf ppf
+!         "The signature for this packaged module couldn't be inferred."
+    | Not_a_packed_module ty ->
+        fprintf ppf
+!         "This expression is packed module, but the expected type is@ %a"
+          type_expr ty
+    | Recursive_local_constraint trace ->
+        report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "Recursive local constraint when unifying")
+          (function ppf ->
+             fprintf ppf "with")
+    | Unexpected_existential ->
+        fprintf ppf
+!         "Unexpected existential"
+  
+  let () =
+    Env.add_delayed_check_forward := add_delayed_check
+--- 3043,3213 ----
+  
+  let report_error ppf = function
+    | Polymorphic_label lid ->
+!       fprintf ppf "@[L'étiquette de champ d'enregistrement %a est polymorphe.@ %s@]"
+!         longident lid "Vous ne pouvez pas l'instancier dans un motif."
+    | Constructor_arity_mismatch(lid, expected, provided) ->
+        fprintf ppf
+!        "@[Le constructeur %a@ attend %i argument(s),@ \
+!         mais est appliqué ici à %i argument(s)@]"
+         longident lid expected provided
+    | Label_mismatch(lid, trace) ->
+        report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "L'étiquette de champ d'enregistrement %a@ appartient au type"
+                     longident lid)
+          (function ppf ->
+!            fprintf ppf "mais est mélangée ici avec des étiquettes du type")
+    | Pattern_type_clash trace ->
+        report_unification_error ppf trace
+          (function ppf ->
+!           fprintf ppf "Ce motif filtre des valeurs de type")
+          (function ppf ->
+!           fprintf ppf "mais il faudrait un motif correspondant à des valeurs de type")
+    | Multiply_bound_variable name ->
+!       fprintf ppf "La variable %s est liée plusieurs fois dans ce filtrage" name
+    | Orpat_vars id ->
+!       fprintf ppf "La variable %s doit apparaître de chaque côté de ce motif |"
+          (Ident.name id)
+    | Expr_type_clash trace ->
+        report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "Cette expression est de type")
+          (function ppf ->
+!            fprintf ppf "mais on attendait ici une expression de type")
+    | Apply_non_function typ ->
+        begin match (repr typ).desc with
+          Tarrow _ ->
+!           fprintf ppf "Cette fonction est appliquée à trop d'arguments ;@ ";
+!           fprintf ppf "peut-être avez-vous oublié un `;' ?"
+        | _ ->
+            fprintf ppf
+!             "Cette expression n'est pas une fonction ; elle ne peut pas être appliquée"
+        end
+    | Apply_wrong_label (l, ty) ->
+        let print_label ppf = function
+!         | "" -> fprintf ppf "sans étiquette"
+          | l ->
+!             fprintf ppf "avec l'étiquette %s%s" (if is_optional l then "" else "~") l
+        in
+        reset_and_mark_loops ty;
+        fprintf ppf
+!         "@[<v>@[<2>La fonction appliquée à cet argument a le type@ %a@]@.\
+!           Cet argument ne peut pas être appliqué %a@]"
+          type_expr ty print_label l
+    | Label_multiply_defined lid ->
+!       fprintf ppf "L'étiquette de champ d'enregistrement %a est définie plusieurs fois"
+                longident lid
+    | Label_missing labels ->
+        let print_labels ppf =
+          List.iter (fun lbl -> fprintf ppf "@ %s" (Ident.name lbl)) in
+!       fprintf ppf "@[<hov>Certaines étiquettes de champ d'enregistrement ne sont pas définies :%a@]"
+          print_labels labels
+    | Label_not_mutable lid ->
+!       fprintf ppf "L'étiquette de champ d'enregistrement %a n'est pas mutable" longident lid
+    | Incomplete_format s ->
+!       fprintf ppf "Fin prématurée de la chaîne de format ``%S''" s
+    | Bad_conversion (fmt, i, c) ->
+        fprintf ppf
+!         "Mauvaise conversion %%%c, au caractère numéro %d \
+!          dans la chaîne de format ``%s''" c i fmt
+    | Undefined_method (ty, me) ->
+        reset_and_mark_loops ty;
+        fprintf ppf
+!         "@[<v>@[Cette expression a le type@;<1 2>%a@]@,\
+!          Elle n'a pas de méthode %s@]" type_expr ty me
+    | Undefined_inherited_method me ->
+!       fprintf ppf "Cette expression n'a pas de méthode %s" me
+    | Virtual_class cl ->
+!       fprintf ppf "Impossible d'instancier la classe virtuelle %a"
+          longident cl
+    | Unbound_instance_variable v ->
+!       fprintf ppf "Variable d'instance %s non définie" v
+    | Instance_variable_not_mutable (b, v) ->
+        if b then
+!         fprintf ppf "La variable d'instance %s n'est pas mutable" v
+        else
+!         fprintf ppf "La valeur %s n'est pas une variable d'instance" v
+    | Not_subtype(tr1, tr2) ->
+!       report_subtyping_error ppf tr1 "n'est pas un sous-type de" tr2
+    | Outside_class ->
+!       fprintf ppf "Cette duplication d'objet apparaît hors d'une définition de méthode"
+    | Value_multiply_overridden v ->
+!       fprintf ppf "La variable d'instance %s est surchargée plusieurs fois" v
+    | Coercion_failure (ty, ty', trace, b) ->
+        report_unification_error ppf trace
+          (function ppf ->
+             let ty, ty' = prepare_expansion (ty, ty') in
+             fprintf ppf
+!              "Cette expression ne peut pas être contrainte au type@;<1 2>%a;@ elle a le type"
+             (type_expansion ty) ty')
+          (function ppf ->
+!            fprintf ppf "mais est utilisée ici avec le type");
+        if b then
+          fprintf ppf ".@.@[<hov>%s@ %s@]"
+!           "Cette contrainte simple n'est pas complètement générale."
+!           "Essayez d'utiliser une double contrainte."
+    | Too_many_arguments (in_function, ty) ->
+        reset_and_mark_loops ty;
+        if in_function then begin
+!         fprintf ppf "Cette fonction attend trop d'arguments,@ ";
+!         fprintf ppf "elle devrait être du type@ %a"
+            type_expr ty
+        end else begin
+!         fprintf ppf "Cette expression ne devrait pas être une fonction,@ ";
+!         fprintf ppf "le type attendu est@ %a"
+            type_expr ty
+        end
+    | Abstract_wrong_label (l, ty) ->
+        let label_mark = function
+!         | "" -> "mais son premier argument n'a pas d'étiquette"
+!         |  l -> sprintf "mais son premier argument a l'étiquette ~%s" l in
+        reset_and_mark_loops ty;
+!       fprintf ppf "@[<v>@[<2>Cette fonction devrait être du type@ %a@]@,%s@]"
+        type_expr ty (label_mark l)
+    | Scoping_let_module(id, ty) ->
+        reset_and_mark_loops ty;
+        fprintf ppf
+!        "Cette expression `let module' a le type@ %a@ " type_expr ty;
+        fprintf ppf
+!        "Dans ce type, le nom de module défini localement %s sort de son domaine de visibilité" id
+    | Masked_instance_variable lid ->
+        fprintf ppf
+!         "La variable d'instance %a@ \
+!          n'est pas accessible depuis la définition d'une autre variable d'instance"
+          longident lid
+    | Private_type ty ->
+!       fprintf ppf "Impossible de créer des valeurs du type privé %a" type_expr ty
+    | Private_label (lid, ty) ->
+!       fprintf ppf "Impossible d'assigner le champ %a du type privé %a"
+          longident lid type_expr ty
+    | Not_a_variant_type lid ->
+!       fprintf ppf "Le type %a@ n'est pas un type variant" longident lid
+    | Incoherent_label_order ->
+!       fprintf ppf "Cette fonction est appliquée aux arguments@ ";
+!       fprintf ppf "dans un ordre différent des autres appels.@ ";
+!       fprintf ppf "C'est autorisé seulement quand le type réel est connu."
+    | Less_general (kind, trace) ->
+        report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "Ce %s a le type" kind)
+!         (fun ppf -> fprintf ppf "ce qui est moins général que")
+    | Modules_not_allowed ->
+!       fprintf ppf "Les modules ne sont pas autorisés dans ce motif."
+    | Cannot_infer_signature ->
+        fprintf ppf
+!         "La signature pour ce module emballé ne peut être inférée."
+    | Not_a_packed_module ty ->
+        fprintf ppf
+!         "Cette expression est un module emballé, mais le type attendu est@ %a"
+          type_expr ty
+    | Recursive_local_constraint trace ->
+        report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "Contrainte locale récursive lors de l'unification")
+          (function ppf ->
+             fprintf ppf "with")
+    | Unexpected_existential ->
+        fprintf ppf
+!         "Existentiel inattendu"
+  
+  let () =
+    Env.add_delayed_check_forward := add_delayed_check
+diff -rcN ocaml-4.00.1.orig/typing/typedecl.ml ocaml-4.00.1/typing/typedecl.ml
+*** ocaml-4.00.1.orig/typing/typedecl.ml	2012-07-30 20:59:07.000000000 +0200
+--- ocaml-4.00.1/typing/typedecl.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 1042,1048 ****
+        Btype.newgenty (Tobject(tv, ref None)) in
+      Printtyp.reset_and_mark_loops_list [typ ti; ty0];
+      fprintf ppf
+!       ".@.@[<hov2>In %s@ %s%a@;<1 -2>the variable %a is unbound@]"
+        kwd (lab ti) Printtyp.type_expr (typ ti) Printtyp.type_expr tv
+    with Not_found -> ()
+  
+--- 1042,1048 ----
+        Btype.newgenty (Tobject(tv, ref None)) in
+      Printtyp.reset_and_mark_loops_list [typ ti; ty0];
+      fprintf ppf
+!       ".@.@[<hov2>Dans %s@ %s%a@;<1 -2>la variable %a n'est pas définie@]"
+        kwd (lab ti) Printtyp.type_expr (typ ti) Printtyp.type_expr tv
+    with Not_found -> ()
+  
+***************
+*** 1069,1123 ****
+  
+  let report_error ppf = function
+    | Repeated_parameter ->
+!       fprintf ppf "A type parameter occurs several times"
+    | Duplicate_constructor s ->
+!       fprintf ppf "Two constructors are named %s" s
+    | Too_many_constructors ->
+        fprintf ppf
+!         "@[Too many non-constant constructors@ -- maximum is %i %s@]"
+!         (Config.max_tag + 1) "non-constant constructors"
+    | Duplicate_label s ->
+!       fprintf ppf "Two labels are named %s" s
+    | Recursive_abbrev s ->
+!       fprintf ppf "The type abbreviation %s is cyclic" s
+    | Definition_mismatch (ty, errs) ->
+        Printtyp.reset_and_mark_loops ty;
+        fprintf ppf "@[<v>@[<hov>%s@ %s@;<1 2>%a@]%a@]"
+!         "This variant or record definition" "does not match that of type"
+          Printtyp.type_expr ty
+!         (Includecore.report_type_mismatch "the original" "this" "definition")
+          errs
+    | Constraint_failed (ty, ty') ->
+        Printtyp.reset_and_mark_loops ty;
+        Printtyp.mark_loops ty';
+!       fprintf ppf "@[%s@ @[<hv>Type@ %a@ should be an instance of@ %a@]@]"
+!         "Constraints are not satisfied in this type."
+          Printtyp.type_expr ty Printtyp.type_expr ty'
+    | Parameters_differ (path, ty, ty') ->
+        Printtyp.reset_and_mark_loops ty;
+        Printtyp.mark_loops ty';
+        fprintf ppf
+!         "@[<hv>In the definition of %s, type@ %a@ should be@ %a@]"
+          (Path.name path) Printtyp.type_expr ty Printtyp.type_expr ty'
+    | Inconsistent_constraint trace ->
+!       fprintf ppf "The type constraints are not consistent.@.";
+        Printtyp.report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "Type")
+!         (fun ppf -> fprintf ppf "is not compatible with type")
+    | Type_clash trace ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "This type constructor expands to type")
+          (function ppf ->
+!            fprintf ppf "but is used here with type")
+    | Null_arity_external ->
+!       fprintf ppf "External identifiers must be functions"
+    | Missing_native_external ->
+!       fprintf ppf "@[<hv>An external function with more than 5 arguments \
+!                    requires a second stub function@ \
+!                    for native-code compilation@]"
+    | Unbound_type_var (ty, decl) ->
+!       fprintf ppf "A type variable is unbound in this type declaration";
+        let ty = Ctype.repr ty in
+        begin match decl.type_kind, decl.type_manifest with
+        | Type_variant tl, _ ->
+--- 1069,1123 ----
+  
+  let report_error ppf = function
+    | Repeated_parameter ->
+!       fprintf ppf "Un paramètre de type apparaît plusieurs fois"
+    | Duplicate_constructor s ->
+!       fprintf ppf "Deux constructeurs sont nommés %s" s
+    | Too_many_constructors ->
+        fprintf ppf
+!         "@[Trop de constructeurs non constants@ -- le maximum est %i %s@]"
+!         (Config.max_tag + 1) "constructeurs non constants"
+    | Duplicate_label s ->
+!       fprintf ppf "Deux étiquettes sont nommées %s" s
+    | Recursive_abbrev s ->
+!       fprintf ppf "L'abréviation de type %s est cyclique" s
+    | Definition_mismatch (ty, errs) ->
+        Printtyp.reset_and_mark_loops ty;
+        fprintf ppf "@[<v>@[<hov>%s@ %s@;<1 2>%a@]%a@]"
+!         "Cette définition de variante ou d'enregistrement" "ne correspond pas à celle du type"
+          Printtyp.type_expr ty
+!         (Includecore.report_type_mismatch "la première" "cette" "définition")
+          errs
+    | Constraint_failed (ty, ty') ->
+        Printtyp.reset_and_mark_loops ty;
+        Printtyp.mark_loops ty';
+!       fprintf ppf "@[%s@ @[<hv>Le type@ %a@ devrait être une instance de@ %a@]@]"
+!         "Des contraintes ne sont pas satisfaites dans ce type.@."
+          Printtyp.type_expr ty Printtyp.type_expr ty'
+    | Parameters_differ (path, ty, ty') ->
+        Printtyp.reset_and_mark_loops ty;
+        Printtyp.mark_loops ty';
+        fprintf ppf
+!         "@[<hv>Dans la définition de %s, le type@ %a@ devrait être@ %a@]"
+          (Path.name path) Printtyp.type_expr ty Printtyp.type_expr ty'
+    | Inconsistent_constraint trace ->
+!       fprintf ppf "Les contraintes de type ne sont pas consistantes.@.";
+        Printtyp.report_unification_error ppf trace
+!         (fun ppf -> fprintf ppf "Le type")
+!         (fun ppf -> fprintf ppf "n'est pas compatible avec le type")
+    | Type_clash trace ->
+        Printtyp.report_unification_error ppf trace
+          (function ppf ->
+!            fprintf ppf "Ce constructeur de type se développe en le type")
+          (function ppf ->
+!            fprintf ppf "mais est utilisé ici avec le type")
+    | Null_arity_external ->
+!       fprintf ppf "Les identificateurs externes doivent être des fonctions"
+    | Missing_native_external ->
+!       fprintf ppf "@[<hv>Une fonction externe avec plus de 5 arguments \
+!                    nécessite une seconde fonction stub@ \
+!                    pour la compilation en code natif@]"
+    | Unbound_type_var (ty, decl) ->
+!       fprintf ppf "Une variable de type est non définie dans cette déclaration de type";
+        let ty = Ctype.repr ty in
+        begin match decl.type_kind, decl.type_manifest with
+        | Type_variant tl, _ ->
+***************
+*** 1132,1175 ****
+        | _ -> ()
+        end
+    | Unbound_type_var_exc (tv, ty) ->
+!       fprintf ppf "A type variable is unbound in this exception declaration";
+        explain_unbound_single ppf (Ctype.repr tv) ty
+    | Unbound_exception lid ->
+!       fprintf ppf "Unbound exception constructor@ %a" Printtyp.longident lid
+    | Not_an_exception lid ->
+!       fprintf ppf "The constructor@ %a@ is not an exception"
+          Printtyp.longident lid
+    | Bad_variance (n, v1, v2) ->
+        let variance = function
+            (true, true)  -> "invariant"
+          | (true, false) -> "covariant"
+          | (false,true)  -> "contravariant"
+!         | (false,false) -> "unrestricted"
+        in
+!       let suffix n =
+!         let teen = (n mod 100)/10 = 1 in
+!         match n mod 10 with
+!         | 1 when not teen -> "st"
+!         | 2 when not teen -> "nd"
+!         | 3 when not teen -> "rd"
+!         | _ -> "th"
+        in
+        if n < 1 then
+          fprintf ppf "@[%s@ %s@]"
+!           "In this definition, a type variable has a variance that"
+!           "is not reflected by its occurrence in type parameters."
+        else
+          fprintf ppf "@[%s@ %s@ %s %d%s %s %s,@ %s %s@]"
+!           "In this definition, expected parameter"
+!           "variances are not satisfied."
+!           "The" n (suffix n)
+!           "type parameter was expected to be" (variance v2)
+!           "but it is" (variance v1)
+    | Unavailable_type_constructor p ->
+!       fprintf ppf "The definition of type %a@ is unavailable" Printtyp.path p
+    | Bad_fixed_type r ->
+!       fprintf ppf "This fixed type %s" r
+    | Varying_anonymous ->
+        fprintf ppf "@[%s@ %s@ %s@]"
+!         "In this GADT definition," "the variance of some parameter"
+!         "cannot be checked"
+--- 1132,1171 ----
+        | _ -> ()
+        end
+    | Unbound_type_var_exc (tv, ty) ->
+!       fprintf ppf "Une variable de type est non définie dans cette déclaration d'exception";
+        explain_unbound_single ppf (Ctype.repr tv) ty
+    | Unbound_exception lid ->
+!       fprintf ppf "Constructeur d'exception non défini@ %a" Printtyp.longident lid
+    | Not_an_exception lid ->
+!       fprintf ppf "Le constructeur@ %a@ n'est pas une exception"
+          Printtyp.longident lid
+    | Bad_variance (n, v1, v2) ->
+        let variance = function
+            (true, true)  -> "invariant"
+          | (true, false) -> "covariant"
+          | (false,true)  -> "contravariant"
+!         | (false,false) -> "non restreint"
+        in
+!       let suffix = function
+!         | 1 -> "er"
+!         | _ -> "ème"
+        in
+        if n < 1 then
+          fprintf ppf "@[%s@ %s@]"
+!           "Dans cette définition, une variable de type possède une variance"
+!           "qui n'est pas reflétée par son occurence dans les paramètres de type."
+        else
+          fprintf ppf "@[%s@ %s@ %s %d%s %s %s,@ %s %s@]"
+!           "Dans cette définition, les variances des paramètres"
+!           "attendus ne sont pas satisfaites."
+!           "Le" n (suffix n)
+!           "paramètre de type était supposé être" (variance v2)
+!           "mais il est" (variance v1)
+    | Unavailable_type_constructor p ->
+!       fprintf ppf "La définition du type %a@ n'est pas disponible" Printtyp.path p
+    | Bad_fixed_type r ->
+!       fprintf ppf "Ce type fixe %s" r
+    | Varying_anonymous ->
+        fprintf ppf "@[%s@ %s@ %s@]"
+!         "Dans cette définition GADT," "la variance de certains paramètres"
+!         "ne peut être vérifiée"
+diff -rcN ocaml-4.00.1.orig/typing/typemod.ml ocaml-4.00.1/typing/typemod.ml
+*** ocaml-4.00.1.orig/typing/typemod.ml	2012-07-30 20:59:07.000000000 +0200
+--- ocaml-4.00.1/typing/typemod.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 1360,1432 ****
+  let report_error ppf = function
+      Cannot_apply mty ->
+        fprintf ppf
+!         "@[This module is not a functor; it has type@ %a@]" modtype mty
+    | Not_included errs ->
+        fprintf ppf
+!         "@[<v>Signature mismatch:@ %a@]" Includemod.report_error errs
+    | Cannot_eliminate_dependency mty ->
+        fprintf ppf
+!         "@[This functor has type@ %a@ \
+!            The parameter cannot be eliminated in the result type.@  \
+!            Please bind the argument to a module identifier.@]" modtype mty
+!   | Signature_expected -> fprintf ppf "This module type is not a signature"
+    | Structure_expected mty ->
+        fprintf ppf
+!         "@[This module is not a structure; it has type@ %a" modtype mty
+    | With_no_component lid ->
+        fprintf ppf
+!         "@[The signature constrained by `with' has no component named %a@]"
+          longident lid
+    | With_mismatch(lid, explanation) ->
+        fprintf ppf
+          "@[<v>\
+!            @[In this `with' constraint, the new definition of %a@ \
+!              does not match its original definition@ \
+!              in the constrained signature:@]@ \
+             %a@]"
+          longident lid Includemod.report_error explanation
+    | Repeated_name(kind, name) ->
+        fprintf ppf
+!         "@[Multiple definition of the %s name %s.@ \
+!            Names must be unique in a given structure or signature.@]" kind name
+    | Non_generalizable typ ->
+        fprintf ppf
+!         "@[The type of this expression,@ %a,@ \
+!            contains type variables that cannot be generalized@]" type_scheme typ
+    | Non_generalizable_class (id, desc) ->
+        fprintf ppf
+!         "@[The type of this class,@ %a,@ \
+!            contains type variables that cannot be generalized@]"
+          (class_declaration id) desc
+    | Non_generalizable_module mty ->
+        fprintf ppf
+!         "@[The type of this module,@ %a,@ \
+!            contains type variables that cannot be generalized@]" modtype mty
+    | Implementation_is_required intf_name ->
+        fprintf ppf
+!         "@[The interface %a@ declares values, not just types.@ \
+!            An implementation must be provided.@]"
+          Location.print_filename intf_name
+    | Interface_not_compiled intf_name ->
+        fprintf ppf
+!         "@[Could not find the .cmi file for interface@ %a.@]"
+          Location.print_filename intf_name
+    | Not_allowed_in_functor_body ->
+        fprintf ppf
+!         "This kind of expression is not allowed within the body of a functor."
+    | With_need_typeconstr ->
+        fprintf ppf
+!         "Only type constructors with identical parameters can be substituted."
+    | Not_a_packed_module ty ->
+        fprintf ppf
+!         "This expression is not a packed module. It has type@ %a"
+          type_expr ty
+    | Incomplete_packed_module ty ->
+        fprintf ppf
+!         "The type of this packed module contains variables:@ %a"
+          type_expr ty
+    | Scoping_pack (lid, ty) ->
+        fprintf ppf
+!         "The type %a in this module cannot be exported.@ " longident lid;
+        fprintf ppf
+!         "Its type contains local dependencies:@ %a" type_expr ty
+--- 1360,1432 ----
+  let report_error ppf = function
+      Cannot_apply mty ->
+        fprintf ppf
+!         "@[Ce module n'est pas un foncteur; il est de type@ %a@]" modtype mty
+    | Not_included errs ->
+        fprintf ppf
+!         "@[<v>Signature erronée :@ %a@]" Includemod.report_error errs
+    | Cannot_eliminate_dependency mty ->
+        fprintf ppf
+!         "@[Ce foncteur est de type@ %a@ \
+!            Le paramètre ne peut être éliminé dans le type résultat.@  \
+!            Veuillez assigner à l'argument un identificateur de module.@]" modtype mty
+!   | Signature_expected -> fprintf ppf "Ce type de module n'est pas une signature"
+    | Structure_expected mty ->
+        fprintf ppf
+!         "@[Ce module n'est pas une structure ; il est de type@ %a" modtype mty
+    | With_no_component lid ->
+        fprintf ppf
+!         "@[La signature contrainte par `with' n'a pas de composant nommé %a@]"
+          longident lid
+    | With_mismatch(lid, explanation) ->
+        fprintf ppf
+          "@[<v>\
+!            @[Dans cette contrainte `with', la nouvelle définition de %a@ \
+!              ne correspond pas à la définition originale@ \
+!              dans la signature contrainte :@]@ \
+             %a@]"
+          longident lid Includemod.report_error explanation
+    | Repeated_name(kind, name) ->
+        fprintf ppf
+!         "@[Définitions multiples du nom %s %s.@ \
+!            Les noms doivent ête uniques dans une structure ou signature donnée.@]" kind name
+    | Non_generalizable typ ->
+        fprintf ppf
+!         "@[Le type de cette expression,@ %a,@ \
+!            contient des variables de type qui ne peuvent être généralisées@]" type_scheme typ
+    | Non_generalizable_class (id, desc) ->
+        fprintf ppf
+!         "@[Le type de cette classe,@ %a,@ \
+!            contient des variables de type qui ne peuvent être généralisées@]"
+          (class_declaration id) desc
+    | Non_generalizable_module mty ->
+        fprintf ppf
+!         "@[Le type de ce module,@ %a,@ \
+!            contient des variables de type qui ne peuvent être généralisées@]" modtype mty
+    | Implementation_is_required intf_name ->
+        fprintf ppf
+!         "@[L'interface %a@ declare des valeurs, pas seulement des types.@ \
+!            Une implémentation doit être fournie.@]"
+          Location.print_filename intf_name
+    | Interface_not_compiled intf_name ->
+        fprintf ppf
+!         "@[Impossible de trouver le fichier .cmi pour l'interface@ %a.@]"
+          Location.print_filename intf_name
+    | Not_allowed_in_functor_body ->
+        fprintf ppf
+!         "Ce genre d'expressions est interdit dans le corps d'un foncteur."
+    | With_need_typeconstr ->
+        fprintf ppf
+!         "Seuls les constructeurs de type avec des paramètres identiques peuvent être substitués."
+    | Not_a_packed_module ty ->
+        fprintf ppf
+!         "Cette expression n'est pas un module emballé. Elle a le type@ %a"
+          type_expr ty
+    | Incomplete_packed_module ty ->
+        fprintf ppf
+!         "Le type de ce module emballé contient les variables :@ %a"
+          type_expr ty
+    | Scoping_pack (lid, ty) ->
+        fprintf ppf
+!         "Le type %a dans ce module ne peut être exporté.@ " longident lid;
+        fprintf ppf
+!         "Son type contient des dépendances locales :@ %a" type_expr ty
+diff -rcN ocaml-4.00.1.orig/typing/typetexp.ml ocaml-4.00.1/typing/typetexp.ml
+*** ocaml-4.00.1.orig/typing/typetexp.ml	2012-07-30 20:59:07.000000000 +0200
+--- ocaml-4.00.1/typing/typetexp.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 665,747 ****
+  
+  let report_error ppf = function
+    | Unbound_type_variable name ->
+!       fprintf ppf "Unbound type parameter %s" name
+    | Unbound_type_constructor lid ->
+!       fprintf ppf "Unbound type constructor %a" longident lid
+    | Unbound_type_constructor_2 p ->
+!       fprintf ppf "The type constructor@ %a@ is not yet completely defined"
+          path p
+    | Type_arity_mismatch(lid, expected, provided) ->
+        fprintf ppf
+!        "@[The type constructor %a@ expects %i argument(s),@ \
+!         but is here applied to %i argument(s)@]"
+         longident lid expected provided
+    | Bound_type_variable name ->
+!       fprintf ppf "Already bound type parameter '%s" name
+    | Recursive_type ->
+!       fprintf ppf "This type is recursive"
+    | Unbound_row_variable lid ->
+!       fprintf ppf "Unbound row variable in #%a" longident lid
+    | Type_mismatch trace ->
+        Printtyp.unification_error true trace
+          (function ppf ->
+!            fprintf ppf "This type")
+          ppf
+          (function ppf ->
+!            fprintf ppf "should be an instance of type")
+    | Alias_type_mismatch trace ->
+        Printtyp.unification_error true trace
+          (function ppf ->
+!            fprintf ppf "This alias is bound to type")
+          ppf
+          (function ppf ->
+!            fprintf ppf "but is used as an instance of type")
+    | Present_has_conjunction l ->
+!       fprintf ppf "The present constructor %s has a conjunctive type" l
+    | Present_has_no_type l ->
+!       fprintf ppf "The present constructor %s has no type" l
+    | Constructor_mismatch (ty, ty') ->
+        Printtyp.reset_and_mark_loops_list [ty; ty'];
+        fprintf ppf "@[<hov>%s %a@ %s@ %a@]"
+!         "This variant type contains a constructor"
+          Printtyp.type_expr ty
+!         "which should be"
+          Printtyp.type_expr ty'
+    | Not_a_variant ty ->
+        Printtyp.reset_and_mark_loops ty;
+!       fprintf ppf "@[The type %a@ is not a polymorphic variant type@]"
+          Printtyp.type_expr ty
+    | Variant_tags (lab1, lab2) ->
+        fprintf ppf
+!         "@[Variant tags `%s@ and `%s have the same hash value.@ %s@]"
+!         lab1 lab2 "Change one of them."
+    | Invalid_variable_name name ->
+!       fprintf ppf "The type variable name %s is not allowed in programs" name
+    | Cannot_quantify (name, v) ->
+        fprintf ppf
+!         "@[<hov>The universal type variable '%s cannot be generalized:@ %s.@]"
+          name
+!         (if Btype.is_Tvar v then "it escapes its scope" else
+!          if Btype.is_Tunivar v then "it is already bound to another variable"
+!          else "it is not a variable")
+    | Multiple_constraints_on_type s ->
+!       fprintf ppf "Multiple constraints for type %a" longident s
+    | Repeated_method_label s ->
+!       fprintf ppf "@[This is the second method `%s' of this object type.@ %s@]"
+!         s "Multiple occurences are not allowed."
+    | Unbound_value lid ->
+!       fprintf ppf "Unbound value %a" longident lid
+    | Unbound_module lid ->
+!       fprintf ppf "Unbound module %a" longident lid
+    | Unbound_constructor lid ->
+!       fprintf ppf "Unbound constructor %a" longident lid
+    | Unbound_label lid ->
+!       fprintf ppf "Unbound record field label %a" longident lid
+    | Unbound_class lid ->
+!       fprintf ppf "Unbound class %a" longident lid
+    | Unbound_modtype lid ->
+!       fprintf ppf "Unbound module type %a" longident lid
+    | Unbound_cltype lid ->
+!       fprintf ppf "Unbound class type %a" longident lid
+    | Ill_typed_functor_application lid ->
+!       fprintf ppf "Ill-typed functor application %a" longident lid
+--- 665,747 ----
+  
+  let report_error ppf = function
+    | Unbound_type_variable name ->
+!       fprintf ppf "Paramètre de type %s non défini" name
+    | Unbound_type_constructor lid ->
+!       fprintf ppf "Constructeur de type %a non défini" longident lid
+    | Unbound_type_constructor_2 p ->
+!       fprintf ppf "Le constructeur de type@ %a@ n'est pas encore complètement défini"
+          path p
+    | Type_arity_mismatch(lid, expected, provided) ->
+        fprintf ppf
+!        "@[Le constructeur de type %a@ attend %i argument(s),@ \
+!         mais est ici appliqué à %i argument(s)@]"
+         longident lid expected provided
+    | Bound_type_variable name ->
+!       fprintf ppf "Paramètre de type déjà défini '%s" name
+    | Recursive_type ->
+!       fprintf ppf "Ce type est récursif"
+    | Unbound_row_variable lid ->
+!       fprintf ppf "Variable de ligne non définie dans #%a" longident lid
+    | Type_mismatch trace ->
+        Printtyp.unification_error true trace
+          (function ppf ->
+!            fprintf ppf "Ce type")
+          ppf
+          (function ppf ->
+!            fprintf ppf "devrait être une instance du type")
+    | Alias_type_mismatch trace ->
+        Printtyp.unification_error true trace
+          (function ppf ->
+!            fprintf ppf "Cet alias est lié au type")
+          ppf
+          (function ppf ->
+!            fprintf ppf "mais est utilisé comme une instance du type")
+    | Present_has_conjunction l ->
+!       fprintf ppf "Le présent constructeur %s a un type conjonctif" l
+    | Present_has_no_type l ->
+!       fprintf ppf "Le présent constructeur %s n'a pas de type" l
+    | Constructor_mismatch (ty, ty') ->
+        Printtyp.reset_and_mark_loops_list [ty; ty'];
+        fprintf ppf "@[<hov>%s %a@ %s@ %a@]"
+!         "Ce type variant contient un constructeur"
+          Printtyp.type_expr ty
+!         "qui devrait être"
+          Printtyp.type_expr ty'
+    | Not_a_variant ty ->
+        Printtyp.reset_and_mark_loops ty;
+!       fprintf ppf "@[Le type %a@ n'est pas un type variant polymorphe@]"
+          Printtyp.type_expr ty
+    | Variant_tags (lab1, lab2) ->
+        fprintf ppf
+!         "@[Les constructeurs de type somme `%s@ et `%s ont la même valeur de hachage.@ %s@]"
+!         lab1 lab2 "Changez-en un."
+    | Invalid_variable_name name ->
+!       fprintf ppf "Le nom de variable de type %s est interdit dans les programmes" name
+    | Cannot_quantify (name, v) ->
+        fprintf ppf
+!         "@[<hov>Le type de variable universel '%s ne peut être généralisé :@ %s.@]"
+          name
+!         (if Btype.is_Tvar v then "il sort de sa portée" else
+!          if Btype.is_Tunivar v then "il est déjà lié à une autre variable"
+!          else "ce n'est pas une variable")
+    | Multiple_constraints_on_type s ->
+!       fprintf ppf "Contraintes multiples pour le type %a" longident s
+    | Repeated_method_label s ->
+!       fprintf ppf "@[C'est la deuxième méthode `%s' de ce type objet.@ %s@]"
+!         s "Les occurences multiples sont interdites."
+    | Unbound_value lid ->
+!       fprintf ppf "Valeur %a non définie" longident lid
+    | Unbound_module lid ->
+!       fprintf ppf "Module %a non défini" longident lid
+    | Unbound_constructor lid ->
+!       fprintf ppf "Constructeur %a non défini" longident lid
+    | Unbound_label lid ->
+!       fprintf ppf "Etiquette de champ d'enregistrement %a non définie" longident lid
+    | Unbound_class lid ->
+!       fprintf ppf "Classe %a non définie" longident lid
+    | Unbound_modtype lid ->
+!       fprintf ppf "Type de module %a non défini" longident lid
+    | Unbound_cltype lid ->
+!       fprintf ppf "Type de classe %a non défini" longident lid
+    | Ill_typed_functor_application lid ->
+!       fprintf ppf "Application de foncteur %a mal typée" longident lid
+diff -rcN ocaml-4.00.1.orig/utils/warnings.ml ocaml-4.00.1/utils/warnings.ml
+*** ocaml-4.00.1.orig/utils/warnings.ml	2012-05-29 14:35:17.000000000 +0200
+--- ocaml-4.00.1/utils/warnings.ml	2012-10-26 17:48:23.000000000 +0200
+***************
+*** 211,309 ****
+  let () = parse_options true defaults_warn_error;;
+  
+  let message = function
+!   | Comment_start -> "this is the start of a comment."
+!   | Comment_not_end -> "this is not the end of a comment."
+!   | Deprecated -> "this syntax is deprecated."
+    | Fragile_match "" ->
+!       "this pattern-matching is fragile."
+    | Fragile_match s ->
+!       "this pattern-matching is fragile.\n\
+!        It will remain exhaustive when constructors are added to type " ^ s ^ "."
+    | Partial_application ->
+!       "this function application is partial,\n\
+!        maybe some arguments are missing."
+    | Labels_omitted ->
+!       "labels were omitted in the application of this function."
+    | Method_override [lab] ->
+!       "the method " ^ lab ^ " is overridden."
+    | Method_override (cname :: slist) ->
+        String.concat " "
+!         ("the following methods are overridden by the class"
+           :: cname  :: ":\n " :: slist)
+    | Method_override [] -> assert false
+!   | Partial_match "" -> "this pattern-matching is not exhaustive."
+    | Partial_match s ->
+!       "this pattern-matching is not exhaustive.\n\
+!        Here is an example of a value that is not matched:\n" ^ s
+    | Non_closed_record_pattern s ->
+!       "the following labels are not bound in this record pattern:\n" ^ s ^
+!       "\nEither bind these labels explicitly or add '; _' to the pattern."
+    | Statement_type ->
+!       "this expression should have type unit."
+!   | Unused_match -> "this match case is unused."
+!   | Unused_pat   -> "this sub-pattern is unused."
+    | Instance_variable_override [lab] ->
+!       "the instance variable " ^ lab ^ " is overridden.\n" ^
+!       "The behaviour changed in ocaml 3.10 (previous behaviour was hiding.)"
+    | Instance_variable_override (cname :: slist) ->
+        String.concat " "
+!         ("the following instance variables are overridden by the class"
+           :: cname  :: ":\n " :: slist) ^
+!       "\nThe behaviour changed in ocaml 3.10 (previous behaviour was hiding.)"
+    | Instance_variable_override [] -> assert false
+!   | Illegal_backslash -> "illegal backslash escape in string."
+    | Implicit_public_methods l ->
+!       "the following private methods were made public implicitly:\n "
+        ^ String.concat " " l ^ "."
+!   | Unerasable_optional_argument -> "this optional argument cannot be erased."
+!   | Undeclared_virtual_method m -> "the virtual method "^m^" is not declared."
+!   | Not_principal s -> s^" is not principal."
+!   | Without_principality s -> s^" without principality."
+!   | Unused_argument -> "this argument will not be used by the function."
+    | Nonreturning_statement ->
+!       "this statement never returns (or has an unsound type.)"
+    | Camlp4 s -> s
+    | Useless_record_with ->
+!       "all the fields are explicitly listed in this record:\n\
+!        the 'with' clause is useless."
+    | Bad_module_name (modname) ->
+!       "bad source file name: \"" ^ modname ^ "\" is not a valid module name."
+    | All_clauses_guarded ->
+!       "bad style, all clauses in this pattern-matching are guarded."
+!   | Unused_var v | Unused_var_strict v -> "unused variable " ^ v ^ "."
+    | Wildcard_arg_to_constant_constr ->
+!      "wildcard pattern given as argument to a constant constructor"
+    | Eol_in_string ->
+!      "unescaped end-of-line in a string constant (non-portable code)"
+    | Duplicate_definitions (kind, cname, tc1, tc2) ->
+!       Printf.sprintf "the %s %s is defined in both types %s and %s."
+          kind cname tc1 tc2
+    | Multiple_definition(modname, file1, file2) ->
+        Printf.sprintf
+!         "files %s and %s both define a module named %s"
+          file1 file2 modname
+!   | Unused_value_declaration v -> "unused value " ^ v ^ "."
+!   | Unused_open s -> "unused open " ^ s ^ "."
+!   | Unused_type_declaration s -> "unused type " ^ s ^ "."
+!   | Unused_for_index s -> "unused for-loop index " ^ s ^ "."
+!   | Unused_ancestor s -> "unused ancestor variable " ^ s ^ "."
+!   | Unused_constructor (s, false, false) -> "unused constructor " ^ s ^ "."
+    | Unused_constructor (s, true, _) ->
+!       "constructor " ^ s ^
+!       " is never used to build values.\n\
+!         (However, this constructor appears in patterns.)"
+    | Unused_constructor (s, false, true) ->
+!       "constructor " ^ s ^
+!       " is never used to build values.\n\
+!         Its type is exported as a private type."
+    | Unused_exception (s, false) ->
+!       "unused exception constructor " ^ s ^ "."
+    | Unused_exception (s, true) ->
+!       "exception constructor " ^ s ^
+!       " is never raised or used to build values.\n\
+!         (However, this constructor appears in patterns.)"
+    | Unused_rec_flag ->
+!       "unused rec flag."
+  ;;
+  
+  let nerrors = ref 0;;
+--- 211,309 ----
+  let () = parse_options true defaults_warn_error;;
+  
+  let message = function
+!   | Comment_start -> "ceci est le début d'un commentaire."
+!   | Comment_not_end -> "ce n'est pas la fin d'un commentaire."
+!   | Deprecated -> "cette syntaxe est obsolète."
+    | Fragile_match "" ->
+!       "ce filtrage est fragile."
+    | Fragile_match s ->
+!       "ce filtrage est fragile.\n\
+!        Il restera exhaustif quand des constructeurs seront ajoutés au type " ^ s ^ "."
+    | Partial_application ->
+!       "cette application de fonction est partielle,\n\
+!        il manque peut-être des arguments."
+    | Labels_omitted ->
+!       "des étiquettes ont été omises dans l'application de cette fonction."
+    | Method_override [lab] ->
+!       "la méthode " ^ lab ^ " est surchargée."
+    | Method_override (cname :: slist) ->
+        String.concat " "
+!         ("les méthodes suivantes sont surchargées par la classe"
+           :: cname  :: ":\n " :: slist)
+    | Method_override [] -> assert false
+!   | Partial_match "" -> "ce filtrage n'est pas exhaustif."
+    | Partial_match s ->
+!       "ce filtrage n'est pas exhaustif.\n\
+!        Voici un exemple de valeur non filtrée :\n" ^ s
+    | Non_closed_record_pattern s ->
+!       "les étiquettes suivantes ne sont pas définies dans ce filtre d'enregistrement :\n" ^ s ^
+!       "\nRenseignez ces étiquettes explicitement ou ajoutez '; _' au filtre."
+    | Statement_type ->
+!       "cette expression devrait avoir le type unit."
+!   | Unused_match -> "ce cas de filtrage n'est jamais utilisé."
+!   | Unused_pat   -> "ce sous-motif n'est jamais utilisé."
+    | Instance_variable_override [lab] ->
+!       "la variable d'instance " ^ lab ^ " est surchargée.\n" ^
+!       "Le comportement a changé avec ocaml 3.10 (le comportement antérieur était le masquage.)"
+    | Instance_variable_override (cname :: slist) ->
+        String.concat " "
+!         ("les variables d'instance suivantes sont surchargées par la classe"
+           :: cname  :: ":\n " :: slist) ^
+!       "\nLe comportement a changé avec ocaml 3.10 (le comportement antérieur était le masquage.)"
+    | Instance_variable_override [] -> assert false
+!   | Illegal_backslash -> "séquence d'échappement illégale dans la chaîne."
+    | Implicit_public_methods l ->
+!       "les méthodes privées suivantes ont été rendues publiques implicitement :\n "
+        ^ String.concat " " l ^ "."
+!   | Unerasable_optional_argument -> "cet argument optionnel ne peut pas être effacé."
+!   | Undeclared_virtual_method m -> "la méthode virtuelle "^m^" n'est pas déclarée."
+!   | Not_principal s -> s^" n'est pas principal."
+!   | Without_principality s -> s^" sans principalité."
+!   | Unused_argument -> "cet argument ne sera pas utilisé par la fonction."
+    | Nonreturning_statement ->
+!       "cet énoncé ne termine jamais (ou possède un type mal fondé.)"
+    | Camlp4 s -> s
+    | Useless_record_with ->
+!       "tous les champs sont explicitement listés dans cet enregistrement :\n\
+!        la clause 'with' est inutile."
+    | Bad_module_name (modname) ->
+!       "mauvais nom de fichier source : \"" ^ modname ^ "\" n'est pas un nom de module valide."
+    | All_clauses_guarded ->
+!       "mauvais style, toutes les clauses de ce filtrage ont une garde."
+!   | Unused_var v | Unused_var_strict v -> "variable inutilisée " ^ v ^ "."
+    | Wildcard_arg_to_constant_constr ->
+!      "motif universel donné en argument à un constructeur constant"
+    | Eol_in_string ->
+!      "fin de ligne non échappée dans une constante chaîne (code non-portable)"
+    | Duplicate_definitions (kind, cname, tc1, tc2) ->
+!       Printf.sprintf "Le %s %s est défini(e) dans les deux types %s et %s."
+          kind cname tc1 tc2
+    | Multiple_definition(modname, file1, file2) ->
+        Printf.sprintf
+!         "les fichiers %s et %s définissent tous deux un module nommé %s"
+          file1 file2 modname
+!   | Unused_value_declaration v -> "valeur inutilisée " ^ v ^ "."
+!   | Unused_open s -> "open inutilisé " ^ s ^ "."
+!   | Unused_type_declaration s -> "type inutilisé " ^ s ^ "."
+!   | Unused_for_index s -> "indice de boucle for inutilisé " ^ s ^ "."
+!   | Unused_ancestor s -> "variable d'ancêtre inutilisée " ^ s ^ "."
+!   | Unused_constructor (s, false, false) -> "constructeur inutilisé " ^ s ^ "."
+    | Unused_constructor (s, true, _) ->
+!       "le constructeur " ^ s ^
+!       " n'est jamais utilisé pour construire des valeurs.\n\
+!         (Cependant, ce constructeur apparaît dans des motifs.)"
+    | Unused_constructor (s, false, true) ->
+!       "le constructeur " ^ s ^
+!       " n'est jamais utilisé pour construire des valeurs.\n\
+!         son type est exporté en tant que type privé."
+    | Unused_exception (s, false) ->
+!       "constructeur d'exception inutilisé " ^ s ^ "."
+    | Unused_exception (s, true) ->
+!       "le constructeur d'exception " ^ s ^
+!       " n'est jamais levé ou utilisé pour construire des valeurs.\n\
+!         (Cependant, ce constructeur apparaît dans des motifs.)"
+    | Unused_rec_flag ->
+!       "indicateur rec inutilisé."
+  ;;
+  
+  let nerrors = ref 0;;
+***************
+*** 320,326 ****
+    in
+    let countnewline x = incr newlines; newline x in
+    Format.pp_set_all_formatter_output_functions ppf out flush countnewline space;
+!   Format.fprintf ppf "%d: %s" num msg;
+    Format.pp_print_flush ppf ();
+    Format.pp_set_all_formatter_output_functions ppf out flush newline space;
+    if error.(num) then incr nerrors;
+--- 320,326 ----
+    in
+    let countnewline x = incr newlines; newline x in
+    Format.pp_set_all_formatter_output_functions ppf out flush countnewline space;
+!   Format.fprintf ppf "%d : %s" num msg;
+    Format.pp_print_flush ppf ();
+    Format.pp_set_all_formatter_output_functions ppf out flush newline space;
+    if error.(num) then incr nerrors;
+***************
+*** 339,385 ****
+  
+  let descriptions =
+    [
+!     1, "Suspicious-looking start-of-comment mark.";
+!     2, "Suspicious-looking end-of-comment mark.";
+!     3, "Deprecated syntax.";
+!     4, "Fragile pattern matching: matching that will remain complete even\n\
+!    \    if additional constructors are added to one of the variant types\n\
+!    \    matched.";
+!     5, "Partially applied function: expression whose result has function\n\
+!    \    type and is ignored.";
+!     6, "Label omitted in function application.";
+!     7, "Method overridden.";
+!     8, "Partial match: missing cases in pattern-matching.";
+!     9, "Missing fields in a record pattern.";
+!    10, "Expression on the left-hand side of a sequence that doesn't have type\n\
+!    \    \"unit\" (and that is not a function, see warning number 5).";
+!    11, "Redundant case in a pattern matching (unused match case).";
+!    12, "Redundant sub-pattern in a pattern-matching.";
+!    13, "Instance variable overridden.";
+!    14, "Illegal backslash escape in a string constant.";
+!    15, "Private method made public implicitly.";
+!    16, "Unerasable optional argument.";
+!    17, "Undeclared virtual method.";
+!    18, "Non-principal type.";
+!    19, "Type without principality.";
+!    20, "Unused function argument.";
+!    21, "Non-returning statement.";
+!    22, "Camlp4 warning.";
+!    23, "Useless record \"with\" clause.";
+!    24, "Bad module name: the source file name is not a valid OCaml module \
+!         name.";
+!    25, "Pattern-matching with all clauses guarded.  Exhaustiveness cannot be\n\
+!    \    checked.";
+!    26, "Suspicious unused variable: unused variable that is bound\n\
+!    \    with \"let\" or \"as\", and doesn't start with an underscore (\"_\")\n\
+!    \    character.";
+!    27, "Innocuous unused variable: unused variable that is not bound with\n\
+!    \    \"let\" nor \"as\", and doesn't start with an underscore (\"_\")\n\
+!    \    character.";
+!    28, "Wildcard pattern given as argument to a constant constructor.";
+!    29, "Unescaped end-of-line in a string constant (non-portable code).";
+!    30, "Two labels or constructors of the same name are defined in two\n\
+!    \    mutually recursive types.";
+     31, "A module is linked twice in the same executable.";
+     32, "Unused value declaration.";
+     33, "Unused open statement.";
+--- 339,382 ----
+  
+  let descriptions =
+    [
+!     1, "Marque de début de commentaire suspecte.";
+!     2, "Marque de fin de commentaire suspecte.";
+!     3, "Syntaxe obsolète.";
+!     4, "Filtrage fragile : filtrage qui restera complet même\n\
+!    \    si des constructeurs supplémentaires sont ajoutés à l'un des types variants\n\
+!    \    filtrés.";
+!     5, "Fontion partiellement appliquée : expression dont le résultat a un type fonctionnel\n\
+!    \    et est ignoré.";
+!     6, "Etiquette omise dans l'application de fonction.";
+!     7, "Méthode surchargée.";
+!     8, "Filtrage partiel : cas manquants dans le filtrage.";
+!     9, "Champs manquants dans un motif d'enregistrement.";
+!    10, "Expression dans la partie gauche d'une séquence qui n'a pas le type\n\
+!    \    \"unit\" (et qui n'est pas une fonction, voir avertissement numéro 5).";
+!    11, "Cas redondant dans un filtrage (cas inutilisé).";
+!    12, "Sous-motif redondant dans un filtrage.";
+!    13, "Variable d'instance surchargée.";
+!    14, "Séquence d'échappement illégale dans une constante chaîne.";
+!    15, "Méthode privée rendue publique implicitement.";
+!    16, "Argument optionnel ineffaçable.";
+!    17, "Méthode virtuelle non déclarée.";
+!    18, "Type non principal.";
+!    19, "Type sans principalité.";
+!    20, "Argument de fonction non utilisé.";
+!    21, "Enoncé qui ne termine jamais.";
+!    22, "Avertissement de Camlp4.";
+!    23, "Clause \"with\" d'enregistrement inutile.";
+!    24, "Mauvais nom de module : le nom de fichier source n'est pas un nom de module OCaml valide.";
+!    25, "Filtrage avec toutes les clauses gardées.  L'exhaustivité ne peut être\n\
+!    \    vérifiée";
+!    26, "Variable inutilisée suspecte : variable inutilisée qui est définie avec \"let\"\n\
+!    \    ou \"as\", et ne commence pas par un caractère souligné (\"_\").";
+!    27, "Variable inutilisée inoffensive : variable inutilisée qui est définie avec\n\
+!    \    \"let\" ou \"as\", et ne commence pas par un caractère souligné (\"_\").";
+!    28, "Motif universel donné en argument à un constructeur constant.";
+!    29, "Fin de ligne non échappée dans une constante chaîne (code non-portable).";
+!    30, "Deux étiquettes ou constructeurs du même nom sont définis dans deux\n\
+!    \    types mutuellement récursifs.";
+     31, "A module is linked twice in the same executable.";
+     32, "Unused value declaration.";
+     33, "Unused open statement.";

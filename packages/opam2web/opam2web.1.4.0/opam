@@ -1,13 +1,11 @@
 opam-version: "1.2"
-version: "1.4.0"
 maintainer: "The OPAM team"
 authors: "The OPAM team"
 homepage: "https://github.com/ocaml/opam2web"
 bug-reports: "https://github.com/ocaml/opam2web/issues"
 dev-repo: "https://github.com/ocaml/opam2web.git"
-
 build: [make]
-install:[
+install: [
   [make "install" "PREFIX=%{prefix}%"]
   ["mkdir" "-p" "%{share}%/opam2web/"]
   ["cp" "-R" "ext" "%{share}%/opam2web/"]
@@ -18,6 +16,7 @@ remove: [
   ["ocamlfind" "remove" "opam2web"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ocamlfind"
   "opam-lib" {>= "1.2.0"}
   "opamfu" {>= "0.1.2"}
@@ -27,4 +26,3 @@ depends: [
   "js_of_ocaml" {>= "2.4.1"}
   "cmdliner"
 ]
-available: [ocaml-version >= "4.01.0"]

@@ -9,5 +9,7 @@ remove: [
   ["./configure" "-prefix" prefix]
   [make "uninstall"]
 ]
-depends: ["ocamlfind"]
-available: [ocaml-version < "4.02.0"]
+depends: [
+  "ocaml" {< "4.02.0"}
+  "ocamlfind"
+]

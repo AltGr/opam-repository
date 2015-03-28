@@ -5,13 +5,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "vorbis"]]
-depends: [
-  "ocamlfind"
-  "ogg"
-]
+remove: ["ocamlfind" "remove" "vorbis"]
+depends: ["ocaml" "ocamlfind" "ogg"]
 depexts: [
- [["debian"] ["libvorbis-dev"]]
- [["ubuntu"] ["libvorbis-dev"]]
- [["osx" "homebrew"] ["libvorbis"]]
+  [["debian"] ["libvorbis-dev"]]
+  [["homebrew" "osx"] ["libvorbis"]]
+  [["ubuntu"] ["libvorbis-dev"]]
 ]

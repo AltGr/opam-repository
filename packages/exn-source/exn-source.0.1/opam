@@ -4,7 +4,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "exnsource"]]
-available: [ocaml-version >= "4.02.0"]
-depends: ["ocamlfind"]
-
+remove: ["ocamlfind" "remove" "exnsource"]
+depends: [
+  "ocaml" {>= "4.02.0"}
+  "ocamlfind"
+]

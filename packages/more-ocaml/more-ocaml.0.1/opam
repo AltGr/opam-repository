@@ -4,5 +4,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "more-ocaml"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "more-ocaml"]
+depends: ["ocaml" "ocamlfind"]

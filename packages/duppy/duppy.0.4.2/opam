@@ -5,8 +5,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "duppy"]]
-depends: [
-  "ocamlfind"
-  "pcre"
-]
+remove: ["ocamlfind" "remove" "duppy"]
+depends: ["ocaml" "ocamlfind" "pcre"]

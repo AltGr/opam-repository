@@ -1,0 +1,68 @@
+diff -ruN ocaml-4.01.0/asmcomp/arm/arch.ml ocaml-4.01.0-rpi/asmcomp/arm/arch.ml
+--- ocaml-4.01.0/asmcomp/arm/arch.ml	2013-01-06 17:07:50.000000000 +0000
++++ ocaml-4.01.0-rpi/asmcomp/arm/arch.ml	2014-04-21 00:16:13.749678074 +0100
+@@ -21,7 +21,7 @@
+ 
+ let abi =
+   match Config.system with
+-    "linux_eabi"   -> EABI
++    "linux_eabi" | "freebsd" -> EABI
+   | "linux_eabihf" -> EABI_HF
+   | _ -> assert false
+ 
+diff -ruN ocaml-4.01.0/asmrun/arm.S ocaml-4.01.0-rpi/asmrun/arm.S
+--- ocaml-4.01.0/asmrun/arm.S	2013-01-13 17:20:36.000000000 +0000
++++ ocaml-4.01.0-rpi/asmrun/arm.S	2014-04-21 00:16:16.793677949 +0100
+@@ -31,7 +31,7 @@
+         .arch   armv7-a
+         .fpu    vfpv3-d16
+         .thumb
+-#elif defined(SYS_linux_eabi)
++#elif defined(SYS_linux_eabi) 
+         .arch   armv4t
+         .arm
+ 
+@@ -43,6 +43,15 @@
+         .macro  cbz reg, lbl
+         cmp     \reg, #0
+         beq     \lbl
++        .endm
++#elif defined(SYS_freebsd)
++        .arch   armv6
++        .arm
++
++    /* Compatibility macros */
++        .macro  cbz reg, lbl
++        cmp     \reg, #0
++        beq     \lbl
+         .endm
+ #endif
+ 
+diff -ruN ocaml-4.01.0/configure ocaml-4.01.0-rpi/configure
+--- ocaml-4.01.0/configure	2013-08-23 07:22:36.000000000 +0100
++++ ocaml-4.01.0-rpi/configure	2014-04-25 11:56:53.109809209 +0100
+@@ -657,6 +657,7 @@
+     x86_64-*-netbsd*)             natdynlink=true;;
+     i386-*-gnu0.3)                natdynlink=true;;
+     arm*-*-linux*)                natdynlink=true;;
++    arm*-*-freebsd*)              natdynlink=true;;
+   esac
+ fi
+ 
+@@ -705,6 +706,7 @@
+   armv7*-*-linux-gnueabi)       arch=arm; model=armv7; system=linux_eabi;;
+   armv6t2*-*-linux-gnueabi)     arch=arm; model=armv6t2; system=linux_eabi;;
+   armv6*-*-linux-gnueabi)       arch=arm; model=armv6; system=linux_eabi;;
++  armv6*-*-freebsd*)            arch=arm; model=armv6; system=freebsd;;         # XXX: what system?
+   armv5te*-*-linux-gnueabi)     arch=arm; model=armv5te; system=linux_eabi;;
+   armv5*-*-linux-gnueabi)       arch=arm; model=armv5; system=linux_eabi;;
+   arm*-*-linux-gnueabi)         arch=arm; system=linux_eabi;;
+@@ -766,6 +768,8 @@
+                     aspp='gcc -m64 -c';;
+   amd64,*,*)        as='as'
+                     aspp='gcc -c';;
++  arm,*,freebsd*)   as='cc -c';
++                    aspp='cc -c';;
+   arm,*,*)          as='as';
+                     aspp='gcc -c';;
+   i386,*,solaris)   as='as'

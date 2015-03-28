@@ -5,8 +5,9 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-remove: [["ocamlfind" "remove" "promela"]]
+remove: ["ocamlfind" "remove" "promela"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "ospec" {>= "0.3.0"}
 ]

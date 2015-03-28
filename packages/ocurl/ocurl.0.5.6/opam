@@ -5,10 +5,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "curl"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "curl"]
+depends: ["ocaml" "ocamlfind"]
 depexts: [
+  [["centos"] ["libcurl-devel" "openssl-devel"]]
   [["debian"] ["libcurl4-gnutls-dev"]]
   [["ubuntu"] ["libcurl4-gnutls-dev"]]
-  [["centos"] ["libcurl-devel" "openssl-devel"]]
 ]

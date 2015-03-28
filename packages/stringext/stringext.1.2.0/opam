@@ -18,7 +18,7 @@ build-test: [
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "stringext"]
 depends: [
+  "ocaml" {>= "4.00.0"}
   "ocamlfind" {build}
   "base-bytes"
 ]
-available: [ocaml-version >= "4.00.0"]

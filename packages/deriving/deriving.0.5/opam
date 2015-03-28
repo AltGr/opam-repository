@@ -6,6 +6,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "deriving"]
 depends: [
+  "ocaml" {<= "4.01.0"}
   "ocamlfind"
   "optcomp" {>= "1.6"}
   "camlp4"
@@ -14,4 +15,3 @@ depopts: "type_conv"
 conflicts: [
   "type_conv" {< "108.07.00"}
 ]
-ocaml-version: [<= "4.01.0"]

@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "thomas@gazagnaire.org"
-authors: [ "Thomas Gazagnaire" ]
+authors: "Thomas Gazagnaire"
 license: "ISC"
 build: [
   ["./configure" "--prefix" prefix]
@@ -12,6 +12,7 @@ remove: [
   ["rm" "-f" "%{bin}%/irmin"]
 ]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "ezjsonm" {>= "0.2.0" & < "0.4.0"}
   "ocamlgraph"
   "lwt"
@@ -21,10 +22,9 @@ depends: [
   "mstruct"
   "core_kernel" {>= "109.55.02"}
   "uri" {>= "1.3.12"}
-  "cohttp" {>="0.10.0" & <"0.12.0"}
+  "cohttp" {>= "0.10.0" & < "0.12.0"}
   "ssl"
   "cmdliner"
   "git" {= "1.2.0"}
   "crunch"
 ]
-ocaml-version: [>= "4.01.0"]

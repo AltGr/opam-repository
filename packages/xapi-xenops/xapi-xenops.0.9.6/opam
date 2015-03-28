@@ -4,10 +4,9 @@ build: [
   [make]
   [make "PREFIX=%{prefix}%" "BINDIR=%{bin}%" "install"]
 ]
-remove: [
-  [make "PREFIX=%{prefix}%" "BINDIR=%{bin}%" "uninstall"]
-]
+remove: [make "PREFIX=%{prefix}%" "BINDIR=%{bin}%" "uninstall"]
 depends: [
+  "ocaml" {>= "4.01.0"}
   "obuild" {>= "0.1.1"}
   "xapi-stdext"
   "xapi-libs-transitional"
@@ -15,4 +14,3 @@ depends: [
   "xenstore"
   "xenstore_transport"
 ]
-ocaml-version: [>= "4.01.0"]

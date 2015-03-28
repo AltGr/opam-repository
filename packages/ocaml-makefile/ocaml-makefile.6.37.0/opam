@@ -4,3 +4,4 @@ build: [
   ["mkdir" "-p" "%{lib}%/ocaml-makefile"]
   ["cp" "OCamlMakefile" "%{lib}%/ocaml-makefile"]
 ]
+depends: "ocaml"

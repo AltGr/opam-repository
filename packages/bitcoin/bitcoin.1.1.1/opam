@@ -1,20 +1,26 @@
 opam-version: "1"
 maintainer: "dario.teixeira@nleyten.com"
-authors: ["Dario Teixeira <dario.teixeira@nleyten.com>"]
+authors: "Dario Teixeira <dario.teixeira@nleyten.com>"
 homepage: "http://ocaml-bitcoin.forge.ocamlcore.org/"
 license: "GPL-2.0"
 build: [
-  ["./configure" "--prefix" prefix "--docdir" "%{doc}%/bitcoin" "--%{ocsigenserver:enable}%-ocsigen" "--%{ocamlnet:enable}%-ocamlnet"]
+  [
+    "./configure"
+    "--prefix"
+    prefix
+    "--docdir"
+    "%{doc}%/bitcoin"
+    "--%{ocsigenserver:enable}%-ocsigen"
+    "--%{ocamlnet:enable}%-ocamlnet"
+  ]
   [make]
   [make "doc"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "bitcoin"]]
+remove: ["ocamlfind" "remove" "bitcoin"]
 depends: [
+  "ocaml"
   "yojson"
   "ocamlnet" {< "4"}
 ]
-depopts: [
-  "lwt"
-  "ocsigenserver"
-]
+depopts: ["lwt" "ocsigenserver"]

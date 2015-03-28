@@ -16,7 +16,9 @@ build: [
 ]
 build-doc: ["ocaml" "setup.ml" "-doc"]
 remove: ["ocamlfind" "remove" "theMovieDb"]
-depends: ["ocamlfind" "ocsigenserver" "deriving-yojson" "yojson" "lwt"]
+depends: [
+  "ocaml" "ocamlfind" "ocsigenserver" "deriving-yojson" "yojson" "lwt"
+]
 depopts: "ounit"
 conflicts: [
   "ounit" {< "2.0.0"}

@@ -12,7 +12,8 @@ remove: [
   [make "uninstall"]
 ]
 depends: [
+  "ocaml"
   "ocp-build" {>= "1.99.4-beta"}
   "cmdliner"
 ]
-patches: ["warnings.patch"]
+patches: "warnings.patch"

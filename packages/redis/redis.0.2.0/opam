@@ -2,14 +2,15 @@ opam-version: "1"
 maintainer: "0xffea@gmail.com"
 license: "BSD3"
 build: [
-  ["./configure"
-     "--%{lwt:enable}%-lwt"]
+  ["./configure" "--%{lwt:enable}%-lwt"]
   [make "build"]
   [make "install"]
 ]
-remove: [
-  ["ocamlfind" "remove" "redis"]
+remove: ["ocamlfind" "remove" "redis"]
+depends: [
+  "ocaml" {>= "4.00.0"}
+  "ocamlfind"
+  "batteries"
+  "uuidm"
 ]
-depends: ["ocamlfind" "batteries" "uuidm"]
-depopts: ["lwt"]
-ocaml-version: [>= "4.00.0"]
+depopts: "lwt"

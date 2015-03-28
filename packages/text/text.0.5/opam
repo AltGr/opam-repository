@@ -4,6 +4,8 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "text"]]
-depends: ["ocamlfind"]
-ocaml-version: [= "3.12.1"]
+remove: ["ocamlfind" "remove" "text"]
+depends: [
+  "ocaml" {= "3.12.1"}
+  "ocamlfind"
+]

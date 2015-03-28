@@ -6,3 +6,4 @@ build: [
   [make]
   [make "install"]
 ]
+depends: "ocaml"

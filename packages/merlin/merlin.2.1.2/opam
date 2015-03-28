@@ -6,13 +6,13 @@ build: [
   [make "-j" jobs]
 ]
 depends: [
+  "ocaml" {>= "4.00.1"}
   "ocamlfind"
   "yojson"
 ]
-ocaml-version: [>= "4.00.1"]
-
 post-messages: [
-  "merlin installed.
+  "
+merlin installed.
 
 Quick setup for VIM
 -------------------
@@ -40,6 +40,6 @@ Add opam emacs directory to your load-path by appending this to your .emacs:
   (setq merlin-command 'opam)
 
 Take a look at https://github.com/the-lambda-church/merlin for more information
-"
-  {success}
+  "
+    {success}
 ]

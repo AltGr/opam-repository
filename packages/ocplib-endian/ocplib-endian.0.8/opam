@@ -1,19 +1,13 @@
 opam-version: "1.2"
-author: "Pierre Chambart"
 maintainer: "pierre.chambart@ocamlpro.com"
+authors: "Pierre Chambart"
 homepage: "https://github.com/OCamlPro/ocplib-endian"
+bug-reports: "https://github.com/OCamlPro/ocplib-endian/issues"
+dev-repo: "https://github.com/OCamlPro/ocplib-endian.git"
 build: [
   ["ocaml" "setup.ml" "-configure" "--disable-debug" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
 ]
-install: [
-  ["ocaml" "setup.ml" "-install"]
-]
+install: ["ocaml" "setup.ml" "-install"]
 remove: ["ocamlfind" "remove" "ocplib-endian"]
-depends: [
-  "base-bytes"
-  "ocamlfind"
-  "cppo"
-]
-dev-repo: "https://github.com/OCamlPro/ocplib-endian.git"
-bug-reports: "https://github.com/OCamlPro/ocplib-endian/issues"
+depends: ["ocaml" "base-bytes" "ocamlfind" "cppo"]

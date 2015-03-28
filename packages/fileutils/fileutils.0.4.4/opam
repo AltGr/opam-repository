@@ -5,8 +5,5 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "fileutils"]]
-depends: [
-  "ocamlfind"
-  "ounit"
-]
+remove: ["ocamlfind" "remove" "fileutils"]
+depends: ["ocaml" "ocamlfind" "ounit"]

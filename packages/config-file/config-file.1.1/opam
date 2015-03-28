@@ -5,5 +5,5 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
-depends: ["ocamlfind" "camlp4"]
+remove: [make "uninstall"]
+depends: ["ocaml" "ocamlfind" "camlp4"]

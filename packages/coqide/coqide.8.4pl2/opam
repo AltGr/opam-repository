@@ -1,11 +1,25 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
 build: [
-  ["./configure" "-configdir" "%{lib}%/coq/config" "-mandir" man "-docdir" doc "--prefix" prefix "--usecamlp5" "--camlp5dir" "%{lib}%/camlp5"]
+  [
+    "./configure"
+    "-configdir"
+    "%{lib}%/coq/config"
+    "-mandir"
+    man
+    "-docdir"
+    doc
+    "--prefix"
+    prefix
+    "--usecamlp5"
+    "--camlp5dir"
+    "%{lib}%/camlp5"
+  ]
   [make "coqide-files" "coqide-binaries"]
   [make "install-coqide"]
 ]
 depends: [
+  "ocaml"
   "camlp5"
   "coq" {= "8.4pl2"}
   "lablgtk"

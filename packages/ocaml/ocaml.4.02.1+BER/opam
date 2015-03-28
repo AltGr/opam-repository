@@ -1,0 +1,9 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  ["./configure" "-prefix" "%{prefix}%"]
+  ["%{make}%" "world" "bootstrap" "opt" "opt.opt"]
+  ["%{make}%" "-i" "install"]
+  ["%{make}%" "-C" "metalib" "all" "install"]
+]
+patches: "ber-n102.patch"

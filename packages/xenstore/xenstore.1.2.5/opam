@@ -4,8 +4,9 @@ build: [
   [make "all"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "xenstore"]]
+remove: ["ocamlfind" "remove" "xenstore"]
 depends: [
+  "ocaml"
   "cstruct" {>= "0.6.0"}
   "lwt"
   "ounit"

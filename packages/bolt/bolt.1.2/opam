@@ -5,7 +5,10 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "bolt"]]
-depends: ["ocamlfind" "camlp4"]
-patches: ["opam.patch"]
-ocaml-version: [= "3.12.1"]
+remove: ["ocamlfind" "remove" "bolt"]
+depends: [
+  "ocaml" {= "3.12.1"}
+  "ocamlfind"
+  "camlp4"
+]
+patches: "opam.patch"

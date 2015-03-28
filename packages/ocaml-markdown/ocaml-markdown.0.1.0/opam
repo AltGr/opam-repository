@@ -5,8 +5,9 @@ build: [
   [make]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "markdown"]]
+remove: ["ocamlfind" "remove" "markdown"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "extlib" {= "1.5.3"}
   "sexplib"
@@ -14,4 +15,4 @@ depends: [
   "ounit"
   "tyxml" {< "3.2.0"}
 ]
-patches: ["opam.patch"]
+patches: "opam.patch"

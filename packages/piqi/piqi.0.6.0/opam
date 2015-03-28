@@ -12,6 +12,7 @@ remove: [
   ["ocamlfind" "remove" "piqi"]
 ]
 depends: [
+  "ocaml"
   "ocamlfind"
   "easy-format"
   "ulex"

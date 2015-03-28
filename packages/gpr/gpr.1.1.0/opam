@@ -1,6 +1,6 @@
 opam-version: "1"
 maintainer: "markus.mottl@gmail.com"
-authors: ["Markus Mottl <markus.mottl@gmail.com>"]
+authors: "Markus Mottl <markus.mottl@gmail.com>"
 homepage: "http://mmottl.github.io/gpr"
 license: "LGPL-2.1+ with OCaml linking exception"
 build: [
@@ -8,9 +8,10 @@ build: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-install"]
 ]
-build-doc: [["ocaml" "setup.ml" "-doc"]]
-remove: [["ocamlfind" "remove" "gpr"]]
+build-doc: ["ocaml" "setup.ml" "-doc"]
+remove: ["ocamlfind" "remove" "gpr"]
 depends: [
+  "ocaml" {>= "3.12"}
   "core"
   "gsl"
   "lacaml"
@@ -20,4 +21,3 @@ depexts: [
   [["debian"] ["libgsl0-dev"]]
   [["ubuntu"] ["libgsl0-dev"]]
 ]
-ocaml-version: [>= "3.12"]

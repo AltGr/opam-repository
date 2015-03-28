@@ -11,6 +11,7 @@ build: [
 ]
 remove: ["ocamlfind" "remove" "xmldiff"]
 depends: [
+  "ocaml" {>= "4.02.0"}
   "ocamlfind"
   "xmlm" {>= "1.1.0"}
 ]
@@ -18,4 +19,3 @@ depopts: "js_of_ocaml"
 conflicts: [
   "js_of_ocaml" {< "2.4.0"}
 ]
-ocaml-version: [>= "4.02.0"]

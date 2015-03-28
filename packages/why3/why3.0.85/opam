@@ -9,7 +9,7 @@ authors: [
 ]
 homepage: "http://why3.lri.fr/"
 license: "GNU Lesser General Public License version 2.1"
-doc: ["http://why3.lri.fr/#documentation"]
+doc: "http://why3.lri.fr/#documentation"
 tags: [
   "deductive"
   "program verification"
@@ -26,6 +26,7 @@ build-doc: [
   [make "doc" "stdlibdoc" "apidoc"]
   [make "DOCDIR=%{doc}%/why3" "install-doc"]
 ]
+depends: "ocaml"
 depopts: [
   "lablgtk"
   "conf-gtksourceview"

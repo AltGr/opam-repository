@@ -1,10 +1,6 @@
 opam-version: "1"
 maintainer: "filliatr@lri.fr"
-authors: [
-  "Sylvain Conchon"
-  "Jean-Christophe Filliâtre"
-  "Julien Signoles"
-]
+authors: ["Sylvain Conchon" "Jean-Christophe Filliâtre" "Julien Signoles"]
 homepage: "http://ocamlgraph.lri.fr/"
 license: "GNU Library General Public License version 2.1"
 build: [
@@ -12,5 +8,5 @@ build: [
   [make]
   [make "install-findlib"]
 ]
-remove: [["ocamlfind" "remove" "ocamlgraph"]]
-depends: ["ocamlfind"]
+remove: ["ocamlfind" "remove" "ocamlgraph"]
+depends: ["ocaml" "ocamlfind"]

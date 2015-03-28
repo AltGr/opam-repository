@@ -1,8 +1,9 @@
 opam-version: "1"
 maintainer: "ygrek@autistici.org"
 homepage: "http://ygrek.org.ua/p/sqlgg/"
-build: [[make "-C" "src"]]
+build: [make "-C" "src"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "menhir"
   "deriving"

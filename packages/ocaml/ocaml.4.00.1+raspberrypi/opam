@@ -1,0 +1,8 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  ["./configure" "-prefix" prefix]
+  [make "world" "world.opt"]
+  [make "install"]
+]
+patches: "dc0776f55108a20dad5a9c06188545dc08dbf462.patch"

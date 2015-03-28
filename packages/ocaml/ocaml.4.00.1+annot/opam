@@ -1,0 +1,8 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  ["./configure" "-prefix" prefix]
+  [make "world" "world.opt"]
+  [make "install"]
+]
+patches: "ocaml-annot-4.00.1.patch"

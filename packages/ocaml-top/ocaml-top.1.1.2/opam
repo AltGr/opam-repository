@@ -3,15 +3,13 @@ maintainer: "contact@ocamlpro.com"
 authors: "Louis Gesbert <louis.gesbert@ocamlpro.com>"
 homepage: "http://www.typerex.org/ocaml-top.html"
 license: "GPL 3"
-tags: [
-  "org:ocamlpro"
-  "org:typerex"
-]
+tags: ["org:ocamlpro" "org:typerex"]
 build: [
   ["ocp-build" "-init"]
   ["ocp-build" "ocaml-top"]
 ]
 depends: [
+  "ocaml"
   "ocp-build" {>= "1.99.6-beta"}
   "lablgtk" {>= "2.16.0"}
   "conf-gtksourceview" {= "2"}

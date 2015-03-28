@@ -1,6 +1,4 @@
 opam-version: "1.2.0"
-name: "frama-c"
-version: "20150201"
 maintainer: "francois.bobot@cea.fr"
 authors: [
   "Patrick Baudin"
@@ -22,9 +20,9 @@ authors: [
   "Boris Yakobowski"
 ]
 homepage: "http://frama-c.com/"
-license: "GNU Lesser General Public License version 2.1"
-doc: ["http://frama-c.com/download/user-manual-Sodium-20150201.pdf"]
 bug-reports: "https://bts.frama-c.com/"
+license: "GNU Lesser General Public License version 2.1"
+doc: "http://frama-c.com/download/user-manual-Sodium-20150201.pdf"
 tags: [
   "deductive"
   "program verification"
@@ -39,37 +37,28 @@ tags: [
   "ACSL"
   "dataflow analysis"
 ]
-
 build: [
   ["./configure" "--prefix" prefix]
   [make]
   [make "install"]
 ]
-
+build-test: [make "PTESTS_OPTS=-error-code" "tests"]
+build-doc: [
+  [make "-C" "doc" "download"]
+  [make "-C" "doc" "FRAMAC_DOCDIR=%{frama-c:doc}%" "install"]
+]
 remove: [
   ["./configure" "--prefix" prefix]
   [make "uninstall"]
   ["rm" "-rf" frama-c:doc]
 ]
-
-build-doc: [
-   [make "-C" "doc" "download"]
-   [make "-C" "doc" "FRAMAC_DOCDIR=%{frama-c:doc}%" "install"]
-]
-
-build-test: [
-  [make "PTESTS_OPTS=-error-code" "tests"]
-]
-
 depends: [
-  "ocamlgraph" { = "1.8.5" | = "1.8.6" }
-  "lablgtk" { >= "2.18.2" } #for ocaml >= 4.02.1
+  "ocaml" {>= "3.12" & != "4.02.0"}
+  "ocamlgraph" {= "1.8.5" | = "1.8.6"}
+  "lablgtk" {>= "2.18.2"}
   "conf-gtksourceview"
   "conf-gnomecanvas"
 ]
-
 conflicts: [
-  "why3" { < "0.85" }
+  "why3" {< "0.85"}
 ]
-
-available: [ ocaml-version >= "3.12" & ocaml-version != "4.02.0" ]

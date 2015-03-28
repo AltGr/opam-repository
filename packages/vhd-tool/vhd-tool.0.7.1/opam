@@ -1,16 +1,14 @@
 opam-version: "1"
 maintainer: "dave.scott@eu.citrix.com"
-tags: [
-  "org:mirage"
-  "org:xapi-project"
-]
+tags: ["org:mirage" "org:xapi-project"]
 build: [
   ["./configure" "--bindir=%{bin}%"]
   [make]
   [make "install"]
 ]
-remove: [[make "uninstall"]]
+remove: [make "uninstall"]
 depends: [
+  "ocaml"
   "ocamlfind"
   "lwt" {>= "2.4.3"}
   "cstruct" {>= "1.0.1"}
@@ -22,6 +20,6 @@ depends: [
   "uri"
   "tar-format"
   "sha"
-  "cohttp" {>="0.9.15" & <"0.10.0"}
+  "cohttp" {>= "0.9.15" & < "0.10.0"}
   "ssl"
 ]
