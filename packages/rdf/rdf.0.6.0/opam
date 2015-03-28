@@ -1,22 +1,16 @@
 opam-version: "1"
 maintainer: "zoggy@bat8.org"
-authors: ["Maxence Guesdon"]
+authors: "Maxence Guesdon"
 homepage: "http://zoggy.github.io/ocaml-rdf/"
 license: "GNU Lesser General Public License version 3"
-doc: ["http://zoggy.github.io/ocaml-rdf/doc.html"]
-tags: [
-  "rdf"
-  "semantic web"
-  "xml"
-  "turtle"
-  "graph"
-]
+doc: "http://zoggy.github.io/ocaml-rdf/doc.html"
+tags: ["rdf" "semantic web" "xml" "turtle" "graph"]
 build: [
   ["./configure" "--prefix" prefix]
   [make "all"]
   [make "install"]
 ]
-remove: [["ocamlfind" "remove" "rdf"]]
+remove: ["ocamlfind" "remove" "rdf"]
 depends: [
   "ocamlfind"
   "xmlm" {>= "1.1.1"}
@@ -27,8 +21,8 @@ depends: [
   "cryptokit" {>= "1.7"}
   "pcre" {>= "7.0.2"}
 ]
-depopts: [
-  "mysql" {>= "1.1.1"}
-  "postgresql"
+depopts: ["mysql" "postgresql"]
+conflicts: [
+  "mysql" {< "1.1.1"}
 ]
 ocaml-version: [>= "4.00.0"]

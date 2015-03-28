@@ -8,9 +8,9 @@ remove: [
   ["ocamlfind" "remove" "zbar"]
   ["ocamlfind" "remove" "zbar_ctypes"]
 ]
-depends: ["lwt"]
-depopts: [("ctypes" & "ctypes-foreign")]
+depends: "lwt"
+depopts: ["ctypes" "ctypes-foreign"]
 depexts: [
-[ ["ubuntu"] ["libzbar-dev"] ]
-[ ["debian"] ["libzbar-dev"] ]
+  [["debian"] ["libzbar-dev"]]
+  [["ubuntu"] ["libzbar-dev"]]
 ]
