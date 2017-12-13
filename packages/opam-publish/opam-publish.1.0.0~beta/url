@@ -1,0 +1,5 @@
+src: "https://github.com/ocaml/opam-publish/archive/1.0.0-beta.tar.gz"
+checksum: [
+  "md5=7968f0213f5078aa0bcfb57a70cddbcd"
+  "sha512=5d1a12044eb4e12fbc37b11c66c3baa9450d9668e61972af23ae590e98a7d6a5c45cbb44928b1ab3b69f7bc26a7b48245b6b0c441d46635ecf65a0b44f044385"
+]
