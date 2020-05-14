@@ -1,0 +1,28 @@
+name: ocp-mirror
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+
+    - name: Setup credentials
+      env:
+        OCP_MIRROR_PUB_KEY: ${{ secrets.OCP_MIRROR_PUB_KEY }}
+        OCP_MIRROR_KEY: ${{ secrets.OCP_MIRROR_KEY }}
+        OCP_MIRROR_KNOWN_HOSTS: ${{ secrets.OCP_MIRROR_KNOWN_HOSTS }}
+      run: mkdir ~/.ssh &&
+           echo "$OCP_MIRROR_PUB_KEY" >~/.ssh/id_rsa.pub &&
+           echo "$OCP_MIRROR_KEY" >~/.ssh/id_rsa &&
+           echo "$OCP_MIRROR_KNOWN_HOSTS" >~/.ssh/known_hosts &&
+           chmod 600 ~/.ssh/id_rsa ~/.ssh/known_hosts
+
+    - name: Sync opam-repository mirror at ocp
+      run: git -C "$GITHUB_WORKSPACE" push git@gitlab.ocamlpro.com:OCamlPro/opam-repository +master
